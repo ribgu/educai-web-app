@@ -7,9 +7,11 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "stories": "ladle serve --stories=./src/components/**/*.stories.{js,ts,jsx,tsx,mdx}"
   },
   "dependencies": {
+    "@ladle/react": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
