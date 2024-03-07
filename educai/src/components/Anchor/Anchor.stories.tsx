@@ -6,8 +6,6 @@ export default {
 
 export const TopBarStories = () => {
     return (
-        <>
-            <span className='text-white'>jsfnjf</span>
-        </>
+        <Anchor path=''>ancora</Anchor>
     )
 }
