@@ -10,8 +10,8 @@ export default function Logo(props: LogoProps) {
 
     const mapWidthToClassNames = {
         sm: 'w-[20%]',
-        md: 'w-[50%]',
-        lg: 'w-[100%]'
+        md: 'w-[35%]',
+        lg: 'w-[50%]'
     }
 
     const widthClass = mapWidthToClassNames[width]
@@ -22,13 +22,13 @@ export default function Logo(props: LogoProps) {
                 <img src={logos.padraoBlack} className={widthClass} />
             )}
             {variant === 'padraoWhite' && (
-                <img src={logos.padraoBlack} className={widthClass} />
+                <img src={logos.padraoWhite} className={widthClass} />
             )}
             {variant === 'bookOne' && (
-                <img src={logos.padraoBlack} className={widthClass} />
+                <img src={logos.bookOne} className={widthClass} />
             )}
             {variant === 'bookTwo' && (
-                <img src={logos.padraoBlack} className={widthClass} />
+                <img src={logos.bookTwo} className={widthClass} />
             )}
         </div>
     )
