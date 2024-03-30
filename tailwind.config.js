@@ -6,7 +6,11 @@ export default {
   ],
   theme: {
     extend: {
-      colors:{
+      fontFamily: {
+        montserrat: ['Montserrat', 'sans-serif'],
+        manrope: ['Manrope', 'sans-serif']
+      },
+      colors: {
         dark: '#0A0A0A'
       }
     },
