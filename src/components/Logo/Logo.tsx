@@ -1,21 +1,35 @@
-import { logo } from './logo'
+import logos from './logos'
 
 type LogoProps = {
-    variant: 'white' | 'black',
-    size: 'lg' | 'md' | 'sm'
+    variant: 'padraoBlack' | 'padraoWhite' | 'bookOne' | 'bookTwo'
+    width: 'sm' | 'md' | 'lg'
 }
 
-export function Logo(props: LogoProps){
-    const { variant, size } = props
-    const logoSvg = logo[variant]
+export default function Logo(props: LogoProps) {
+    const { variant, width } = props
 
-    const sizeMap = {
-        lg: 'w-[100%]',
-        md: 'w-[50%]',
-        sm: 'w-[30%]'
+    const mapWidthToClassNames = {
+        sm: 'w-[20%]',
+        md: 'w-[35%]',
+        lg: 'w-[50%]'
     }
 
-    return(
-        <img src={logoSvg} alt="Logo educ.ai" className='w-6' />
+    const widthClass = mapWidthToClassNames[width]
+
+    return (
+        <div className={widthClass}>
+            {variant === 'padraoBlack' && (
+                <img src={logos.padraoBlack} className={widthClass} />
+            )}
+            {variant === 'padraoWhite' && (
+                <img src={logos.padraoWhite} className={widthClass} />
+            )}
+            {variant === 'bookOne' && (
+                <img src={logos.bookOne} className={widthClass} />
+            )}
+            {variant === 'bookTwo' && (
+                <img src={logos.bookTwo} className={widthClass} />
+            )}
+        </div>
     )
 }
