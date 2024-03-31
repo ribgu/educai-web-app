@@ -5,9 +5,7 @@ import Button from '../components/Button/Button'
 export default function LandingPage() {
     return (
         <div className='flex flex-col h-screen items-center bg-dark'>
-
             <div className='flex flex-col w-[90%] h-full'>
-                
                 <div className='flex w-full h-[15%] justify-between items-center py-10'>
                     <h1 className='text-white'>Logo</h1>
                     <NavBar/>
