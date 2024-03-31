@@ -9,7 +9,7 @@ export function Anchor(props: AnchorProps) {
 
     return (
         <>
-            <a href={path} className="font-primary text-lg text-white ">
+            <a href={path} className="font-primary text-sm text-white hover:text-purple-500 ">
                 {children}
             </a>
         </>
