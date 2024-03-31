@@ -1,35 +1,21 @@
-type BotaoProps = {
+type ButtonProps = {
     variant: 'primary' | 'secondary',
-    width: 'sm' | 'md' | 'lg',
-    height: 'sm' | 'md',
-    texto: string
+    children: React.ReactNode
 }
 
-export default function Botao(props: BotaoProps) {
-    const { variant, width, height } = props
+export default function Button(props: ButtonProps) {
+    const { variant, children } = props
 
-    const mapWidthToClassNames = {
-        sm: 'w-[10%]',
-        md: 'w-[20%]',
-        lg: 'w-[50%]'
+    const variantsClasnames = {
+        'primary': 'btn bg-violet-800 border-violet-800 text-white hover:bg-violet-500',
+        'secondary': 'btn btn-outline border-violet-800 hover:bg-violet-800 hover:border-violet-800 hover:text-white'
     }
 
-    const mapHeightToClassNames = {
-        sm: 'h-10',
-        md: 'h-14',
-    }
-
-    const widthClass = mapWidthToClassNames[width]
-    const heightClass = mapHeightToClassNames[height]
+    const className = variantsClasnames[variant]
 
     return(
-        <>
-            {variant === 'primary' && (
-                <button className={`bg-violet-800 rounded text-white ${widthClass} ${heightClass}`}>{props.texto}</button>
-            )}
-            {variant === 'secondary' && (
-                <button className={ `border-2 rounded border-violet-800 text-white ${widthClass} ${heightClass}`}>{props.texto}</button>
-            )}
+        <>   
+            <button className={className}>{children}</button>
         </>
     )
 }

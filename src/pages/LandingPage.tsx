@@ -1,6 +1,6 @@
 import NavBar from '../components/LandingPageNavBar/NavBar'
 import MainTextLogo from '../components/MainTextHome/MainTextLogo'
-import Botao from '../components/Botao/Botao'
+import Button from '../components/Botao/Botao'
 
 export default function LandingPage() {
     return (
@@ -11,23 +11,18 @@ export default function LandingPage() {
                 <div className='flex w-full h-[15%] justify-between items-center py-10'>
                     <h1 className='text-white'>Logo</h1>
                     <NavBar/>
-                    <Botao variant='primary' texto='LOGIN' width='sm' height='sm'/>
+                    <Button variant='primary' children='LOGIN'/>
                 </div>
-                
 
                 <div className='flex flex-col w-full h-[85%] bg-[url(../../public/Gradientes/gradienteHome.png)] bg-no-repeat bg-center justify-center items-center'>
                     <MainTextLogo/>
 
                     <div className='flex w-full justify-center gap-12 mt-12'>
-                        <Botao variant='primary' texto='CONTACT US' width='md' height='md'/>
-                        <Botao variant='secondary' texto='TRY A DEMO' width='md' height='md'/>
+                        <Button variant='primary' children='CONTACT US'/>
+                        <Button variant='secondary' children='TRY A DEMO'/>
                     </div>
-
                 </div>
-
             </div>
-            
         </div>
-        
     )
 }
