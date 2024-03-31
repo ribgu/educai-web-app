@@ -1,6 +1,6 @@
 import NavBar from '../components/LandingPageNavBar/NavBar'
 import MainTextLogo from '../components/MainTextHome/MainTextLogo'
-import Button from '../components/Botao/Botao'
+import Button from '../components/Button/Button'
 
 export default function LandingPage() {
     return (

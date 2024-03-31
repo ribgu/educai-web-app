@@ -1,1 +1,1 @@
-// export * from './MainTextHome'
+export * from './MainTextLogo'
