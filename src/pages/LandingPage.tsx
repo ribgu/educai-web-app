@@ -3,6 +3,7 @@ import MainTextLogo from '../components/MainTextHome/MainTextLogo'
 import Button from '../components/Button/Button'
 import LpCard from '../components/LpCard/LpCard'
 import Typography from '../components/Typography/Typography'
+import Footer from '../components/Footer/Footer'
 
 export default function LandingPage() {
     return (
@@ -66,6 +67,8 @@ export default function LandingPage() {
             <div className='flex flex-col h-screen items-center bg-dark'>
 
             </div>
+
+            <Footer />
         </div>
     )
 }
