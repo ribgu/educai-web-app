@@ -3,7 +3,8 @@ import Typography from '../Typography/Typography'
 
 export default function LandingPagePrincing() {
     return (
-        <div className='flex flex-col gap-10 p-12 b rounded-3xl border-[#BFA5FF] border-2 pr-36'>
+        <div className='flex flex-col gap-10 p-12 b rounded-3xl border-[#BFA5FF] border-2 pr-36 shadow-inner -ml-9 -mt-12 -mr-20 -mb-0 text-purple-600'>
+            {/* box-shadow: inset -9px -12px 20px 0px #6730ec9e */}
             <span className='' style={{background: "url('../../public/Gradientes/gradienteHome.png')"}}></span>
             <div className='flex flex-col gap-3'>
                 <Typography variant='body2'>JOIN WITH US</Typography>
