@@ -3,6 +3,7 @@ import MainTextLogo from '../components/MainTextHome/MainTextLogo'
 import Button from '../components/Button/Button'
 import LpCard from '../components/LpCard/LpCard'
 import Typography from '../components/Typography/Typography'
+import Logo from '../components/Logo/Logo'
 
 export default function LandingPage() {
     return (
@@ -13,7 +14,7 @@ export default function LandingPage() {
                     <div className='flex w-full h-[15%] items-center justify-between px-10'>
     
                         <div className='flex-1'>
-                            <h1 className='text-white'>Logo</h1>
+                            <Logo variant='padraoWhite' width='lg'/>
                         </div>
                         
                         <div className='flex w-[70%] justify-center h-[40%]'>
