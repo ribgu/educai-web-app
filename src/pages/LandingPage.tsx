@@ -3,6 +3,7 @@ import MainTextLogo from '../components/MainTextHome/MainTextLogo'
 import Button from '../components/Button/Button'
 import LpCard from '../components/LpCard/LpCard'
 import Typography from '../components/Typography/Typography'
+import LandingPagePrincing from '../components/LandingPagePricing/LandingPagePrincing'
 
 export default function LandingPage() {
     return (
@@ -11,15 +12,15 @@ export default function LandingPage() {
             <div className='flex flex-col h-screen items-center bg-dark'>
                 <div className='flex flex-col w-full h-full max-w-screen-xl'>
                     <div className='flex w-full h-[15%] items-center justify-between px-10'>
-    
+
                         <div className='flex-1'>
                             <h1 className='text-white'>Logo</h1>
                         </div>
-                        
+
                         <div className='flex w-[70%] justify-center h-[40%]'>
                             <NavBar/>
                         </div>
-                        
+
                         <div className='flex-1 flex justify-end'>
                             <Button variant='primary'>LOGIN</Button>
                         </div>
@@ -39,20 +40,21 @@ export default function LandingPage() {
             {/* Solutions */}
             <div className='flex flex-col h-screen items-center justify-center bg-dark'>
                 <div className='flex w-[85%] flex-wrap justify-between gap-y-16'>
-                    <LpCard figure='../../public/IconCards/iconCard01.svg' iconSide='../public/IconCards/miniIconCard01.svg' 
+                    <LpCard figure='../../public/IconCards/iconCard01.svg' iconSide='../public/IconCards/miniIconCard01.svg'
                     title={<>Create <span className='text-purple-300'>Exercises</span> In Minute</>} subTitle='With AI Copilot'/>
-                    <LpCard figure='../../public/IconCards/iconCard02.svg' iconSide='../public/IconCards/miniIconCard02.svg' 
+                    <LpCard figure='../../public/IconCards/iconCard02.svg' iconSide='../public/IconCards/miniIconCard02.svg'
                     title={<>Students More <span className='text-purple-300'>Engaged</span></>} subTitle='With AI Copilot'/>
-                     <LpCard figure='../../public/IconCards/iconCard03.svg' iconSide='../public/IconCards/miniIconCard03.svg' 
+                     <LpCard figure='../../public/IconCards/iconCard03.svg' iconSide='../public/IconCards/miniIconCard03.svg'
                     title={<>Focus On Language <span className='text-purple-300'>Practice</span></>} subTitle='With AI Copilot'/>
-                    <LpCard figure='../../public/IconCards/iconCard04.svg' iconSide='../public/IconCards/miniIconCard04.svg' 
+                    <LpCard figure='../../public/IconCards/iconCard04.svg' iconSide='../public/IconCards/miniIconCard04.svg'
                     title={<>We Believe In <span className='text-purple-300'>Realtime Feedbacks</span></>} subTitle='With AI Copilot'/>
                 </div>
             </div>
 
             {/* Pricing */}
-            <div className='flex flex-col h-screen items-center bg-dark'>
-
+            <div className='flex flex-row h-screen items-center bg-black justify-center gap-10'>
+                <LandingPagePrincing/>
+                <LandingPagePrincing/>
             </div>
 
             {/* About Us */}
