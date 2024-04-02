@@ -4,7 +4,6 @@ import Typography from '../Typography/Typography'
 export default function LandingPagePrincing() {
     return (
         <div className='flex flex-col gap-10 p-12 b rounded-3xl border-[#BFA5FF] border-2 pr-36'>
-            <span className='' style={{background: "url('../../public/Gradientes/gradienteHome.png')"}}></span>
             <div className='flex flex-col gap-3'>
                 <Typography variant='body2'>JOIN WITH US</Typography>
                 <div className='flex gap-2'>
