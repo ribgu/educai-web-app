@@ -18,7 +18,7 @@ export default function LandingPage() {
                         </div>
 
                         <div className='flex w-[70%] justify-center h-[40%]'>
-                            <NavBar/>
+                            <NavBar />
                         </div>
 
                         <div className='flex-1 flex justify-end'>
@@ -27,7 +27,7 @@ export default function LandingPage() {
                     </div>
 
                     <div className='flex flex-col w-full h-[85%] bg-[url(../../public/Gradientes/gradienteHome.png)] bg-no-repeat bg-center justify-center items-center'>
-                        <MainTextLogo/>
+                        <MainTextLogo />
 
                         <div className='flex w-full justify-center gap-12 mt-12'>
                             <Button variant='primary'>CONTACT US</Button>
@@ -41,20 +41,28 @@ export default function LandingPage() {
             <div className='flex flex-col h-screen items-center justify-center bg-dark'>
                 <div className='flex w-[85%] flex-wrap justify-between gap-y-16'>
                     <LpCard figure='../../public/IconCards/iconCard01.svg' iconSide='../public/IconCards/miniIconCard01.svg'
-                    title={<>Create <span className='text-purple-300'>Exercises</span> In Minute</>} subTitle='With AI Copilot'/>
+                        title={<>Create <span className='text-purple-300'>Exercises</span> In Minute</>} subTitle='With AI Copilot' />
                     <LpCard figure='../../public/IconCards/iconCard02.svg' iconSide='../public/IconCards/miniIconCard02.svg'
-                    title={<>Students More <span className='text-purple-300'>Engaged</span></>} subTitle='With AI Copilot'/>
-                     <LpCard figure='../../public/IconCards/iconCard03.svg' iconSide='../public/IconCards/miniIconCard03.svg'
-                    title={<>Focus On Language <span className='text-purple-300'>Practice</span></>} subTitle='With AI Copilot'/>
+                        title={<>Students More <span className='text-purple-300'>Engaged</span></>} subTitle='With AI Copilot' />
+                    <LpCard figure='../../public/IconCards/iconCard03.svg' iconSide='../public/IconCards/miniIconCard03.svg'
+                        title={<>Focus On Language <span className='text-purple-300'>Practice</span></>} subTitle='With AI Copilot' />
                     <LpCard figure='../../public/IconCards/iconCard04.svg' iconSide='../public/IconCards/miniIconCard04.svg'
-                    title={<>We Believe In <span className='text-purple-300'>Realtime Feedbacks</span></>} subTitle='With AI Copilot'/>
+                        title={<>We Believe In <span className='text-purple-300'>Realtime Feedbacks</span></>} subTitle='With AI Copilot' />
                 </div>
             </div>
 
+            <div className='w-full flex flex-col align-middle justify-center'>
+                <Typography variant='lp-main-sentece'>
+                    CHOOSE YOUR PLAN
+                </Typography>
+                <Typography variant='h1'>
+                Ready to join the language teaching revolution?
+                </Typography>
+            </div>
             {/* Pricing */}
             <div className='flex flex-row h-screen items-center bg-black justify-center gap-10'>
-                <LandingPagePrincing/>
-                <LandingPagePrincing/>
+                <LandingPagePrincing variant='plus' />
+                <LandingPagePrincing variant='premium' />
             </div>
 
             {/* About Us */}
