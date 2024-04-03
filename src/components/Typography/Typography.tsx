@@ -19,7 +19,7 @@ export default function Typography(props: TypographyProps) {
         h3: 'font-montserrat text-2xl font-bold', // 24px
         body1: 'font-montserrat text-base font-normal', // 16px
         body2: 'text-white font-montserrat text-sm font-normal', // 14px
-        'body2-bold': 'font-montserrat text-sm font-medium'
+        'body2-bold': 'font-montserrat text-sm font-medium' // 14px
     }
 
     const className = variantsClasnames[variant]
