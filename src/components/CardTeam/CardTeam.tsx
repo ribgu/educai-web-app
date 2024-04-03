@@ -1,16 +1,16 @@
 // Import Swiper React components
-import Typography from '../Typography/Typography';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import Typography from '../Typography/Typography'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
 
-import '../../App.css';
+import '../../App.css'
 
 // import required modules
-import { Pagination, Navigation } from 'swiper/modules';
+import { Pagination, Navigation } from 'swiper/modules'
 
 export default function App() {
   return (
@@ -70,5 +70,5 @@ export default function App() {
         </SwiperSlide>
       </Swiper>
     </>
-  );
+  )
 }
