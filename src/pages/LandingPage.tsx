@@ -7,7 +7,7 @@ import LandingPagePrincing from '../components/LandingPagePricing/LandingPagePri
 
 export default function LandingPage() {
     return (
-        <div className='flex flex-col'>
+        <div className='flex flex-col bg-black'>
             {/* Home */}
             <div className='flex flex-col h-screen items-center bg-dark'>
                 <div className='flex flex-col w-full h-full max-w-screen-xl'>
@@ -51,13 +51,16 @@ export default function LandingPage() {
                 </div>
             </div>
 
-            <div className='w-full flex flex-col align-middle justify-center'>
+            <div className='w-full flex flex-col items-center justify-center bg-black mb-2 gap-2'>
                 <Typography variant='lp-main-sentece'>
                     CHOOSE YOUR PLAN
                 </Typography>
-                <Typography variant='h1'>
-                Ready to join the language teaching revolution?
-                </Typography>
+                <div className='flex gap-2'>
+                    <Typography variant='h2' color='white' >Ready to</Typography>
+                    <Typography variant='h2' color='purple-300' >join</Typography>
+                    <Typography variant='h2' color='white' >the language teaching</Typography>
+                    <Typography variant='h2' color='purple-300 '>revolution?</Typography>
+                </div>
             </div>
             {/* Pricing */}
             <div className='flex flex-row h-screen items-center bg-black justify-center gap-10'>
