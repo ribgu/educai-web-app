@@ -34,7 +34,6 @@
     border-radius: 40px;
     border: solid 2px #A975DC;
   
-    /* Center slide text vertically */
     display: flex;
     justify-content: center;
     align-items: center;
