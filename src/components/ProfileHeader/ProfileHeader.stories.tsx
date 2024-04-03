@@ -5,7 +5,7 @@ export default {
     title: 'Components/ProfileHeader'
 }
 
-export const TopBarStories = () => {
+export const ProfileHeaderStories = () => {
     return (
       <Stack sx={{
         backgroundColor: '#3A3A3A'
