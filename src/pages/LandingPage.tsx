@@ -4,6 +4,7 @@ import Button from '../components/Button/Button'
 import LpCard from '../components/LpCard/LpCard'
 import Typography from '../components/Typography/Typography'
 import Logo from '../components/Logo/Logo'
+import CardTeam from '../components/CardTeam/CardTeam'
 
 export default function LandingPage() {
     return (
@@ -65,7 +66,11 @@ export default function LandingPage() {
 
             {/* Contact */}
             <div className='flex flex-col h-screen items-center bg-dark'>
-
+                <div className='flex flex-col cp w-[80%] h-full justify-center items-center gap-3'>
+                    <Typography variant='lp-team-title'>OUR TEAM</Typography>
+                    <img src='../../public/Logos/logoSemIcon.svg'></img>
+                    <CardTeam/>
+                </div>
             </div>
         </div>
     )
