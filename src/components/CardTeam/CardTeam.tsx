@@ -1,4 +1,3 @@
-// Import Swiper React components
 import Typography from '../Typography/Typography';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
