@@ -1,3 +1,7 @@
+.shadow-pricing {
+  box-shadow: inset -9px -12px 20px 0px #6730ec9e
+}
+
 #app {
     height: 100%;
   }
