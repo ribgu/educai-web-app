@@ -1,6 +1,6 @@
-import { SlSocialFacebook, SlSocialInstagram, SlSocialTwitter } from "react-icons/sl";
-import Typography from "../Typography/Typography";
-import Logo from "../Logo/Logo";
+import { SlSocialFacebook, SlSocialInstagram, SlSocialTwitter } from 'react-icons/sl'
+import Typography from '../Typography/Typography'
+import Logo from './Logo/Logo'
 
 
 export default function Footer() {
