@@ -20,24 +20,24 @@ export default function LandingPagePrincing({ variant }: PrincingProps) {
                 <div className='flex flex-col gap-3'>
                     <Typography variant='body2'>JOIN WITH US</Typography>
                     <div className='flex gap-2'>
-                        <Typography variant='h2-light'>IN</Typography>
+                        <Typography variant='h2-light' color='white'>IN</Typography>
                         {variant === 'plus' && (
                             <Typography variant='h2' color='purple-300'>PLUS</Typography>
                         )}
                         {variant === 'premium' && (
                             <Typography variant='h2' color='purple-300'>PREMIUM</Typography>
                         )}
-                        <Typography variant='h2-light'>PLAN</Typography>
+                        <Typography variant='h2-light' color='white'>PLAN</Typography>
                     </div>
                 </div>
                 <div>
                     {variant === 'plus' && (
-                        <Typography variant='h2'>$30</Typography>
+                        <Typography variant='h2' color='white'>$30</Typography>
                     )}
                     {variant === 'premium' && (
-                        <Typography variant='h2'>$40</Typography>
+                        <Typography variant='h2' color='white'>$40</Typography>
                     )}
-                    <Typography variant='body1'>/mo</Typography>
+                    <Typography variant='body1' color='white'>/month</Typography>
                 </div>
                 <div className={`flex flex-col ${margin}`}>
                     <Typography variant='body1' color='purple-300'>Unlimited Classses</Typography>
