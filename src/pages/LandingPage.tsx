@@ -6,6 +6,7 @@ import Typography from '../components/Typography/Typography'
 import Logo from '../components/Logo/Logo'
 import CardTeam from '../components/CardTeam/CardTeam'
 import LandingPagePrincing from '../components/LandingPagePricing/LandingPagePrincing'
+import Footer from '../components/Footer/Footer'
 
 export default function LandingPage() {
     return (
@@ -90,6 +91,8 @@ export default function LandingPage() {
                     <CardTeam/>
                 </div>
             </div>
+
+            <Footer />
         </div>
     )
 }
