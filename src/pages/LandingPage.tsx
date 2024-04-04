@@ -3,7 +3,10 @@ import MainTextLogo from '../components/MainTextHome/MainTextLogo'
 import Button from '../components/Button/Button'
 import LpCard from '../components/LpCard/LpCard'
 import Typography from '../components/Typography/Typography'
+import Logo from '../components/Logo/Logo'
+import CardTeam from '../components/CardTeam/CardTeam'
 import LandingPagePrincing from '../components/LandingPagePricing/LandingPagePrincing'
+import Footer from '../components/Footer/Footer'
 
 export default function LandingPage() {
     return (
@@ -14,7 +17,7 @@ export default function LandingPage() {
                     <div className='flex w-full h-[15%] items-center justify-between px-10'>
 
                         <div className='flex-1'>
-                            <h1 className='text-white'>Logo</h1>
+                            <Logo variant='padraoWhite' width='lg'/>
                         </div>
 
                         <div className='flex w-[70%] justify-center h-[40%]'>
@@ -51,21 +54,26 @@ export default function LandingPage() {
                 </div>
             </div>
 
-            <div className='w-full flex flex-col items-center justify-center bg-black mb-2 gap-2'>
-                <Typography variant='lp-main-sentece'>
+            {/* Pricing */}
+            <div className='flex flex-col h-screen items-center bg-dark justify-center gap-10'>
+            <Typography variant='lp-main-sentece'>
                     CHOOSE YOUR PLAN
                 </Typography>
-                <div className='flex gap-2'>
-                    <Typography variant='h2' color='white' >Ready to</Typography>
-                    <Typography variant='h2' color='purple-300' >join</Typography>
-                    <Typography variant='h2' color='white' >the language teaching</Typography>
-                    <Typography variant='h2' color='purple-300 '>revolution?</Typography>
+                <div className='flex'>
+                <Typography variant='h2' color='white' >
+                    Ready to  <Typography variant='h2' color='purple-300' >
+                         join</Typography> <Typography variant='h2' color='white' > the language teaching</Typography>
+                         <Typography variant='h2' color='purple-300 '> revolution?</Typography> </Typography>
+                   
+                    
+                    
                 </div>
-            </div>
-            {/* Pricing */}
-            <div className='flex flex-row h-screen items-center bg-black justify-center gap-10'>
+
+                <div className='flex gap-20'>
                 <LandingPagePrincing variant='plus' />
                 <LandingPagePrincing variant='premium' />
+                </div>
+                
             </div>
 
             {/* About Us */}
@@ -77,8 +85,14 @@ export default function LandingPage() {
 
             {/* Contact */}
             <div className='flex flex-col h-screen items-center bg-dark'>
-
+                <div className='flex flex-col cp w-[80%] h-full justify-center items-center gap-3'>
+                    <Typography variant='lp-team-title'>OUR TEAM</Typography>
+                    <img src='../../public/Logos/logoSemIcon.svg'></img>
+                    <CardTeam/>
+                </div>
             </div>
+
+            <Footer />
         </div>
     )
 }

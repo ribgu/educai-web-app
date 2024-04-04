@@ -10,8 +10,8 @@ export default function Logo(props: LogoProps) {
 
     const mapWidthToClassNames = {
         sm: 'w-[20%]',
-        md: 'w-[35%]',
-        lg: 'w-[50%]'
+        md: 'w-[50%]',
+        lg: 'w-[85%]'
     }
 
     const widthClass = mapWidthToClassNames[width]

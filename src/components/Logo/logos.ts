@@ -1,13 +1,8 @@
-import padraoBlack from '../../../public/logos/padraoBlack.svg'
-import padraoWhite from '../../../public/logos/padraoWhite.svg'
-import bookOne from '../../../public/logos/bookOne.svg'
-import bookTwo from '../../../public/logos/bookTwo.svg'
-
 const logos = {
-    padraoBlack,
-    padraoWhite,
-    bookOne,
-    bookTwo
+    padraoBlack: '../../../public/logos/padraoBlack.svg',
+    padraoWhite: '../../../public/logos/padraoWhite.svg',
+    bookOne: '../../../public/logos/bookOne.svg',
+    bookTwo: '../../../public/logos/bookTwo.svg'
 }
 
 export default logos
