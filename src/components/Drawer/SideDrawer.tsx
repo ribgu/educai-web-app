@@ -17,17 +17,15 @@ export default function SideDrawer() {
           <Stack
           sx={{
             display: 'flex',
-            width: '200px',
             alignItems: 'center',
             justifyContent: 'center',
             gap: '10px',
-            padding: '10px'
-
+            marginTop: '80px'
           }}
           >
-            <DrawerItem name='Home' icon={home} path='/' />
-            <DrawerItem name='Turma' icon={turma} path='/turma' />
-            <DrawerItem name='Edu' icon={edu} path='/educ' />
+            <DrawerItem name='Home' icon={home} path='/' variant='unselected'/>
+            <DrawerItem name='Turma' icon={turma} path='/turma' variant='selected'/>
+            <DrawerItem name='Edu' icon={edu} path='/educ' variant='unselected'/>
           </Stack>
       </List>
     </Drawer>
