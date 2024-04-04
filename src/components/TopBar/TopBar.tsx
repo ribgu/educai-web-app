@@ -5,7 +5,9 @@ import ProfileHeader from '../ProfileHeader/ProfileHeader'
 export default function TopBar() {
   return (
     <Stack width={'100%'} height={'80px'} sx={{
-      borderBottom: '1px solid #3A3A3A',
+      borderBottom: '1px solid transparent',
+      zIndex: 10000,
+      position: 'absolute',
       backgroundImage: 'linear-gradient(90deg, #1E0132, #6730EC)',
       borderRadius: '0 0 24px 24px',
       display: 'flex',
