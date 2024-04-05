@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack'
 import Avatar from '@mui/material/Avatar'
-import { Typography } from '@mui/material'
+import Typography from '@mui/material/Typography'
 
 type ProfileHeaderProps = {
   name: string
