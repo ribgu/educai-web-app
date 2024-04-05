@@ -17,7 +17,7 @@ export default function ProfileHeader(props: ProfileHeaderProps) {
       alignItems: 'center',
       gap: 2
     }}>
-      <Typography variant='h6' fontWeight={900} color={'white'}>{name}</Typography>
+      <Typography variant='h6' fontWeight={900} color='white'>{name}</Typography>
       <Avatar src={imageUrl} sx={{
         borderColor: 'white',
         border: '3px solid'
