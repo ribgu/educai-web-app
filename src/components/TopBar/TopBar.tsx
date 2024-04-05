@@ -4,7 +4,7 @@ import ProfileHeader from '../ProfileHeader/ProfileHeader'
 
 export default function TopBar() {
   return (
-    <Stack width={'100%'} height={'80px'} sx={{
+    <Stack width='100%' height='80px' sx={{
       borderBottom: '1px solid transparent',
       zIndex: 10000,
       position: 'absolute',
