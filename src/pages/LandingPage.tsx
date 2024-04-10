@@ -56,7 +56,7 @@ export default function LandingPage() {
 
             {/* Pricing */}
             <div className='flex flex-col h-screen items-center bg-dark justify-center gap-10'>
-            <Typography variant='lp-main-sentece'>
+                <Typography variant='lp-main-sentece'>
                     CHOOSE YOUR PLAN
                 </Typography>
                 <div className='flex'>
@@ -92,7 +92,11 @@ export default function LandingPage() {
                 </div>
             </div>
 
-            <Footer />
+            <div className='flex flex-col items-center bg-dark'>
+                <div className='flex flex-col cp w-[90%] justify-center items-center gap-3'>
+                    <Footer />
+                </div>
+            </div>
         </div>
     )
 }
