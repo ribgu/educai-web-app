@@ -24,7 +24,7 @@ export default function SideDrawer() {
           }}
           >
             <DrawerItem name='Home' icon={home} path='/' variant='unselected'/>
-            <DrawerItem name='Turma' icon={turma} path='/turma' variant='turma-selected'/>
+            <DrawerItem name='Turma' icon={turma} path='/turma' variant='turma-selected' />
             <DrawerItem name='Criar Material' icon={edu} path='/educacao' variant='unselected' color='purple'/>
             <DrawerItem name='Fale com o edu' icon={edu} path='/avaliacao' variant='unselected' color='purple'/>
           </Stack>
