@@ -7,9 +7,12 @@ type ItemProps = {
   icon: string
   path: string
   variant: 'selected' | 'unselected'
+  color?: string
 }
 export default function DrawerItem(props: ItemProps) {
-  const { name, icon, variant } = props
+  const { name, icon, variant, color } = props
+  const colorHex = color ? '#6730EC' : 'black'
+
   return (
     <>
       {variant === 'selected' && (
@@ -29,8 +32,9 @@ export default function DrawerItem(props: ItemProps) {
             flexDirection: 'row'
           }}  >
             <img src={icon} alt={name} />
-            <Typography variant='h6' sx={{
-              fontWeight: 'bold'
+            <Typography variant='body1' sx={{
+              fontWeight: 'bold',
+              color: colorHex
             }}>{name}</Typography>
           </Stack>
         </ListItem>
@@ -51,8 +55,9 @@ export default function DrawerItem(props: ItemProps) {
             flexDirection: 'row'
           }}  >
             <img src={icon} alt={name} />
-            <Typography variant='h6' sx={{
-              fontWeight: 'bold'
+            <Typography variant='body1' sx={{
+              fontWeight: 'bold',
+              color: colorHex
             }}>{name}</Typography>
           </Stack>
         </ListItem>

@@ -1,5 +1,4 @@
-import TopBar from '../TopBar/TopBar'
-import Drawer from '../Drawer/SideDrawer'
+import PlatformLayout from './PlatformLayout'
 
 export default {
   title: 'Components/PlatformLayout'
@@ -7,10 +6,7 @@ export default {
 
 export const PlatformLayoutStories = () => {
   return (
-    <>
-      <TopBar />
-      <Drawer />
-    </>
+    <PlatformLayout />
   )
 }
 
