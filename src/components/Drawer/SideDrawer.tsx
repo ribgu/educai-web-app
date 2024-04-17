@@ -1,18 +1,19 @@
 import DrawerItem from './components/DrawerItem'
-import Drawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
 import home from '../../../public/IconSideBar/home_icon.svg'
 import turma from '../../../public/IconSideBar/turma_icon.svg'
 import edu from '../../../public/IconSideBar/edu_icon.svg'
 import Stack from '@mui/material/Stack'
+import Box from '@mui/material/Box/Box'
 
 export default function SideDrawer() {
 
   return (
-    <Drawer
-      variant='persistent'
-      open={true}
-    >
+    <Box
+    sx={{
+      borderRight: '1px solid #e0e0e0',
+      width: '15%',
+    }}>
       <List>
           <Stack
           sx={{
@@ -29,6 +30,6 @@ export default function SideDrawer() {
             <DrawerItem name='Fale com o edu' icon={edu} path='/avaliacao' variant='unselected' color='purple'/>
           </Stack>
       </List>
-    </Drawer>
+    </Box>
   )
 }

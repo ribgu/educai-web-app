@@ -8,6 +8,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom'
+import Turmas from './pages/Turmas.tsx'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: '/teste',
     element: <PlatformLayout />,
+  },
+  {
+    path: '/turmas',
+    element: <Turmas />,
   }
 ])
 
