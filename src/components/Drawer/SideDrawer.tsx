@@ -12,7 +12,7 @@ export default function SideDrawer() {
     <Box
     sx={{
       borderRight: '1px solid #e0e0e0',
-      width: '15%',
+      width: '18%',
     }}>
       <List>
           <Stack
