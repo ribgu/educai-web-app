@@ -43,7 +43,7 @@ export default function Login() {
                     width: '50%',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '20px',
+                    gap: '20px'
                 }}>
                     <TextField id='outlined-basic' variant='outlined' label='E-mail'/> 
                     <TextField id='outlined-basic' variant='outlined' type='password' label='Senha'/>
