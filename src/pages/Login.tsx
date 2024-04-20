@@ -1,11 +1,11 @@
-import SlideLogin from '../components/SlidesLogin/SlidesLogin';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Logo from '../components/Logo/Logo';
-import Divider from '@mui/material/Divider';
+import SlideLogin from '../components/SlidesLogin/SlidesLogin'
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
+import Logo from '../components/Logo/Logo'
+import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField'
+import Checkbox from '@mui/material/Checkbox'
 
 export default function Login() {
     return (
