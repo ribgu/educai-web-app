@@ -63,10 +63,7 @@ export default function LandingPage() {
                 <Typography variant='h2' color='white' >
                     Ready to  <Typography variant='h2' color='purple-300' >
                          join</Typography> <Typography variant='h2' color='white' > the language teaching</Typography>
-                         <Typography variant='h2' color='purple-300 '> revolution?</Typography> </Typography>
-                   
-                    
-                    
+                         <Typography variant='h2' color='purple-300 '> revolution?</Typography> </Typography>   
                 </div>
 
                 <div className='flex gap-20'>
