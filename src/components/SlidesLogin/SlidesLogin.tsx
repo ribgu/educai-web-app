@@ -29,7 +29,7 @@ export default function SlideLogin() {
         </SwiperSlide>
 
         <SwiperSlide className='swiper-slide-login'>
-          <img src="../../../public/Illustration/illustrationSlide2.svg" alt="" />
+          <img src='../../../public/Illustration/illustrationSlide2.svg' alt='' />
           <Typography variant='h3' color='white'>Idiomas ao Seu Alcance</Typography>
           <Typography variant='body2' color='white'>
             Explore novos idiomas com suporte de IA. Personalizado para o seu aprendizado fluir naturalmente.</Typography>
