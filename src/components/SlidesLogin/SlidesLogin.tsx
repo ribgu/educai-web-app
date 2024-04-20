@@ -22,7 +22,7 @@ export default function SlideLogin() {
         className='mySwiper swiper-login'
       >
         <SwiperSlide className='swiper-slide-login'>
-          <img src="../../../public/Illustration/IlustracaoLogin.svg" alt="" />
+          <img src='../../../public/Illustration/IlustracaoLogin.svg' alt='' />
           <Typography variant='h3' color='white'>Revolucionando a Educacão</Typography>
           <Typography variant='body2' color='white'>A IA que transforma seu jeito de aprender idiomas. Tornando-o mais interativo, adaptável, eficaz.</Typography>
         </SwiperSlide>
