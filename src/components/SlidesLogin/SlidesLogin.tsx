@@ -16,7 +16,7 @@ export default function SlideLogin() {
           disableOnInteraction: false
         }}
         pagination={{
-          clickable: true,
+          clickable: true
         }}
         modules={[Autoplay, Pagination, Navigation]}
         className='mySwiper swiper-login'
