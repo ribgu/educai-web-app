@@ -35,7 +35,7 @@ export default function SlideLogin() {
         </SwiperSlide>
 
         <SwiperSlide className='swiper-slide-login'>
-          <img src="../../../public/Illustration/illustrationSlide3.svg" alt="" />
+          <img src='../../../public/Illustration/illustrationSlide3.svg' alt='' />
           <Typography variant='h3' color='white'>Fluência Inteligente</Typography>
           <Typography variant='body2' color='white'>
             IA que entende seu ritmo. Aprenda idiomas com atividades que se adaptam a você.</Typography>
