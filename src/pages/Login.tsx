@@ -65,7 +65,7 @@ export default function Login() {
                         paddingY: '12px'
                     
                     }} variant='contained'>
-                        <Typography variant='body2' color={'white'}>Entrar</Typography> </Button>
+                        <Typography variant='body2' color='white'>Entrar</Typography> </Button>
 
                     <Box sx={{
                         display: 'flex',
