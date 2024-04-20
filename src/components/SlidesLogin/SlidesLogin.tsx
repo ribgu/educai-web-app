@@ -8,7 +8,6 @@ import Typography from '../Typography/Typography'
 
 export default function SlideLogin() {
   return (
-    <>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
