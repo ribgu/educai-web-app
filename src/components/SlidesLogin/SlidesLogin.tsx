@@ -42,6 +42,5 @@ export default function SlideLogin() {
         </SwiperSlide>
 
       </Swiper>
-    </>
   );
 }
