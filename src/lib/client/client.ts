@@ -16,7 +16,7 @@ export default class Client {
   }
 
   async login(
-    params: UserLogin,
+    params: UserLogin
   ) {
     return (await this.axios.get('login', { params })).data
   }
