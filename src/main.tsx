@@ -10,6 +10,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom'
+import Login from './pages/Login.tsx'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: '/turmas',
     element: <Turmas />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
   }
 ])
 

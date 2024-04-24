@@ -18,6 +18,7 @@ export default function App() {
       <Swiper
         slidesPerView={3}
         centeredSlides={true}
+        initialSlide={1}
         spaceBetween={30}
         pagination={{
           type: 'fraction',
@@ -28,42 +29,42 @@ export default function App() {
       >
         <SwiperSlide>
             <img src='../../public/Team/gustavo.svg'></img>
-              <div className='flex flex-col gap-3'>
+              <div className='flex flex-col gap-2'>
                 <Typography variant='lp-name-team'>Gustavo</Typography> 
                 <Typography variant='body2'>AI Engineer</Typography>
               </div>
           </SwiperSlide>
         <SwiperSlide>
         <img src='../../public/Team/julia.svg'></img>
-            <div className='flex flex-col gap-3'>
+            <div className='flex flex-col gap-2'>
               <Typography variant='lp-name-team'>Julia</Typography> 
               <Typography variant='body2'>Designer e Front-End</Typography>
             </div>
         </SwiperSlide>
         <SwiperSlide>
         <img src='../../public/Team/luiza.svg'></img>
-            <div className='flex flex-col gap-3'>
+            <div className='flex flex-col gap-2'>
               <Typography variant='lp-name-team'>Luiza</Typography> 
               <Typography variant='body2'>Back-End</Typography>
             </div>
         </SwiperSlide>
         <SwiperSlide>
         <img src='../../public/Team/vitao.svg'></img>
-            <div className='flex flex-col gap-3'>
+            <div className='flex flex-col gap-2'>
               <Typography variant='lp-name-team'>Vitor</Typography> 
               <Typography variant='body2'>DevOps</Typography>
             </div>
         </SwiperSlide>
         <SwiperSlide>
         <img src='../../public/Team/diego.svg'></img>
-            <div className='flex flex-col gap-3'>
+            <div className='flex flex-col gap-2'>
               <Typography variant='lp-name-team'>Diego</Typography> 
               <Typography variant='body2'>Back-End</Typography>
             </div>
         </SwiperSlide>
         <SwiperSlide>
         <img src='../../public/Team/erick.svg'></img>
-            <div className='flex flex-col gap-3'>
+            <div className='flex flex-col gap-2'>
               <Typography variant='lp-name-team'>Erick</Typography> 
               <Typography variant='body2'>Front-End</Typography>
             </div>
