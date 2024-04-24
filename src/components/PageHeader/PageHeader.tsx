@@ -51,11 +51,12 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
                     backgroundColor: theme.palette.primary.main
                   },
                   '.MuiTab-root': {
-                    color: theme.palette.primary.main
+                    color: 'black',
+                    fontWeight: '600'
                   }
                 }}
                 indicatorColor='primary'
-                textColor='primary'
+                textColor='secondary'
                 onChange={handleChange}
                 value={tab}
               >
