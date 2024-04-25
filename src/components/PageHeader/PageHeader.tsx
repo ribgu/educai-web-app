@@ -70,11 +70,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
         </Box>
       </Box>
       <Divider sx={{
-        border: '1px solid',
-        // a cor gradiente
-        // #E0D5F4
-        // #A578F9
-        // #DBCFF2
+        border: '1px solid purple'
       }} />
     </Box>
   )
