@@ -28,14 +28,14 @@ export default function SlideLogin() {
         </SwiperSlide>
 
         <SwiperSlide className='swiper-slide-login'>
-          <img src='../../../public/Illustration/illustrationSlide2.svg' alt='Mulher aprendendo um novo idioma através do computador' />
+          <img src='./Illustration/illustrationSlide2.svg' alt='Mulher aprendendo um novo idioma através do computador' />
           <Typography variant='h3' color='white'>Idiomas ao Seu Alcance</Typography>
           <Typography variant='body2' color='white'>
             Explore novos idiomas com suporte de IA. Personalizado para o seu aprendizado fluir naturalmente.</Typography>
         </SwiperSlide>
 
         <SwiperSlide className='swiper-slide-login'>
-          <img src='../../../public/Illustration/illustrationSlide3.svg' alt='Mulher realizando testes online' />
+          <img src='./Illustration/illustrationSlide3.svg' alt='Mulher realizando testes online' />
           <Typography variant='h3' color='white'>Fluência Inteligente</Typography>
           <Typography variant='body2' color='white'>
             IA que entende seu ritmo. Aprenda idiomas com atividades que se adaptam a você.</Typography>
