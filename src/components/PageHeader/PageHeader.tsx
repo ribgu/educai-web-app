@@ -2,6 +2,7 @@ import Box from '@mui/material/Box/Box'
 import Divider from '@mui/material/Divider/Divider'
 import Tab from '@mui/material/Tab'
 import TabContext from '@mui/lab/TabContext'
+import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography/Typography'
 import { useState } from 'react'
 import { Tabs, useTheme } from '@mui/material'
@@ -16,12 +17,15 @@ type Tab = 'posts' | 'atividades' | 'pessoas'
 export default function PageHeader(PageHeaderProps: PageHeaderProps) {
   const { title } = PageHeaderProps
 
-  const [tab, setTab] = useState<Tab>('posts')
+  const actualTab = new URLSearchParams(window.location.search).get('tab')
+  const [tab, setTab] = useState<Tab>(actualTab ? actualTab as Tab : 'posts')
   const theme = useTheme()
+  const navigate = useNavigate()
 
   const handleChange = (e: React.SyntheticEvent, newTab: Tab) => {
+    const url = new URL(window.location.href)
+    navigate(`${url.pathname}?tab=${newTab}`)
     setTab(newTab)
-    // tem que fazer a logica para mudar o conteudo da pagina ou a rota
     console.log(e) // se tirar o log o ts reclama que eu nao usei, e pra funcionar as tabs tem que ter o parametro e
   }
 
