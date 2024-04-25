@@ -32,8 +32,7 @@ export default function DrawerItem(props: ItemProps) {
           backgroundColor: '#F1EBFF',
           justifyContent: 'center',
           borderRadius: '0 24px 24px 0',
-          width: '220px',
-          padding: '14px'
+          width: '100%',
         }}>
           <Stack sx={{
             display: 'flex',
