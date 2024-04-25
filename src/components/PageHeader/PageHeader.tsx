@@ -30,19 +30,20 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
       width: '80%',
       marginTop: '20px',
     }}>
-      <img src='' alt='' />
       <Box sx={{
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between'
       }}>
-        <Typography variant='h4' sx={{
-          fontWeight: '700',
-          marginBottom: '16px'
+        <Box sx={{ display: 'flex', alignItems: 'center', gap:'20px' }}>
+        <img src='./iconsPages/turma.svg' alt='' />
+        <Typography variant='h5' sx={{
+          fontWeight: '700'
         }}>
           {title}
         </Typography>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        </Box>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom:'5px' }}>
           <TabContext value={tab}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
@@ -69,7 +70,11 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
         </Box>
       </Box>
       <Divider sx={{
-        border: '1px solid purple'
+        border: '1px solid',
+        // a cor gradiente
+        // #E0D5F4
+        // #A578F9
+        // #DBCFF2
       }} />
     </Box>
   )
