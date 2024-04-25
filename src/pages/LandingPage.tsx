@@ -43,13 +43,13 @@ export default function LandingPage() {
             {/* Solutions */}
             <div className='flex flex-col h-screen items-center justify-center bg-dark'>
                 <div className='flex w-[85%] flex-wrap justify-between gap-y-16'>
-                    <LpCard figure='../../public/IconCards/iconCard01.svg' iconSide='../public/IconCards/miniIconCard01.svg'
+                    <LpCard figure='./IconCards/iconCard01.svg' iconSide='./IconCards/miniIconCard01.svg'
                         title={<>Create <span className='text-purple-300'>Exercises</span> In Minute</>} subTitle='With AI Copilot' />
-                    <LpCard figure='../../public/IconCards/iconCard02.svg' iconSide='../public/IconCards/miniIconCard02.svg'
+                    <LpCard figure='./IconCards/iconCard02.svg' iconSide='./IconCards/miniIconCard02.svg'
                         title={<>Students More <span className='text-purple-300'>Engaged</span></>} subTitle='With AI Copilot' />
-                    <LpCard figure='../../public/IconCards/iconCard03.svg' iconSide='../public/IconCards/miniIconCard03.svg'
+                    <LpCard figure='./IconCards/iconCard03.svg' iconSide='./IconCards/miniIconCard03.svg'
                         title={<>Focus On Language <span className='text-purple-300'>Practice</span></>} subTitle='With AI Copilot' />
-                    <LpCard figure='../../public/IconCards/iconCard04.svg' iconSide='../public/IconCards/miniIconCard04.svg'
+                    <LpCard figure='./public/IconCards/iconCard04.svg' iconSide='./IconCards/miniIconCard04.svg'
                         title={<>We Believe In <span className='text-purple-300'>Realtime Feedbacks</span></>} subTitle='With AI Copilot' />
                 </div>
             </div>
@@ -63,14 +63,14 @@ export default function LandingPage() {
                 <Typography variant='h2' color='white' >
                     Ready to  <Typography variant='h2' color='purple-300' >
                          join</Typography> <Typography variant='h2' color='white' > the language teaching</Typography>
-                         <Typography variant='h2' color='purple-300'> revolution?</Typography> </Typography>   
+                         <Typography variant='h2' color='purple-300'> revolution?</Typography> </Typography>
                 </div>
 
                 <div className='flex gap-20'>
                 <LandingPagePrincing variant='plus' />
                 <LandingPagePrincing variant='premium' />
                 </div>
-                
+
             </div>
 
             {/* About Us */}
