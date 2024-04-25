@@ -17,7 +17,7 @@ export default function   TopBar() {
       padding: '20px'
     }}>
       {/* adicionar variante certa  */}
-      <Logo variant='padraoWhite' width='sm' />
+      <Logo variant='allWhite' width='ssm' />
       <ProfileHeader name='Gustavinho' imageUrl='https://avatars.githubusercontent.com/u/6713782?v=4' />
     </Stack>
   )
