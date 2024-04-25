@@ -17,7 +17,7 @@ export default function Logo(props: LogoProps) {
     const widthClass = mapWidthToClassNames[width]
 
     return (
-        <div className={widthClass}>
+        <>
             {variant === 'padraoBlack' && (
                 <img src={logos.padraoBlack} className={widthClass} />
             )}
@@ -30,6 +30,6 @@ export default function Logo(props: LogoProps) {
             {variant === 'bookTwo' && (
                 <img src={logos.bookTwo} className={widthClass} />
             )}
-        </div>
+        </>
     )
 }
