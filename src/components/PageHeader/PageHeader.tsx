@@ -8,7 +8,7 @@ export default function PageHeader () {
       width: '100%',
       marginTop: '20px',
     }}>
-      <img src="" alt="" />
+      <img src='' alt='' />
       <Typography>Turmas</Typography>
       <Divider />
     </Box>
