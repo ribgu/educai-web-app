@@ -2,13 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import LandingPage from './pages/LandingPage.tsx'
-import PlatformLayout from './components/PlatformLayout/PlatformLayout.tsx'
 
 import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom'
 import Login from './pages/Login.tsx'
+import Teste from './pages/Teste.tsx'
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/teste',
-    element: <PlatformLayout />,
+    element: <Teste />,
   },
   {
     path: '/login',
