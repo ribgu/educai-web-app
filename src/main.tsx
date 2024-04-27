@@ -10,6 +10,7 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 import Login from './pages/Login.tsx'
+import PostCard from './components/PostCard/PostCard.tsx'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/teste',
+    element: <PostCard />,
   }
 ])
 
