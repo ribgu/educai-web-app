@@ -1,10 +1,11 @@
 type ButtonProps = {
     variant: 'primary' | 'secondary',
-    children: React.ReactNode
+    children: React.ReactNode,
+    onClick?: () => void
 }
 
 export default function Button(props: ButtonProps) {
-    const { variant, children } = props
+    const { variant, children, onClick } = props
 
     const variantsClasnames = {
         'primary': 'btn bg-violet-800 border-violet-800 text-white hover:bg-violet-500',
@@ -15,7 +16,7 @@ export default function Button(props: ButtonProps) {
 
     return(
         <>   
-            <button className={className}>{children}</button>
+            <button className={className} onClick={onClick}>{children}</button>
         </>
     )
 }
