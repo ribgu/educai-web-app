@@ -9,14 +9,19 @@ import Checkbox from '@mui/material/Checkbox'
 import { useState } from 'react'
 import { useAsyncCallback } from 'react-async-hook'
 import useClient from '../lib/client/useClient'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
     const client = useClient()
+    const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const handleLogin = useAsyncCallback(async () => {
-        await client.login({ email, password })
+        await client.login({ email, password }).then((res) => {
+            console.log(res) // colocar login e senha na sessão
+            navigate('/turmas')
+        })
     })
 
     return (
