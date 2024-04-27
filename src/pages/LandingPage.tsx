@@ -7,8 +7,15 @@ import Logo from '../components/Logo/Logo'
 import CardTeam from '../components/CardTeam/CardTeam'
 import LandingPagePrincing from '../components/LandingPagePricing/LandingPagePrincing'
 import Footer from '../components/Footer/Footer'
+import { useNavigate } from 'react-router-dom'
 
 export default function LandingPage() {
+    const navigate = useNavigate()
+
+    const handleClickLogin = () => {
+        navigate('/login')
+    }
+
     return (
         <div className='flex flex-col bg-black'>
             {/* Home */}
@@ -25,7 +32,7 @@ export default function LandingPage() {
                         </div>
 
                         <div className='flex-1 flex justify-end'>
-                            <Button variant='primary'>LOGIN</Button>
+                            <Button variant='primary' onClick={handleClickLogin}>LOGIN</Button>
                         </div>
                     </div>
 

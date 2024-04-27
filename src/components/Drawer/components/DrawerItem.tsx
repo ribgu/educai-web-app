@@ -21,7 +21,7 @@ export default function DrawerItem(props: ItemProps) {
   const handleClick = () => {
     setOpen(!open)
   }
-  const colorHex = color ? '#6730EC' : 'black'
+  const colorHex = color ? color : 'black'
 
   return (
     <>

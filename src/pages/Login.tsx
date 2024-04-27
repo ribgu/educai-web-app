@@ -6,8 +6,24 @@ import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
+import { useState } from 'react'
+import { useAsyncCallback } from 'react-async-hook'
+import useClient from '../lib/client/useClient'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
+    const client = useClient()
+    const navigate = useNavigate()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleLogin = useAsyncCallback(async () => {
+        await client.login({ email, password }).then((res) => {
+            console.log(res) // colocar login e senha na sessão
+            navigate('/turmas')
+        })
+    })
+
     return (
         <Box sx={{
             display: 'flex',
@@ -45,26 +61,36 @@ export default function Login() {
                     flexDirection: 'column',
                     gap: '20px'
                 }}>
-                    <TextField id='outlined-basic' variant='outlined' label='E-mail'/> 
-                    <TextField id='outlined-basic' variant='outlined' type='password' label='Senha'/>
+                    <TextField
+                        variant='outlined'
+                        label='E-mail'
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
 
+                    <TextField
+                        variant='outlined'
+                        type='password'
+                        label='Senha'
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                     <Box sx={{
                         display: 'flex',
                         alignItems: 'center'
                     }}>
-                        <Checkbox defaultChecked/>
+                        <Checkbox defaultChecked />
                         <Typography variant='body2'>Mantenha-me conectado</Typography>
                     </Box>
-                    
-                    <Button sx={{
-                        backgroundColor: '#6730EC',
-                        color: 'white',
-                        '&:hover': {
-                            backgroundColor: '#4D1EAD',
-                        },
-                        paddingY: '12px'
-                    
-                    }} variant='contained'>
+
+                    <Button variant='contained'
+                        onClick={handleLogin.execute}
+                        sx={{
+                            backgroundColor: '#6730EC',
+                            color: 'white',
+                            '&:hover': {
+                                backgroundColor: '#4D1EAD',
+                            },
+                            paddingY: '12px'
+                        }} >
                         <Typography variant='body2' color='white'>Entrar</Typography> </Button>
 
                     <Box sx={{
@@ -92,9 +118,9 @@ export default function Login() {
                         <img style={{
                             width: '20px',
                             height: '20px',
-                        }} 
-                        src='../../../public/Illustration/iconGoogle.png' alt='Icone G do Google' /> 
-                        <Typography variant='body2'>Entrar com o Google</Typography> 
+                        }}
+                            src='../../../public/Illustration/iconGoogle.png' alt='Icone G do Google' />
+                        <Typography variant='body2'>Entrar com o Google</Typography>
                     </Button>
                 </Box>
             </Box>
