@@ -2,7 +2,7 @@ import Stack from '@mui/material/Stack'
 import Logo from '../Logo/Logo'
 import ProfileHeader from '../ProfileHeader/ProfileHeader'
 
-export default function   TopBar() {
+export default function TopBar() {
   return (
     <Stack width='100%' height='80px' sx={{
       borderBottom: '1px solid transparent',
