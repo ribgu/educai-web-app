@@ -5,7 +5,7 @@ import TabContext from '@mui/lab/TabContext'
 import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography/Typography'
 import { useState } from 'react'
-import { Tabs, useTheme } from '@mui/material'
+import { Tabs } from '@mui/material'
 
 type PageHeaderProps = {
   title: string
@@ -19,7 +19,6 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
 
   const actualTab = new URLSearchParams(window.location.search).get('tab')
   const [tab, setTab] = useState<Tab>(actualTab ? actualTab as Tab : 'posts')
-  const theme = useTheme()
   const navigate = useNavigate()
 
   const handleChange = (e: React.SyntheticEvent, newTab: Tab) => {
@@ -31,29 +30,29 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
 
   return (
     <Box sx={{
-      width: '80%',
-      marginTop: '20px',
+      width: '95%',
+      marginTop: '20px'
     }}>
       <Box sx={{
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between'
       }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap:'20px' }}>
-        <img src='./iconsPages/turma.svg' alt='Pessoas agrupadas' />
-        <Typography variant='h5' sx={{
-          fontWeight: '700'
-        }}>
-          {title}
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <img src='./iconsPages/turma.svg' alt='Pessoas agrupadas' />
+          <Typography variant='h5' sx={{
+            fontWeight: '700'
+          }}>
+            {title}
+          </Typography>
         </Box>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom:'5px' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '5px' }}>
           <TabContext value={tab}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
                 sx={{
                   '.MuiTabs-indicator': {
-                    backgroundColor: theme.palette.primary.main
+                    backgroundColor: '#6730EC'
                   },
                   '.MuiTab-root': {
                     color: 'black',
@@ -74,7 +73,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
         </Box>
       </Box>
       <Divider sx={{
-        border: '1px solid purple'
+        border: '1px solid #6730EC',
       }} />
     </Box>
   )
