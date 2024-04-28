@@ -5,6 +5,7 @@ import theme from './lib/theme.ts'
 import './index.css'
 import LandingPage from './pages/LandingPage.tsx'
 import Turmas from './pages/Turmas.tsx'
+import Turma from './components/Turma/Turma.tsx'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/teste',
+    element: <Turma nome='turma' disciplina='sexo' qtdAlunos={69}/>,
   }
 ])
 
