@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box/Box'
 import Logo from '../Logo/Logo'
-import { Typography } from '@mui/material'
+import Typography from '@mui/material/Typography'
 
 export default function PostCard() {
     return (
