@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom/client'
 import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import theme from './lib/theme.ts'
 import './index.css'
-import LandingPage from './pages/LandingPage.tsx'
-import Turmas from './pages/Turmas.tsx'
+import LandingPage from './pages/LandingPage'
+import Turmas from './pages/Turmas'
+import Turma from './components/Turma/Turma'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/teste',
+    element: <Turma nome='turma' disciplina='sexo' qtdAlunos={69}/>,
   }
 ])
 
