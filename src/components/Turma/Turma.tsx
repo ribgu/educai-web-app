@@ -29,7 +29,7 @@ export default function Turma(props: TurmaProps) {
                 borderColor: '#BEBEBE' 
                 }}>
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px' }}>
-                    <img src='./logos/bookTwo.svg' style={{ width: '26px', marginBottom: '5px' }} />
+                    <img src='./logos/bookTwo.svg' alt='Ícone de livro' style={{ width: '26px', marginBottom: '5px' }} />
                     <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap' }}>{nome}</Typography>
                 </Box>
                 <IconButton size='small' onClick={handleClick}>
