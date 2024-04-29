@@ -1,4 +1,3 @@
-//import NewPostButton from '../components/NewPostButton/NewPostButton'
 import PageHeader from '../components/PageHeader/PageHeader'
 import Layout from './Layout'
 import Box from '@mui/material/Box/Box'
