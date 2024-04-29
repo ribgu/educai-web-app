@@ -18,16 +18,16 @@ export default function Post (post: PostProps) {
     }
 
     return (
-        <Box sx={{ width: '28vw', height: '18vh', border: '2px solid #BEBEBE', borderRadius: '10px' }}>
-            <Box sx={{ 
-                width: '100%', 
-                height: '35%', 
-                display: 'flex', 
-                flexDirection: 'row', 
-                justifyContent: 'space-between', 
-                padding: '8px', 
+        <Box sx={{ width: '100%', height: '18vh', border: '2px solid #BEBEBE', borderRadius: '10px' }}>
+            <Box sx={{
+                width: '100%',
+                height: '35%',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                padding: '8px',
                 borderBottom: '2px solid #BEBEBE',
-                borderColor: '#BEBEBE' 
+                borderColor: '#BEBEBE'
                 }}>
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px' }}>
                     <img src='./logos/bookTwo.svg' alt='Ícone de livro' style={{ width: '26px', marginBottom: '5px' }} />
