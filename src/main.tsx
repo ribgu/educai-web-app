@@ -3,14 +3,16 @@ import ReactDOM from 'react-dom/client'
 import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import theme from './lib/theme.ts'
 import './index.css'
-import LandingPage from './pages/LandingPage.tsx'
-import Turmas from './pages/Turmas.tsx'
+import LandingPage from './pages/LandingPage'
+import Turmas from './pages/Turmas'
+import Turma from './pages/Turma'
+import Login from './pages/Login'
+
 import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom'
-import Login from './pages/Login.tsx'
-import Teste from './pages/Teste.tsx'
+import NewPostButton from './components/NewPostButton/NewPostButton'
 
 const router = createBrowserRouter([
   {
@@ -18,16 +20,20 @@ const router = createBrowserRouter([
     element: <LandingPage />,
   },
   {
-    path: '/teste',
-    element: <Teste />,
-  },
-  {
     path: '/turmas',
     element: <Turmas />,
   },
   {
+    path: '/turma/:id',
+    element: <Turma />,
+  },
+  {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/teste',
+    element: <NewPostButton />,
   }
 ])
 

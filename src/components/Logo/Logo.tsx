@@ -2,13 +2,14 @@ import logos from './logos'
 
 type LogoProps = {
     variant: 'padraoBlack' | 'padraoWhite' | 'bookOne' | 'bookTwo' | 'allWhite'
-    width: 'sm' | 'md' | 'lg' | 'ssm'
+    width: 'sm' | 'md' | 'lg' | 'ssm' | 'bookSmall'
 }
 
 export default function Logo(props: LogoProps) {
     const { variant, width } = props
 
     const mapWidthToClassNames = {
+        bookSmall: 'w-[6%]',
         ssm: 'w-[10%]',
         sm: 'w-[30%]',
         md: 'w-[50%]',
