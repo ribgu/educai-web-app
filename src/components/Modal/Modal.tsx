@@ -51,8 +51,6 @@ export default function BasicModal(props: ModalProps) {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
       >
         <Box sx={{
           position: 'absolute',
