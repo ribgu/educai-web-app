@@ -73,7 +73,7 @@ export default function BasicModal(props: ModalProps) {
             gap: '10px'
           }}>
             <img src={icone} alt={altIcone} />
-            <Typography id="modal-modal-title" variant="h6" component="h2">
+            <Typography variant="h6" component="h2">
               {titulo}
             </Typography>
           </Box>
