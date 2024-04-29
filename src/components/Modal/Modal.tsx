@@ -98,7 +98,7 @@ export default function BasicModal(props: ModalProps) {
               color: 'black',
               borderColor: '#5D1EF4',
               '&:hover': {
-                backgroundColor: '#D8D8D8',
+                backgroundColor: '#D8D8D8'
               },
               paddingY: '12px',
               width: '48%'
