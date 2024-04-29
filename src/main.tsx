@@ -5,6 +5,7 @@ import theme from './lib/theme.ts'
 import './index.css'
 import LandingPage from './pages/LandingPage'
 import Turmas from './pages/Turmas'
+import Turma from './pages/Turma'
 import Login from './pages/Login'
 
 import {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: '/turmas',
     element: <Turmas />,
+  },
+  {
+    path: '/turma/:id',
+    element: <Turma />,
   },
   {
     path: '/login',
