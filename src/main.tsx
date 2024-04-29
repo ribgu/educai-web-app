@@ -5,12 +5,13 @@ import theme from './lib/theme.ts'
 import './index.css'
 import LandingPage from './pages/LandingPage'
 import Turmas from './pages/Turmas'
+import Login from './pages/Login'
+
 import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom'
-import Login from './pages/Login.tsx'
-import PostCard from './components/PostCard/PostCard.tsx'
+import Post from './components/Post/Post'
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/teste',
-    element: <PostCard />,
+    element: <Post dtPublicacao={new Date} title='ABRACADABRA' description='SAFJIBSAFJBKFASJKBSFAJBKASFJKOLÇ' fileName='IYHUGUGFY'/>,
   }
 ])
 
