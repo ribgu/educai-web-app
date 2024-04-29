@@ -45,7 +45,7 @@ export default function BasicModal(props: ModalProps) {
         },
         ...sxButton
       }} variant='outlined' onClick={handleOpen}>
-        <img src="../../public/IconsPages/iconAdicionar.svg" alt="Circulo com um mais dentro" />
+        <img src="../../public/iconsPages/plus-circle.svg" alt="Circulo com um mais dentro" />
         <Typography variant='body1' color='black'>{textoBotaoAbrirModal}</Typography>
       </Button>
       <Modal
