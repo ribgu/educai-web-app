@@ -41,7 +41,7 @@ export default function BasicModal(props: ModalProps) {
         borderColor: '#5D1EF4',
         gap: '10px',
         '&:hover': {
-          backgroundColor: '#D8D8D8',
+          backgroundColor: '#D8D8D8'
         },
         ...sxButton
       }} variant='outlined' onClick={handleOpen}>
