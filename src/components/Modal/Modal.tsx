@@ -6,13 +6,13 @@ import Modal from '@mui/material/Modal'
 import Divider from '@mui/material/Divider'
 
 type ModalProps = {
-  variantButton: 'sm' | 'lg',
-  titulo: string,
-  icone: string,
-  altIcone: string,
-  textoBotaoConfirmar: string,
-  textoBotaoAbrirModal: string,
-  onClick?: () => void,
+  variantButton: 'sm' | 'lg'
+  titulo: string
+  icone: string
+  altIcone: string
+  textoBotaoConfirmar: string
+  textoBotaoAbrirModal: string
+  onClick?: () => void
   children: React.ReactNode
 }
 
