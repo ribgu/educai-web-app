@@ -74,7 +74,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
       </Box>
       <Divider sx={{
         height: '2px',
-        background: 'linear-gradient(to right, #E0D5F4 0%, #A578F9 50%, #DBCFF2 100%)',
+        background: 'linear-gradient(to right, #E0D5F4 0%, #A578F9 50%, #DBCFF2 100%)'
       }} />
     </Box>
   )
