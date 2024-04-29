@@ -7,7 +7,7 @@ import LandingPage from './pages/LandingPage'
 import Turmas from './pages/Turmas'
 import Turma from './pages/Turma'
 import Login from './pages/Login'
-import Teste from './pages/Teste.tsx'
+import Teste from './pages/Teste'
 
 import {
   createBrowserRouter,
