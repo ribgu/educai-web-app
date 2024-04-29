@@ -11,7 +11,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom'
-import Post from './components/Post/Post'
+import NewPostButton from './components/NewPostButton/NewPostButton'
 
 const router = createBrowserRouter([
   {
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/teste',
-    element: <Post dtPublicacao={new Date} title='ABRACADABRA' description='SAFJIBSAFJBKFASJKBSFAJBKASFJKOLÇ' fileName='IYHUGUGFY'/>,
+    element: <NewPostButton />,
   }
 ])
 
