@@ -117,5 +117,5 @@ export default function BasicModal(props: ModalProps) {
         </Box>
       </Modal>
     </>
-  );
+  )
 }
