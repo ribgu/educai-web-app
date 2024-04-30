@@ -2,7 +2,6 @@ import Box from '@mui/material/Box/Box'
 import PageHeader from '../components/PageHeader/PageHeader'
 import Layout from './Layout'
 import Turma from '../components/Turma/Turma'
-import { Grid } from '@mui/material'
 
 export default function Turmas() {
   return (
