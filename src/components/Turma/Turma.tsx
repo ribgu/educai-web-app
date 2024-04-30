@@ -10,12 +10,14 @@ type TurmaProps = {
     nome: string
     disciplina: string
     qtdAlunos: number
+    onClick: () => void
 }
 
 export default function Turma(props: TurmaProps) {
-    const { nome, disciplina, qtdAlunos } = props
+    const { nome, disciplina, qtdAlunos, onClick } = props
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
+
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget)
@@ -32,7 +34,8 @@ export default function Turma(props: TurmaProps) {
     }
 
     return (
-        <Box sx={{ width: '15vw', height: '14vh', border: '2px solid #BEBEBE', borderRadius: '10px', backgroundColor: 'green' }} >
+        <Box sx={{ width: '15vw', height: '14vh', border: '2px solid #BEBEBE', borderRadius: '10px', backgroundColor: 'green' }}
+            onClick={onClick} >
             <Box sx={{
                 width: '100%',
                 height: '35%',
