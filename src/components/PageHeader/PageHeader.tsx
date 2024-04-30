@@ -5,7 +5,7 @@ import TabContext from '@mui/lab/TabContext'
 import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography/Typography'
 import { useState } from 'react'
-import { Tabs } from '@mui/material' // to importando assim pq nao achei o export default desse componente
+import { Tabs, TextField } from '@mui/material' // to importando assim pq nao achei o export default desse componente
 import Modal from '../Modal/Modal'
 
 type PageHeaderProps = {
@@ -21,6 +21,13 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
   const actualTab = new URLSearchParams(window.location.search).get('tab')
   const [tab, setTab] = useState<Tab>(actualTab ? actualTab as Tab : 'posts')
   const navigate = useNavigate()
+  const [name, setName] = useState('')
+  const [subject, setSubject] = useState('')
+
+  const createClass = () => {
+    console.log(name)
+    console.log(subject)
+  }
 
   const isTurmasPage = title === 'Turmas'
 
@@ -84,8 +91,18 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
             variantButton='novaTurma'
             icone='/iconsPages/plus-circle.svg'
             textoBotaoConfirmar='Criar Turma'
-            >
-              criança
+            onClick={createClass}
+          >
+            <TextField
+              variant='outlined'
+              label='Nome'
+              onChange={(e) => setName(e.target.value)}
+              />
+            <TextField
+             variant='outlined'
+             label='Matéria'
+            onChange={(e) => setSubject(e.target.value)}
+             />
           </Modal>
         )}
       </Box>
