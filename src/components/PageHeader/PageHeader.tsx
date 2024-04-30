@@ -39,7 +39,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
         justifyContent: 'space-between'
       }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <img src='./iconsPages/turma.svg' alt='Pessoas agrupadas' />
+          <img src='/iconsPages/turma.svg' alt='Pessoas agrupadas' />
           <Typography variant='h5' sx={{
             fontWeight: '700'
           }}>
