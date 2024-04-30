@@ -17,16 +17,16 @@ export default function Turma(props: TurmaProps) {
     }
 
     return (
-        <Box sx={{ width: '15vw', height: '14vh', border: '2px solid #BEBEBE', borderRadius: '10px' }}>
-            <Box sx={{ 
-                width: '100%', 
-                height: '35%', 
-                display: 'flex', 
-                flexDirection: 'row', 
-                justifyContent: 'space-between', 
-                padding: '8px', 
+        <Box sx={{ width: '15vw', height: '14vh', border: '2px solid #BEBEBE', borderRadius: '10px', backgroundColor: 'green' }} >
+            <Box sx={{
+                width: '100%',
+                height: '35%',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                padding: '8px',
                 borderBottom: '2px solid #BEBEBE',
-                borderColor: '#BEBEBE' 
+                borderColor: '#BEBEBE'
                 }}>
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px' }}>
                     <img src='./logos/bookTwo.svg' alt='Ícone de livro' style={{ width: '26px', marginBottom: '5px' }} />
