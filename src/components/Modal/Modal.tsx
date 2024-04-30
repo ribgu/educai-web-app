@@ -17,7 +17,16 @@ type ModalProps = {
 }
 
 export default function BasicModal(props: ModalProps) {
-  const { variantButton, titulo, icone, textoBotaoConfirmar, children, altIcone, onClick, textoBotaoAbrirModal } = props
+  const {
+    variantButton,
+    titulo,
+    icone,
+    textoBotaoConfirmar,
+    children,
+    altIcone,
+    onClick,
+    textoBotaoAbrirModal
+  } = props
 
   const variantsButtonStyle = {
     'sm': {
@@ -45,7 +54,7 @@ export default function BasicModal(props: ModalProps) {
         },
         ...sxButton
       }} variant='outlined' onClick={handleOpen}>
-        <img src="../../public/iconsPages/plus-circle.svg" alt="Circulo com um mais dentro" />
+        <img src='./iconsPages/plus-circle.svg' alt='Circulo com um mais dentro' />
         <Typography variant='body1' color='black'>{textoBotaoAbrirModal}</Typography>
       </Button>
       <Modal
@@ -73,7 +82,7 @@ export default function BasicModal(props: ModalProps) {
             gap: '10px'
           }}>
             <img src={icone} alt={altIcone} />
-            <Typography variant="h6" component="h2">
+            <Typography variant='h6' component='h2'>
               {titulo}
             </Typography>
           </Box>

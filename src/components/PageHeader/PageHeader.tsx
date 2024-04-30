@@ -39,7 +39,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
         justifyContent: 'space-between'
       }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <img src='../../public/iconsPages/turma.svg' alt='Pessoas agrupadas' />
+          <img src='./iconsPages/turma.svg' alt='Pessoas agrupadas' />
           <Typography variant='h5' sx={{
             fontWeight: '700'
           }}>
@@ -73,8 +73,11 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
         </Box>
       </Box>
       <Divider sx={{
+        width: '100%',
+        border: 0,
         height: '2px',
-        background: 'linear-gradient(to right, #E0D5F4 0%, #A578F9 50%, #DBCFF2 100%)'
+        background: 'linear-gradient(to right, #E0D5F4 0%, #A578F9 50%, #DBCFF2 100%)',
+        marginBottom: '10px'
       }} />
     </Box>
   )
