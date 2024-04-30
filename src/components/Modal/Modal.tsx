@@ -6,7 +6,7 @@ import Modal from '@mui/material/Modal'
 import Divider from '@mui/material/Divider'
 
 type ModalProps = {
-  variantButton: 'sm' | 'lg'
+  variantButton: 'sm' | 'lg' | 'novaTurma'
   titulo: string
   icone: string
   altIcone: string
@@ -28,7 +28,13 @@ export default function BasicModal(props: ModalProps) {
     textoBotaoAbrirModal
   } = props
 
+  const isNovaTurmaButton = titulo === 'Nova Turma'
+
   const variantsButtonStyle = {
+    'novaTurma':
+    {
+      width: '14%'
+    },
     'sm': {
       width: '48%'
     },
@@ -54,7 +60,9 @@ export default function BasicModal(props: ModalProps) {
         },
         ...sxButton
       }} variant='outlined' onClick={handleOpen}>
-        <img src='/iconsPages/plus-circle.svg' alt='Circulo com um mais dentro' />
+        {!isNovaTurmaButton && (
+          <img src='/iconsPages/plus-circle.svg' alt='Circulo com um mais dentro' />
+        )}
         <Typography variant='body1' color='black'>{textoBotaoAbrirModal}</Typography>
       </Button>
       <Modal
