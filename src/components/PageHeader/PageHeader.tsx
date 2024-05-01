@@ -5,7 +5,8 @@ import TabContext from '@mui/lab/TabContext'
 import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography/Typography'
 import { useState } from 'react'
-import { Tabs, TextField } from '@mui/material' // to importando assim pq nao achei o export default desse componente
+import Tabs from '@mui/material/Tabs/Tabs'
+import TextField from '@mui/material/TextField/TextField'
 import Modal from '../Modal/Modal'
 
 type PageHeaderProps = {
@@ -13,7 +14,6 @@ type PageHeaderProps = {
 }
 
 type Tab = 'posts' | 'atividades' | 'pessoas'
-
 
 export default function PageHeader(PageHeaderProps: PageHeaderProps) {
   const { title } = PageHeaderProps
