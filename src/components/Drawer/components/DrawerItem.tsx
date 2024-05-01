@@ -13,7 +13,7 @@ type ItemProps = {
   path: string
   variant: 'selected' | 'unselected' | 'turma-selected' | 'turma-unselected'
   color?: string
-  onClick?: () => void
+  onClick: () => void
 }
 export default function DrawerItem(props: ItemProps) {
   const { name, icon, variant, color, onClick } = props
@@ -31,7 +31,11 @@ export default function DrawerItem(props: ItemProps) {
         <ListItemButton sx={{
           display: 'flex',
           gap: '10px',
-          backgroundColor: '#F1EBFF',
+          backgroundColor: '#BBA7EB',
+          '&:hover': {
+            backgroundColor: '#D1C5ED',
+          },
+          padding: '16px',
           justifyContent: 'center',
           borderRadius: '0 24px 24px 0',
           width: '100%',
@@ -79,6 +83,52 @@ export default function DrawerItem(props: ItemProps) {
       )}
 
       {variant === 'turma-selected' && (
+        <>
+          <ListItemButton onClick={handleClick} sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            backgroundColor: '#BBA7EB',
+            '&:hover': {
+              backgroundColor: '#D1C5ED',
+            },
+            width: '220px',
+            gap: '10px',
+            padding: '14px'
+          }}
+          >
+            <img src={icon} alt={name} />
+            <Typography variant='body1' sx={{
+              fontWeight: 'bold',
+              color: colorHex
+            }}>{name}</Typography>
+            {open ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={open} timeout="auto" unmountOnExit> {/* ta estatico, precisa conectar com a API */}
+            <List component="div" disablePadding>
+              <ListItemButton sx={{
+                display: 'flex',
+                gap: '10px',
+                justifyContent: 'center',
+                width: '220px',
+                padding: '14px'
+              }}>
+                <Stack sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  flexDirection: 'row'
+                }}  >
+                  <Typography variant='body1' sx={{
+                    fontWeight: 'bold',
+                    color: colorHex
+                  }}>Turma 01</Typography>
+                </Stack>
+              </ListItemButton>
+            </List>
+          </Collapse>
+        </>
+      )}
+      {variant === 'turma-unselected' && (
         <>
           <ListItemButton onClick={handleClick} sx={{
             display: 'flex',
