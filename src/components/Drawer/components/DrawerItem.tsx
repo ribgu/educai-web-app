@@ -13,14 +13,16 @@ type ItemProps = {
   path: string
   variant: 'selected' | 'unselected' | 'turma-selected' | 'turma-unselected'
   color?: string
+  onClick?: () => void
 }
 export default function DrawerItem(props: ItemProps) {
-  const { name, icon, variant, color } = props
+  const { name, icon, variant, color, onClick } = props
   const [open, setOpen] = useState(false)
 
   const handleClick = () => {
     setOpen(!open)
   }
+
   const colorHex = color ? color : 'black'
 
   return (
@@ -33,7 +35,9 @@ export default function DrawerItem(props: ItemProps) {
           justifyContent: 'center',
           borderRadius: '0 24px 24px 0',
           width: '100%',
-        }}>
+        }}
+        onClick={onClick}
+        >
           <Stack sx={{
             display: 'flex',
             alignItems: 'center',
@@ -56,7 +60,9 @@ export default function DrawerItem(props: ItemProps) {
           justifyContent: 'center',
           width: '220px',
           padding: '14px'
-        }}>
+        }}
+        onClick={onClick}
+        >
           <Stack sx={{
             display: 'flex',
             alignItems: 'center',

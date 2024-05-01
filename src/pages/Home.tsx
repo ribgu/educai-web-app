@@ -4,7 +4,7 @@ import Layout from './Layout'
 import Turma from '../components/Turma/Turma'
 import { useNavigate } from 'react-router-dom'
 
-export default function Turmas() {
+export default function Home() {
   const turmasArray = Array.from({ length: 10 })
   const navigate = useNavigate()
 

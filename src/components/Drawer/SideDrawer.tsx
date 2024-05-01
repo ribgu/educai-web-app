@@ -4,11 +4,11 @@ import Stack from '@mui/material/Stack'
 import Box from '@mui/material/Box/Box'
 
 export default function SideDrawer() {
-  const home = '../../public/IconSideBar/home_icon.svg'
-  const turma = '../../public/IconSideBar/turma_icon.svg'
-  const material = '../../public/IconSideBar/material.svg'
-  const chat = '../../public/IconSideBar/chat.svg'
-  const logout = '../../public/IconSideBar/logout.svg'
+  const home = '/IconSideBar/home_icon.svg'
+  const turma = '/IconSideBar/turma_icon.svg'
+  const material = '/IconSideBar/material.svg'
+  const chat = '/IconSideBar/chat.svg'
+  const logout = '/IconSideBar/logout.svg'
 
   return (
     <Box
@@ -26,7 +26,7 @@ export default function SideDrawer() {
             marginTop: '80px'
           }}
         >
-          <DrawerItem name='Home' icon={home} path='/' variant='unselected' />
+          <DrawerItem name='Home' icon={home} path='/home' variant='unselected' />
           <DrawerItem name='Turma' icon={turma} path='/turma' variant='turma-selected' />
           <DrawerItem name='Criar Material' icon={material} path='/educacao' variant='unselected' color='#6730EC' />
           <DrawerItem name='Fale com o edu' icon={chat} path='/avaliacao' variant='unselected' color='#6730EC' />
