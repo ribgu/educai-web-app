@@ -18,7 +18,6 @@ export default function Turma(props: TurmaProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
 
-
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget)
     }
@@ -54,7 +53,6 @@ export default function Turma(props: TurmaProps) {
                     <MoreVertIcon />
                 </IconButton>
                 <Menu
-                    id="long-menu"
                     anchorEl={anchorEl}
                     keepMounted
                     open={open}
