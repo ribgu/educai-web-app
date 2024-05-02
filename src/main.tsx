@@ -4,7 +4,7 @@ import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import theme from './lib/theme.ts'
 import './index.css'
 import LandingPage from './pages/LandingPage'
-import Turmas from './pages/Turmas'
+import Home from './pages/Home.tsx'
 import Turma from './pages/Turma'
 import Login from './pages/Login'
 import Teste from './pages/Teste'
@@ -20,8 +20,8 @@ const router = createBrowserRouter([
     element: <LandingPage />,
   },
   {
-    path: '/turmas',
-    element: <Turmas />,
+    path: '/home',
+    element: <Home />,
   },
   {
     path: '/turma/:id',

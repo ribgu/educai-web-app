@@ -1,7 +1,6 @@
 import  TextField  from '@mui/material/TextField'
 import Modal from '../components/Modal/Modal'
 
-
 export default function Teste() {
   return (
     <div style={{
