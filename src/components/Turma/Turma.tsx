@@ -1,9 +1,9 @@
-import Box from '@mui/material/Box/Box'
-import Typography from '@mui/material/Typography/Typography'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import Box from '@mui/material/Box/Box'
 import IconButton from '@mui/material/IconButton/IconButton'
-import MenuItem from '@mui/material/MenuItem/MenuItem'
 import Menu from '@mui/material/Menu/Menu'
+import MenuItem from '@mui/material/MenuItem/MenuItem'
+import Typography from '@mui/material/Typography/Typography'
 import { useState } from 'react'
 
 type TurmaProps = {
@@ -33,23 +33,32 @@ export default function Turma(props: TurmaProps) {
     }
 
     return (
-        <Box sx={{ cursor: 'pointer', width: '15vw', height: '14vh', border: '2px solid #BEBEBE', borderRadius: '10px' }}
-            onClick={onClick} >
+        <Box sx={{ 
+            cursor: 'pointer', 
+            width: '15vw', 
+            height: '14vh', 
+            border: '1px solid #BEBEBE', 
+            borderRadius: '10px', 
+            boxShadow: '0px 2px 3px 1px #00000012',
+            userSelect: 'none'
+        }} 
+        onClick={onClick}>
             <Box sx={{
                 width: '100%',
                 height: '35%',
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                padding: '8px',
-                borderBottom: '2px solid #BEBEBE',
+                paddingLeft: '16px',
+                paddingRight: '6px',
+                borderBottom: '1px solid #BEBEBE',
                 borderColor: '#BEBEBE'
             }}>
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px' }}>
-                    <img src='./logos/bookTwo.svg' alt='Ícone de livro' style={{ width: '26px', marginBottom: '5px' }} />
-                    <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap' }}>{nome}</Typography>
+                    <img src='./logos/bookTwo.svg' alt='Ícone de livro' style={{ width: '26px', marginBottom: '3px' }} />
+                    <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap', fontWeight: 500 }}>{nome}</Typography>
                 </Box>
-                <IconButton size='small' onClick={handleClick}>
+                <IconButton sx={{ justifyContent: 'end' }} size='small' onClick={handleClick}>
                     <MoreVertIcon />
                 </IconButton>
                 <Menu
@@ -66,9 +75,16 @@ export default function Turma(props: TurmaProps) {
                     </MenuItem>
                 </Menu>
             </Box>
-            <Box sx={{ width: '100%', height: '65%', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <Typography>Disciplina: {disciplina}</Typography>
-                <Typography>Quantidade de alunos: {qtdAlunos}</Typography>
+            <Box sx={{ width: '100%', height: '65%', padding: '8px 16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
+                <Typography sx={{ display: 'flex', gap: '4px', fontSize: 14, color: '#5E5E5E' }}>
+                    Disciplina: 
+                    <Typography sx={{ color: "#5E5E5E", fontWeight: 700, fontSize: 14 }}>{disciplina}</Typography>
+                </Typography>
+
+                <Typography sx={{ display: 'flex', gap: '4px', fontSize: 14, color: '#5E5E5E' }}>
+                    Quantidade de alunos: 
+                    <Typography sx={{ color: "#5E5E5E", fontWeight: 700, fontSize: 14 }}>{qtdAlunos}</Typography>
+                </Typography>
             </Box>
         </Box>
     )

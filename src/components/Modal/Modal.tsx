@@ -1,9 +1,10 @@
-import * as React from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
 import Divider from '@mui/material/Divider'
+import Modal from '@mui/material/Modal'
+import Typography from '@mui/material/Typography'
+import * as React from 'react'
+import { FiPlusCircle } from 'react-icons/fi'
 
 type ModalProps = {
   variantButton: 'sm' | 'lg' | 'novaTurma'
@@ -33,7 +34,7 @@ export default function BasicModal(props: ModalProps) {
   const variantsButtonStyle = {
     'novaTurma':
     {
-      width: '14%'
+      width: 'fix-content'
     },
     'sm': {
       width: '48%'
@@ -52,18 +53,21 @@ export default function BasicModal(props: ModalProps) {
   return (
     <>
       <Button sx={{
+        borderRadius: 25,
+        textTransform: 'capitalize',
         display: 'flex',
+        gap: '16px',
+        justifyContent: 'space-between',
         borderColor: '#5D1EF4',
-        gap: '10px',
         '&:hover': {
           backgroundColor: '#D8D8D8'
         },
         ...sxButton
-      }} variant='outlined' onClick={handleOpen}>
+      }} startIcon={<FiPlusCircle size={25}/>} variant='outlined' onClick={handleOpen}>
         {!isNovaTurmaButton && (
           <img src='/iconsPages/plus-circle.svg' alt='Circulo com um mais dentro' />
         )}
-        <Typography variant='body1' color='black'>{textoBotaoAbrirModal}</Typography>
+        <Typography variant='body1' color='#170050' fontWeight={700}>{textoBotaoAbrirModal}</Typography>
       </Button>
       <Modal
         open={open}
