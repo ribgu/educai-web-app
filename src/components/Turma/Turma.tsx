@@ -34,7 +34,7 @@ export default function Turma(props: TurmaProps) {
     }
 
     return (
-        <Box sx={{ width: '15vw', height: '14vh', border: '2px solid #BEBEBE', borderRadius: '10px', backgroundColor: 'green' }}
+        <Box sx={{ cursor: 'pointer', width: '15vw', height: '14vh', border: '2px solid #BEBEBE', borderRadius: '10px' }}
             onClick={onClick} >
             <Box sx={{
                 width: '100%',
