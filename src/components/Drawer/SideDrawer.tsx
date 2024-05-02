@@ -39,7 +39,7 @@ export default function SideDrawer() {
           }}
         >
           <DrawerItem name='Home' icon={home} path='/home' variant={variantHome} onClick={() => handleClick('/home')} />
-          <DrawerItem name='Turma' icon={turma} path='/turma' variant={variantTurma} onClick={() => handleClick('/turma')} />
+          <DrawerItem name='Turmas' icon={turma} path='/turma' variant={variantTurma} onClick={() => handleClick('/turma')} />
           <DrawerItem name='Criar Material' icon={material} path='/material' variant={variantMaterial} color='#6730EC' onClick={() => handleClick('/material')} />
           <DrawerItem name='Fale com o edu' icon={chat} path='/edu' variant={variantChat} color='#6730EC' onClick={() => handleClick('/edu')} />
         </Stack>
