@@ -29,7 +29,8 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
     console.log(subject)
   }
 
-  const isTurmasPage = title === 'Turmas'
+  const isTabsNecessary = title === 'Turmas' || title === 'Falando com o Edu'
+  const isTurma = title === 'Turmas'
 
   const handleChange = (e: React.SyntheticEvent, newTab: Tab) => {
     const url = new URL(window.location.href)
@@ -56,7 +57,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
             {title}
           </Typography>
         </Box>
-        {!isTurmasPage && (
+        {!isTabsNecessary && (
           <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '5px' }}>
             <TabContext value={tab}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -83,7 +84,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
             </TabContext>
           </Box>
         )}
-        {isTurmasPage && (
+        {isTurma && (
           <Modal
             titulo='Nova Turma'
             textoBotaoAbrirModal='Nova Turma'
