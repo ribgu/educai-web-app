@@ -13,12 +13,24 @@ export default class Client {
       baseURL: this.clientType === 'ia-api' ? import.meta.env.VITE_API_URL_IA : import.meta.env.VITE_API_URL,
       withCredentials: true
     })
+
+    this.axios.interceptors.request.use((config) => {
+      if(!config.url?.includes('user/auth')) {
+        config.headers.Authorization = sessionStorage.getItem('token')
+      }
+
+      return config 
+    })  
   }
 
   async login(
     body: UserLogin 
   ) {
-    return (await this.axios.get('login', { data: body })).data
+    return (await this.axios.post('user/auth', body)).data
+  }
+
+  async getUserClassrooms() {
+    return (await this.axios.get('/user/classrooms')).data
   }
 
   // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade

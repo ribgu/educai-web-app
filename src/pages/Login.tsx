@@ -2,7 +2,6 @@ import SlideLogin from '../components/SlidesLogin/SlidesLogin'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Logo from '../components/Logo/Logo'
-import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
@@ -19,8 +18,8 @@ export default function Login() {
 
     const handleLogin = useAsyncCallback(async () => {
         await client.login({ email, password }).then((res) => {
-            console.log(res) // colocar login e senha na sessão
-            navigate('/turmas')
+            sessionStorage.setItem("token", res.token)
+            navigate('/home')
         })
     })
 
@@ -99,29 +98,7 @@ export default function Login() {
                         gap: '10px',
                         justifyContent: 'center',
                     }}>
-                        <Divider sx={{ width: '45%' }} />
-                        <Typography variant='body2'>ou</Typography>
-                        <Divider sx={{ width: '45%' }} />
                     </Box>
-
-                    <Button sx={{
-                        backgroundColor: 'white',
-                        border: '1px solid #8E8E8E',
-                        color: 'black',
-                        '&:hover': {
-                            border: '1px solid #8E8E8E',
-                            backgroundColor: '#E5E5E5',
-                        },
-                        paddingY: '12px',
-                        gap: '10px'
-                    }} variant='outlined'>
-                        <img style={{
-                            width: '20px',
-                            height: '20px',
-                        }}
-                            src='../../../public/Illustration/iconGoogle.png' alt='Icone G do Google' />
-                        <Typography variant='body2'>Entrar com o Google</Typography>
-                    </Button>
                 </Box>
             </Box>
         </Box>
