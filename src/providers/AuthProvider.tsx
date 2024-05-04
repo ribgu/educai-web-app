@@ -1,4 +1,4 @@
-import { jwtDecode } from "jwt-decode"
+import { jwtDecode } from 'jwt-decode'
 import { ReactNode, useState } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
 import { JwtDecoded } from '../lib/types/JwtDecoded'
@@ -10,14 +10,28 @@ interface Props {
 const AuthProvider = ({ children }: Props) => {
 	const [id, setId] = useState('')
 	const [token, setToken] = useState('')
-	const [role, setRole] = useState('')
+	const [role, setRole] = useState<'STUDENT' | 'TEACHER'>('STUDENT')
 
 	const updateAuthData = (newToken: string) => {
 		const tokenDecoded = getTokenDecoded(newToken)
 
 		setId(tokenDecoded.id)
-		setToken(newToken)
 		setRole(tokenDecoded.role)
+		setToken(newToken)
+		sessionStorage.setItem('token', newToken)
+	}
+
+	const getToken = (): string => {
+		if(token) 
+			return token
+
+		const sessionToken = sessionStorage.getItem('token')
+
+		if(sessionToken) {
+			return sessionToken
+		}
+
+		return ''
 	}
 
 	const getTokenDecoded = (tokenEncoded: string): JwtDecoded => {
@@ -25,7 +39,7 @@ const AuthProvider = ({ children }: Props) => {
 	}
 
 	return (
-		<AuthContext.Provider value={{ id, token, role, updateAuthData }}>
+		<AuthContext.Provider value={{ id, role, updateAuthData, getToken }}>
 			{children}
 		</AuthContext.Provider>
 	)

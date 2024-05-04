@@ -3,9 +3,11 @@ import { Auth } from '../lib/types/AuthContext'
 
 export const AuthContext = createContext<Auth>({
 	id: '',
-	token: '',
-	role: '',
+	role: 'STUDENT',
 	updateAuthData: function (): void {
+		throw new Error('Function not implemented.')
+	},
+	getToken: function (): string {
 		throw new Error('Function not implemented.')
 	}
 })

@@ -1,22 +1,25 @@
 import axios, { AxiosInstance } from 'axios'
 import { UserLogin } from '../types/Login'
 
-type ClientType = 'ia-api' | 'api'
+type ClientProps = {
+  clientType: 'ia-api' | 'api',
+  clientToken: string
+}
 
 export default class Client {
   private axios: AxiosInstance
-  private clientType: ClientType
+  private clientProps: ClientProps
 
-  constructor(clientType: ClientType) {
-    this.clientType = clientType
+  constructor(clientProps: ClientProps) {
+    this.clientProps = clientProps
     this.axios = axios.create({
-      baseURL: this.clientType === 'ia-api' ? import.meta.env.VITE_API_URL_IA : import.meta.env.VITE_API_URL,
+      baseURL: this.clientProps.clientType === 'ia-api' ? import.meta.env.VITE_API_URL_IA : import.meta.env.VITE_API_URL,
       withCredentials: true
     })
 
     this.axios.interceptors.request.use((config) => {
       if(!config.url?.includes('user/auth')) {
-        config.headers.Authorization = sessionStorage.getItem('token')
+        config.headers.Authorization = this.clientProps.clientToken
       }
 
       return config 

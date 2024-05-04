@@ -1,6 +1,6 @@
 export type Auth = {
     id: string
-    token: string
-	role: string
+	role: 'STUDENT' | 'TEACHER'
     updateAuthData: (newToken: string) => void
+    getToken: () => string
 }

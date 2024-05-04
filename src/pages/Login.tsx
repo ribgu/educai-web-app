@@ -1,24 +1,26 @@
-import SlideLogin from '../components/SlidesLogin/SlidesLogin'
-import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
-import Logo from '../components/Logo/Logo'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
-import { useState } from 'react'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import { useContext, useState } from 'react'
 import { useAsyncCallback } from 'react-async-hook'
-import useClient from '../lib/client/useClient'
 import { useNavigate } from 'react-router-dom'
+import Logo from '../components/Logo/Logo'
+import SlideLogin from '../components/SlidesLogin/SlidesLogin'
+import { AuthContext } from '../contexts/AuthContext'
+import useClient from '../lib/client/useClient'
 
 export default function Login() {
     const client = useClient()
+    const { updateAuthData } = useContext(AuthContext)
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const handleLogin = useAsyncCallback(async () => {
         await client.login({ email, password }).then((res) => {
-            sessionStorage.setItem("token", res.token)
+            updateAuthData(res.token)
             navigate('/home')
         })
     })

@@ -1,7 +1,7 @@
 import Client from './client'
 
-const useClient = () => {
-    const client = new Client('api')
+const useClient = (clientToken: string = '') => {
+    const client = new Client({clientType: 'api', clientToken})
     return client
 }
 

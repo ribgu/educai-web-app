@@ -5,16 +5,15 @@ import Menu from '@mui/material/Menu/Menu'
 import MenuItem from '@mui/material/MenuItem/MenuItem'
 import Typography from '@mui/material/Typography/Typography'
 import { useState } from 'react'
+import { TurmaType } from '../../lib/types/Turma'
 
-type TurmaProps = {
-    nome: string
-    disciplina: string
-    qtdAlunos: number
+interface TurmaProps extends TurmaType {
+    isTeacher: boolean
     onClick: () => void
 }
 
 export default function Turma(props: TurmaProps) {
-    const { nome, disciplina, qtdAlunos, onClick } = props
+    const { title, course, nextSubmission, studentsCount, isTeacher, onClick } = props
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
 
@@ -35,7 +34,7 @@ export default function Turma(props: TurmaProps) {
     return (
         <Box sx={{ 
             cursor: 'pointer', 
-            width: '15vw', 
+            width: '16vw', 
             height: '14vh', 
             border: '1px solid #BEBEBE', 
             borderRadius: '10px', 
@@ -56,7 +55,7 @@ export default function Turma(props: TurmaProps) {
             }}>
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px' }}>
                     <img src='./logos/bookTwo.svg' alt='Ícone de livro' style={{ width: '26px', marginBottom: '3px' }} />
-                    <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap', fontWeight: 500 }}>{nome}</Typography>
+                    <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap', fontWeight: 500 }}>{title}</Typography>
                 </Box>
                 <IconButton sx={{ justifyContent: 'end' }} size='small' onClick={handleClick}>
                     <MoreVertIcon />
@@ -78,13 +77,24 @@ export default function Turma(props: TurmaProps) {
             <Box sx={{ width: '100%', height: '65%', padding: '8px 16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
                 <Typography sx={{ display: 'flex', gap: '4px', fontSize: 14, color: '#5E5E5E' }}>
                     Disciplina: 
-                    <Typography sx={{ color: "#5E5E5E", fontWeight: 700, fontSize: 14 }}>{disciplina}</Typography>
+                    <Typography sx={{ color: '#5E5E5E', fontWeight: 700, fontSize: 14 }}>{course}</Typography>
                 </Typography>
 
-                <Typography sx={{ display: 'flex', gap: '4px', fontSize: 14, color: '#5E5E5E' }}>
-                    Quantidade de alunos: 
-                    <Typography sx={{ color: "#5E5E5E", fontWeight: 700, fontSize: 14 }}>{qtdAlunos}</Typography>
-                </Typography>
+                {isTeacher ? 
+                    <Typography sx={{ display: 'flex', gap: '4px', fontSize: 14, color: '#5E5E5E', whiteSpace: 'nowrap' }}>
+                        Quantidade de alunos: 
+                        <Typography sx={{ color: '#5E5E5E', fontWeight: 700, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {studentsCount}
+                        </Typography>
+                    </Typography>
+                    :
+                    <Typography sx={{ display: 'flex', gap: '4px', fontSize: 14, color: '#5E5E5E', whiteSpace: 'nowrap' }}>
+                        Próxima entrega: 
+                        <Typography sx={{ color: '#5E5E5E', fontWeight: 700, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {nextSubmission}
+                        </Typography>
+                    </Typography>
+                }
             </Box>
         </Box>
     )

@@ -11,12 +11,13 @@ import Modal from '../Modal/Modal'
 
 type PageHeaderProps = {
   title: string
+  showButton: boolean
 }
 
 type Tab = 'posts' | 'atividades' | 'pessoas'
 
 export default function PageHeader(PageHeaderProps: PageHeaderProps) {
-  const { title } = PageHeaderProps
+  const { title, showButton } = PageHeaderProps
 
   const actualTab = new URLSearchParams(window.location.search).get('tab')
   const [tab, setTab] = useState<Tab>(actualTab ? actualTab as Tab : 'posts')
@@ -83,7 +84,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
             </TabContext>
           </Box>
         )}
-        {isTurmasPage && (
+        {isTurmasPage && showButton && (
           <Modal
             titulo='Nova Turma'
             textoBotaoAbrirModal='Nova Turma'
