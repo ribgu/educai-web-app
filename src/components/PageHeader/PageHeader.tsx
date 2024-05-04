@@ -8,26 +8,33 @@ import Typography from '@mui/material/Typography/Typography'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Modal from '../Modal/Modal'
+import Button from '@mui/material/Button'
+import { LoadingButton } from '@mui/lab'
 
 type PageHeaderProps = {
   title: string
   showButton?: boolean
+  createClassroom?: (title: string, course: string) => Promise<void>
 }
 
 type Tab = 'posts' | 'atividades' | 'pessoas'
 
 export default function PageHeader(PageHeaderProps: PageHeaderProps) {
-  const { title, showButton } = PageHeaderProps
+  const { title, showButton, createClassroom } = PageHeaderProps
 
   const actualTab = new URLSearchParams(window.location.search).get('tab')
   const [tab, setTab] = useState<Tab>(actualTab ? actualTab as Tab : 'posts')
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [subject, setSubject] = useState('')
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [modalIsLoading, setModalIsLoading] = useState(false)
 
   const createClass = () => {
-    console.log(name)
-    console.log(subject)
+    if(name && subject && createClassroom) {
+      setModalIsLoading(true)
+      createClassroom(name, subject).finally(() => setModalIsLoading(false))
+    }
   }
 
   const isTurmasPage = title === 'Turmas'
@@ -92,7 +99,10 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
             variantButton='novaTurma'
             icone='/iconsPages/plus-circle.svg'
             textoBotaoConfirmar='Criar Turma'
-            onClick={createClass}
+            showModal={modalIsOpen}
+            onClose={() => setModalIsOpen(false)}
+            onOpen={() => setModalIsOpen(true)}
+            isLoading={modalIsLoading}
           >
             <TextField
               variant='outlined'
@@ -102,8 +112,34 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
             <TextField
              variant='outlined'
              label='Matéria'
-            onChange={(e) => setSubject(e.target.value)}
-             />
+              onChange={(e) => setSubject(e.target.value)}
+            />
+
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginTop: '10px'
+            }}>
+              <Button sx={{
+                color: 'black',
+                borderColor: '#5D1EF4',
+                '&:hover': {
+                  backgroundColor: '#D8D8D8'
+                },
+                paddingY: '12px',
+                width: '48%'
+              }} variant='outlined' onClick={() => setModalIsOpen(false)}>Cancelar</Button>
+
+              <LoadingButton sx={{
+                backgroundColor: '#6730EC',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: '#4D1EAD'
+                },
+                paddingY: '12px',
+                width: '48%'
+              }} variant='contained' onClick={createClass} loading={modalIsLoading}>Criar turma</LoadingButton>
+            </Box>
           </Modal>
         )}
       </Box>

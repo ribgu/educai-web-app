@@ -20,14 +20,22 @@ export default function Home() {
   }
 
   useEffect(() => {
-    client.getUserClassrooms().then((data) => setTurmas(data))
+    updateClassrooms()
   }, [])
+
+  const createClassroom = async (title: string, course: string): Promise<void> => {
+    return await client.createClassroom({ title, course }).then(() => updateClassrooms())
+  }
+
+  const updateClassrooms = () => {
+    client.getUserClassrooms().then((data) => setTurmas(data))
+  }
 
   return (
     <Layout>
       <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
         <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
-          <PageHeader showButton={role === 'TEACHER'} title='Turmas' />
+          <PageHeader createClassroom={createClassroom} showButton={role === 'TEACHER'} title='Turmas' />
         </Box>
         <Box sx={{ display: 'grid', padding: '24px 42px', gap: 2, 
         gridTemplateColumns: 'repeat(auto-fill, minmax(20%, 1fr))', gridTemplateRows: 'max-content',

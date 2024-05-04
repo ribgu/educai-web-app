@@ -36,6 +36,10 @@ export default class Client {
     return (await this.axios.get('/user/classrooms')).data
   }
 
+  async createClassroom(body: {title: string, course: string}): Promise<void> {
+    return (await this.axios.post('/classroom', body))
+  }
+
   // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade
 
 }
