@@ -11,6 +11,7 @@ interface Props {
 const AuthProvider = ({ children }: Props) => {
 	const [id, setId] = useState('')
 	const [token, setToken] = useState('')
+	const [username, setUsername] = useState('')
 	const [role, setRole] = useState<Role>('TEACHER')
 
 	const updateAuthData = (newToken: string) => {
@@ -19,6 +20,7 @@ const AuthProvider = ({ children }: Props) => {
 		setId(tokenDecoded.id)
 		setRole(tokenDecoded.role)
 		setToken(newToken)
+		setUsername(tokenDecoded.username)
 		sessionStorage.setItem('token', newToken)
 	}
 
@@ -40,7 +42,7 @@ const AuthProvider = ({ children }: Props) => {
 	}
 
 	return (
-		<AuthContext.Provider value={{ id, role, updateAuthData, getToken }}>
+		<AuthContext.Provider value={{ id, role, username, updateAuthData, getToken }}>
 			{children}
 		</AuthContext.Provider>
 	)

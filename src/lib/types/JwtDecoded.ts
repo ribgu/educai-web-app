@@ -1,6 +1,7 @@
 export type JwtDecoded = {
-	iss: string,
-	id: string,
-	role: 'TEACHER' | 'STUDENT',
+	iss: string
+	id: string
+	role: 'TEACHER' | 'STUDENT'
 	exp: Date
+	username: string
 }
