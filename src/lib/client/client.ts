@@ -28,7 +28,7 @@ export default class Client {
 
   async login(
     body: UserLogin 
-  ) {
+  ): Promise<{token: string}> {
     return (await this.axios.post('user/auth', body)).data
   }
 

@@ -32,8 +32,7 @@ export default function BasicModal(props: ModalProps) {
   const isNovaTurmaButton = titulo === 'Nova Turma'
 
   const variantsButtonStyle = {
-    'novaTurma':
-    {
+    'novaTurma': {
       width: 'fix-content'
     },
     'sm': {
@@ -57,13 +56,13 @@ export default function BasicModal(props: ModalProps) {
         textTransform: 'capitalize',
         display: 'flex',
         gap: '16px',
-        justifyContent: 'space-between',
+        justifyContent: variantButton === 'novaTurma' ? 'space-between' : 'center',
         borderColor: '#5D1EF4',
         '&:hover': {
           backgroundColor: '#D8D8D8'
         },
         ...sxButton
-      }} startIcon={<FiPlusCircle size={25}/>} variant='outlined' onClick={handleOpen}>
+      }} startIcon={variantButton === 'novaTurma' && <FiPlusCircle size={25}/>} variant='outlined' onClick={handleOpen}>
         {!isNovaTurmaButton && (
           <img src='/iconsPages/plus-circle.svg' alt='Circulo com um mais dentro' />
         )}

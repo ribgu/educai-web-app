@@ -11,7 +11,7 @@ import Modal from '../Modal/Modal'
 
 type PageHeaderProps = {
   title: string
-  showButton: boolean
+  showButton?: boolean
 }
 
 type Tab = 'posts' | 'atividades' | 'pessoas'

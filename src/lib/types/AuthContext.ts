@@ -1,6 +1,8 @@
+import { Role } from './Role'
+
 export type Auth = {
     id: string
-	role: 'STUDENT' | 'TEACHER'
+	role: Role
     updateAuthData: (newToken: string) => void
     getToken: () => string
 }
