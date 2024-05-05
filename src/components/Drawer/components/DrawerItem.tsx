@@ -6,6 +6,10 @@ import List from '@mui/material/List'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import { useState } from 'react'
+import useClient from '../../../lib/client/useClient'
+import { TurmasType } from '../../../lib/types/Turma'
+import { Link } from 'react-router-dom'
+import { Box, Skeleton } from '@mui/material'
 
 type ItemProps = {
   name: string
@@ -16,14 +20,22 @@ type ItemProps = {
   onClick: () => void
 }
 export default function DrawerItem(props: ItemProps) {
+  const client = useClient()
   const { name, icon, variant, color, onClick } = props
   const [open, setOpen] = useState(false)
+  const [turmas, setTurmas] = useState<TurmasType | null>()
 
   const handleClick = () => {
+    !open && updateClassrooms()
     setOpen(!open)
   }
 
-  const colorHex = color ? color : 'black'
+  const updateClassrooms = () => {
+    setTurmas(null)
+    client.getUserClassrooms().then((data) => setTurmas(data))
+  }
+
+  const colorHex = color ? color : '#272727'
 
   return (
     <>
@@ -31,7 +43,7 @@ export default function DrawerItem(props: ItemProps) {
         <ListItemButton sx={{
           display: 'flex',
           gap: '10px',
-          backgroundColor: '#BBA7EB',
+          backgroundColor: '#F1EBFF',
           '&:hover': {
             backgroundColor: '#D1C5ED',
           },
@@ -147,25 +159,34 @@ export default function DrawerItem(props: ItemProps) {
           </ListItemButton>
           <Collapse in={open} timeout="auto" unmountOnExit> {/* ta estatico, precisa conectar com a API */}
             <List component="div" disablePadding>
-              <ListItemButton sx={{
-                display: 'flex',
-                gap: '10px',
-                justifyContent: 'center',
-                width: '220px',
-                padding: '14px'
-              }}>
-                <Stack sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  flexDirection: 'row'
-                }}  >
-                  <Typography variant='body1' sx={{
-                    fontWeight: 'bold',
-                    color: colorHex
-                  }}>Turma 01</Typography>
-                </Stack>
-              </ListItemButton>
+              {turmas ? turmas.map((turma, index) => (
+                <Link key={index} to={`/turma/${turma.id}`}>
+                  <ListItemButton sx={{
+                    display: 'flex',
+                    gap: '10px',
+                    justifyContent: 'center',
+                    width: '220px',
+                    padding: '14px'
+                  }}>
+                    <Stack sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      flexDirection: 'row'
+                    }}>
+                      <Typography variant='body1' sx={{
+                        fontWeight: 'bold',
+                        color: colorHex
+                      }}>{turma.title}</Typography>
+                    </Stack>
+                  </ListItemButton>
+                </Link>
+              )) : 
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <Skeleton variant="rectangular" width={220} height={50} />
+                  <Skeleton variant="rectangular" width={220} height={50} />
+                </Box>
+              }
             </List>
           </Collapse>
         </>

@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 import { UserLogin } from '../types/Login'
+import { TurmaType } from '../types/Turma'
 
 type ClientProps = {
   clientType: 'ia-api' | 'api',
@@ -21,7 +22,6 @@ export default class Client {
       if(!config.url?.includes('user/auth')) {
         config.headers.Authorization = this.clientProps.clientToken
       }
-
       return config 
     })  
   }
@@ -38,6 +38,10 @@ export default class Client {
 
   async createClassroom(body: {title: string, course: string}): Promise<void> {
     return (await this.axios.post('/classroom', body))
+  }
+
+  async getClassroomById(classroomId: string): Promise<TurmaType> {
+    return (await this.axios.get(`/classroom/${classroomId}`)).data
   }
 
   // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade

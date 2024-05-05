@@ -9,14 +9,13 @@ import { AuthContext } from '../contexts/AuthContext'
 import { TurmasType } from '../lib/types/Turma'
 
 export default function Home() {
-  const { role, getToken } = useContext(AuthContext)
-  const client = useClient(getToken())
+  const { role } = useContext(AuthContext)
+  const client = useClient()
   const [turmas, setTurmas] = useState<TurmasType>([])
   const navigate = useNavigate()
 
-  const handleClick = (index: number) => {
-    // const id = turmasArray[index].id quando tiver conectado
-    navigate(`/turma/${index}`)
+  const handleClick = (classroomId: string) => {
+    navigate(`/turma/${classroomId}`)
   }
 
   useEffect(() => {
@@ -46,7 +45,7 @@ export default function Home() {
               title={turma.title} 
               course={turma.course} 
               studentsCount={turma.studentsCount} 
-              onClick={() => handleClick(index)}
+              onClick={() => handleClick(turma.id)}
               id={turma.id}
               isTeacher={role === 'TEACHER'}
               nextSubmission={turma.nextSubmission}

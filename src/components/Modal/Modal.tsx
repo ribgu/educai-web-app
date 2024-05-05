@@ -17,7 +17,7 @@ type ModalProps = {
   showModal: boolean
   onClose: () => void
   onOpen: () => void
-  isLoading: boolean
+  isLoading?: boolean
 }
 
 export default function BasicModal(props: ModalProps) {

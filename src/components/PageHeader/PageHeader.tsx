@@ -12,7 +12,7 @@ import Button from '@mui/material/Button'
 import { LoadingButton } from '@mui/lab'
 
 type PageHeaderProps = {
-  title: string
+  title?: string
   showButton?: boolean
   createClassroom?: (title: string, course: string) => Promise<void>
 }
