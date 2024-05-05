@@ -47,7 +47,7 @@ export default function DrawerItem(props: ItemProps) {
           '&:hover': {
             backgroundColor: '#D1C5ED',
           },
-          padding: '16px',
+          padding: '14px',
           justifyContent: 'center',
           borderRadius: '0 24px 24px 0',
           width: '100%',

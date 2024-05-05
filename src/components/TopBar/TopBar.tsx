@@ -18,7 +18,7 @@ export default function TopBar() {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: '20px'
+      padding: '20px 48px'
     }}>
       <Logo variant='allWhite' width='ssm' />
       <ProfileHeader name={username} imageUrl='https://avatars.githubusercontent.com/u/6713782?v=4' />
