@@ -18,10 +18,12 @@ export default function Turma(props: TurmaProps) {
     const open = Boolean(anchorEl)
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation()
         setAnchorEl(event.currentTarget)
     }
 
-    const handleClose = (editOrDelete: string) => {
+    const handleClose = (event: React.MouseEvent<HTMLLIElement, MouseEvent>, editOrDelete: string) => {
+        event.stopPropagation()
         setAnchorEl(null)
 
         if (editOrDelete === 'edit') {
@@ -40,8 +42,7 @@ export default function Turma(props: TurmaProps) {
             borderRadius: '10px', 
             boxShadow: '0px 2px 3px 1px #00000012',
             userSelect: 'none'
-        }} 
-        onClick={onClick}>
+        }} onClick={onClick}>
             <Box sx={{
                 width: '100%',
                 height: '35%',
@@ -66,10 +67,10 @@ export default function Turma(props: TurmaProps) {
                     open={open}
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={() => { handleClose('edit') }}>
+                    <MenuItem onClick={(event) => { handleClose(event, 'edit') }}>
                         Editar
                     </MenuItem>
-                    <MenuItem onClick={() => { handleClose('delete') }}>
+                    <MenuItem onClick={(event) => { handleClose(event, 'delete') }}>
                         Apagar
                     </MenuItem>
                 </Menu>
