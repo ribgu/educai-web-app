@@ -9,10 +9,15 @@ interface Props {
 }
 
 const AuthProvider = ({ children }: Props) => {
-	const [id, setId] = useState('')
-	const [token, setToken] = useState('')
-	const [username, setUsername] = useState('')
-	const [role, setRole] = useState<Role>('TEACHER')
+	const getTokenDecoded = (tokenEncoded: string): JwtDecoded => {
+		return jwtDecode(tokenEncoded)
+	}
+
+	const [token, setToken] = useState(sessionStorage.getItem('token') ?? '')
+	const tokenDecoded = getTokenDecoded(token)
+	const [id, setId] = useState(tokenDecoded?.id ?? '')
+	const [username, setUsername] = useState(tokenDecoded?.username ?? '')
+	const [role, setRole] = useState<Role>(tokenDecoded?.role ?? '')
 
 	const updateAuthData = (newToken: string) => {
 		const tokenDecoded = getTokenDecoded(newToken)
@@ -24,25 +29,8 @@ const AuthProvider = ({ children }: Props) => {
 		sessionStorage.setItem('token', newToken)
 	}
 
-	const getToken = (): string => {
-		if(token) 
-			return token
-
-		const sessionToken = sessionStorage.getItem('token')
-
-		if(sessionToken) {
-			return sessionToken
-		}
-
-		return ''
-	}
-
-	const getTokenDecoded = (tokenEncoded: string): JwtDecoded => {
-		return jwtDecode(tokenEncoded)
-	}
-
 	return (
-		<AuthContext.Provider value={{ id, role, username, updateAuthData, getToken }}>
+		<AuthContext.Provider value={{ id, role, username, token, updateAuthData }}>
 			{children}
 		</AuthContext.Provider>
 	)

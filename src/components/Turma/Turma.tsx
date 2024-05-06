@@ -74,27 +74,22 @@ export default function Turma(props: TurmaProps) {
                     </MenuItem>
                 </Menu>
             </Box>
+            
             <Box sx={{ width: '100%', height: '65%', padding: '8px 16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
-                <Typography sx={{ display: 'flex', gap: '4px', fontSize: 14, color: '#5E5E5E' }}>
-                    Disciplina: 
+                <Box sx={{ display: 'flex', gap: '4px' }}>
+                    <Typography sx={{ display: 'flex', fontSize: 14, color: '#5E5E5E' }}>Disciplina: </Typography>
                     <Typography sx={{ color: '#5E5E5E', fontWeight: 700, fontSize: 14 }}>{course}</Typography>
-                </Typography>
+                </Box>
 
-                {isTeacher ? 
-                    <Typography sx={{ display: 'flex', gap: '4px', fontSize: 14, color: '#5E5E5E', whiteSpace: 'nowrap' }}>
-                        Quantidade de alunos: 
-                        <Typography sx={{ color: '#5E5E5E', fontWeight: 700, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                            {studentsCount}
-                        </Typography>
+                <Box sx={{ display: 'flex', gap: '4px' }}>
+                    <Typography sx={{ display: 'flex', fontSize: 14, color: '#5E5E5E', whiteSpace: 'nowrap' }}>
+                        {isTeacher ? 'Quantidade de alunos:' : 'Próxima entrega: ' }
                     </Typography>
-                    :
-                    <Typography sx={{ display: 'flex', gap: '4px', fontSize: 14, color: '#5E5E5E', whiteSpace: 'nowrap' }}>
-                        Próxima entrega: 
-                        <Typography sx={{ color: '#5E5E5E', fontWeight: 700, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                            {nextSubmission}
-                        </Typography>
+
+                    <Typography sx={{ color: '#5E5E5E', fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {isTeacher ? studentsCount : nextSubmission}
                     </Typography>
-                }
+                </Box>
             </Box>
         </Box>
     )
