@@ -33,7 +33,10 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
   const createClass = () => {
     if(name && subject && createClassroom) {
       setModalIsLoading(true)
-      createClassroom(name, subject).finally(() => setModalIsLoading(false))
+      createClassroom(name, subject).finally(() => {
+        setModalIsLoading(false)
+        setModalIsOpen(false)
+      })
     }
   }
 
@@ -98,20 +101,18 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
             altIcone='Nova Turma'
             variantButton='novaTurma'
             icone='/iconsPages/plus-circle.svg'
-            textoBotaoConfirmar='Criar Turma'
             showModal={modalIsOpen}
             onClose={() => setModalIsOpen(false)}
             onOpen={() => setModalIsOpen(true)}
-            isLoading={modalIsLoading}
           >
             <TextField
               variant='outlined'
-              label='Nome'
+              label='Nome*'
               onChange={(e) => setName(e.target.value)}
               />
             <TextField
              variant='outlined'
-             label='Matéria'
+             label='Matéria*'
               onChange={(e) => setSubject(e.target.value)}
             />
 

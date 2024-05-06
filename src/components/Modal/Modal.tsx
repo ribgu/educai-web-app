@@ -7,17 +7,15 @@ import * as React from 'react'
 import { FiPlusCircle } from 'react-icons/fi'
 
 type ModalProps = {
-  variantButton: 'sm' | 'lg' | 'novaTurma'
+  variantButton: 'sm' | 'lg' | 'novaTurma' | 'none'
   titulo: string
   icone: string
   altIcone: string
-  textoBotaoConfirmar: string
-  textoBotaoAbrirModal: string
+  textoBotaoAbrirModal?: string
   children: React.ReactNode
   showModal: boolean
   onClose: () => void
   onOpen: () => void
-  isLoading?: boolean
 }
 
 export default function BasicModal(props: ModalProps) {
@@ -44,6 +42,9 @@ export default function BasicModal(props: ModalProps) {
     },
     'lg': {
       width: '100%'
+    },
+    'none': {
+      display: 'none'
     }
   }
 
@@ -51,23 +52,25 @@ export default function BasicModal(props: ModalProps) {
 
   return (
     <>
-      <Button sx={{
-        borderRadius: 25,
-        textTransform: 'capitalize',
-        display: 'flex',
-        gap: '16px',
-        justifyContent: variantButton === 'novaTurma' ? 'space-between' : 'center',
-        borderColor: '#5D1EF4',
-        '&:hover': {
-          backgroundColor: '#D8D8D8'
-        },
-        ...sxButton
-      }} startIcon={variantButton === 'novaTurma' && <FiPlusCircle size={25}/>} variant='outlined' onClick={onOpen}>
-        {!isNovaTurmaButton && (
-          <img src='/iconsPages/plus-circle.svg' alt='Circulo com um mais dentro' />
-        )}
-        <Typography variant='body1' color='#170050' fontWeight={700}>{textoBotaoAbrirModal}</Typography>
-      </Button>
+      {variantButton &&
+        <Button sx={{
+          borderRadius: 25,
+          textTransform: 'capitalize',
+          display: 'flex',
+          gap: '16px',
+          justifyContent: variantButton === 'novaTurma' ? 'space-between' : 'center',
+          borderColor: '#5D1EF4',
+          '&:hover': {
+            backgroundColor: '#D8D8D8'
+          },
+          ...sxButton
+        }} startIcon={variantButton === 'novaTurma' && <FiPlusCircle size={25}/>} variant='outlined' onClick={onOpen}>
+          {!isNovaTurmaButton && (
+            <img src='/iconsPages/plus-circle.svg' alt='Circulo com um mais dentro' />
+          )}
+          <Typography variant='body1' color='#170050' fontWeight={700}>{textoBotaoAbrirModal}</Typography>
+        </Button>
+      }
       <Modal
         open={showModal}
         onClose={onClose}

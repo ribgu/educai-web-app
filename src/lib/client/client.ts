@@ -19,11 +19,37 @@ export default class Client {
     })
 
     this.axios.interceptors.request.use((config) => {
-      if(!config.url?.includes('user/auth')) {
+      if(!config.url?.includes('user/auth') && !config.url?.includes('user/refreshToken')) {
         config.headers.Authorization = this.clientProps.clientToken
       }
       return config 
     })  
+
+    this.axios.interceptors.response.use(
+      response => {
+        return response
+      },
+      error => {
+        const originalRequest = error.config
+
+        console.log(error)
+        if(error.response.status === 500 && !originalRequest._retry && error.response.data.message.includes('Token has expired')) {
+          originalRequest._retry = true
+
+          return this.refreshToken().then(response => {
+            this.clientProps.clientToken = response.data.token
+            sessionStorage.setItem('token', response.data.token)
+
+            return this.axios(originalRequest)
+          }).catch(errorToken => {
+            console.error('Erro ao atualizar token:', errorToken)
+            throw errorToken
+          })
+        }
+
+        return Promise.reject(error)
+      }
+    )
   }
 
   async login(
@@ -42,6 +68,18 @@ export default class Client {
 
   async getClassroomById(classroomId: string): Promise<TurmaType> {
     return (await this.axios.get(`/classroom/${classroomId}`)).data
+  }
+
+  async deleteClassroom(classroomId: string): Promise<void> {
+    return (await this.axios.delete(`/classroom/${classroomId}`))
+  }
+
+  async updateClassroom(classroomId: string, body: {title?: string, course?: string}): Promise<void> {
+    return (await this.axios.patch(`/classroom/${classroomId}`, body))
+  }
+
+  async refreshToken() {
+    return (await this.axios.post('/user/refreshToken'))
   }
 
   // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade

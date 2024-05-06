@@ -49,6 +49,7 @@ export default function Home() {
               id={turma.id}
               isTeacher={role === 'TEACHER'}
               nextSubmission={turma.nextSubmission}
+              updateClassrooms={updateClassrooms}
             />
           ))}
         </Box>

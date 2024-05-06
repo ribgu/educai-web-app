@@ -14,7 +14,7 @@ const AuthProvider = ({ children }: Props) => {
 	}
 
 	const [token, setToken] = useState(sessionStorage.getItem('token') ?? '')
-	const tokenDecoded = getTokenDecoded(token)
+	const tokenDecoded = token ? getTokenDecoded(token) : {} as JwtDecoded
 	const [id, setId] = useState(tokenDecoded?.id ?? '')
 	const [username, setUsername] = useState(tokenDecoded?.username ?? '')
 	const [role, setRole] = useState<Role>(tokenDecoded?.role ?? '')

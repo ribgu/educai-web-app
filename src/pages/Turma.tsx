@@ -50,7 +50,6 @@ export default function Turma() {
               icone='../../public/IconsPages/turma.svg' 
               altIcone='Pessoas agrupadas' 
               textoBotaoAbrirModal='Novo Post' 
-              textoBotaoConfirmar='Postar'
               showModal={modalIsOpen}
               onClose={() => setModalIsOpen(false)}
               onOpen={() => setModalIsOpen(true)}
