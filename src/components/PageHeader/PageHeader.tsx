@@ -16,12 +16,17 @@ type PageHeaderProps = {
   title?: string
   showButton?: boolean
   createClassroom?: (title: string, course: string) => Promise<void>
+  search?: {
+    searchValue: string
+    setSearchValue: (value: string) => void
+    onSearch: () => void
+  }
 }
 
 type Tab = 'posts' | 'atividades' | 'pessoas'
 
 export default function PageHeader(PageHeaderProps: PageHeaderProps) {
-  const { title, showButton, createClassroom } = PageHeaderProps
+  const { title, showButton, search, createClassroom } = PageHeaderProps
 
   const actualTab = new URLSearchParams(window.location.search).get('tab')
   const [tab, setTab] = useState<Tab>(actualTab ? actualTab as Tab : 'posts')
@@ -30,7 +35,6 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
   const [subject, setSubject] = useState('')
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [modalIsLoading, setModalIsLoading] = useState(false)
-  const [searchValue, setSearchValue] = useState('')
 
   const createClass = () => {
     if(name && subject && createClassroom) {
@@ -98,9 +102,14 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
         )}
         
         {
-          isTurmasPage && 
+          isTurmasPage && search &&
           <Box sx={{ width: '60%' }}>
-            <SearchBar value={searchValue} setValue={setSearchValue} placeholder='Nome da Turma'/>
+            <SearchBar 
+              onSearch={search.onSearch} 
+              value={search.searchValue} 
+              setValue={search.setSearchValue} 
+              placeholder='Nome da Turma'
+            />
           </Box>
         }
 
