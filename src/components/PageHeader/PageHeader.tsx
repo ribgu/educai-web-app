@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import Modal from '../Modal/Modal'
 import Button from '@mui/material/Button'
 import { LoadingButton } from '@mui/lab'
+import SearchBar from '../SearchBar/SearchBar'
 
 type PageHeaderProps = {
   title?: string
@@ -29,6 +30,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
   const [subject, setSubject] = useState('')
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [modalIsLoading, setModalIsLoading] = useState(false)
+  const [searchValue, setSearchValue] = useState('')
 
   const createClass = () => {
     if(name && subject && createClassroom) {
@@ -94,6 +96,14 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
             </TabContext>
           </Box>
         )}
+        
+        {
+          isTurmasPage && 
+          <Box sx={{ width: '60%' }}>
+            <SearchBar value={searchValue} setValue={setSearchValue} placeholder='Nome da Turma'/>
+          </Box>
+        }
+
         {isTurmasPage && showButton && (
           <Modal
             titulo='Nova Turma'
