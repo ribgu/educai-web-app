@@ -182,9 +182,9 @@ export default function DrawerItem(props: ItemProps) {
                   </ListItemButton>
                 </Link>
               )) : 
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <Skeleton variant="rectangular" width={220} height={50} />
-                  <Skeleton variant="rectangular" width={220} height={50} />
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                  <Skeleton variant="rounded" width={140} height={25} sx={{ margin: '15px'}} />
+                  <Skeleton variant="rounded" width={140} height={25} sx={{ margin: '15px'}}/>
                 </Box>
               }
             </List>

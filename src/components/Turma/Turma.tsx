@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton/IconButton'
 import Menu from '@mui/material/Menu/Menu'
 import MenuItem from '@mui/material/MenuItem/MenuItem'
 import Typography from '@mui/material/Typography/Typography'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TurmaType } from '../../lib/types/Turma'
 import Modal from '../Modal/Modal'
 import { Button, TextField } from '@mui/material'
@@ -28,13 +28,20 @@ export default function Turma(props: TurmaProps) {
         type: null
     })
 
-    const [name, setName] = useState('')
-    const [subject, setSubject] = useState('')
+    const [name, setName] = useState(title)
+    const [subject, setSubject] = useState(course)
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation()
         setAnchorEl(event.currentTarget)
     }
+
+    useEffect(() => {
+        if(modal.isOpen) {
+            setName(title)
+            setSubject(course)
+        }
+    }, [modal.isOpen])
 
     const handleClose = (event: React.MouseEvent<HTMLLIElement, MouseEvent>, editOrDelete: string) => {
         event.stopPropagation()
@@ -79,7 +86,7 @@ export default function Turma(props: TurmaProps) {
         if(subject.trim())
             body.course = subject
 
-        client.updateClassroom(id, { title: name, course: subject }).finally(() => {
+        client.updateClassroom(id, body).finally(() => {
             setModal({
                 isLoading: false,
                 type: null,
@@ -111,9 +118,11 @@ export default function Turma(props: TurmaProps) {
                     borderBottom: '1px solid #BEBEBE',
                     borderColor: '#BEBEBE'
                 }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', 
+                    width: '100%', alignItems: 'center', gap: '10px' }}>
                         <img src='./logos/bookTwo.svg' alt='Ícone de livro' style={{ width: '26px', marginBottom: '3px' }} />
-                        <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap', fontWeight: 500 }}>{title}</Typography>
+                        <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap', 
+                        fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</Typography>
                     </Box>
                     <IconButton sx={{ justifyContent: 'end' }} size='small' onClick={handleClick}>
                         <MoreVertIcon />
@@ -136,11 +145,11 @@ export default function Turma(props: TurmaProps) {
                 <Box sx={{ width: '100%', height: '65%', padding: '8px 16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
                     <Box sx={{ display: 'flex', gap: '4px' }}>
                         <Typography sx={{ display: 'flex', fontSize: 14, color: '#5E5E5E' }}>Disciplina: </Typography>
-                        <Typography sx={{ color: '#5E5E5E', fontWeight: 700, fontSize: 14 }}>{course}</Typography>
+                        <Typography sx={{ color: '#5E5E5E', fontWeight: 700, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis' }}>{course}</Typography>
                     </Box>
 
                     <Box sx={{ display: 'flex', gap: '4px' }}>
-                        <Typography sx={{ display: 'flex', fontSize: 14, color: '#5E5E5E', whiteSpace: 'nowrap' }}>
+                        <Typography sx={{ display: 'flex', fontSize: 14, color: '#5E5E5E', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                             {isTeacher ? 'Quantidade de alunos:' : 'Próxima entrega: ' }
                         </Typography>
 
@@ -176,11 +185,13 @@ export default function Turma(props: TurmaProps) {
                                 variant='outlined'
                                 label='Nome'
                                 onChange={(e) => setName(e.target.value)}
+                                value={name}
                             />
                             <TextField
                                 variant='outlined'
                                 label='Matéria'
                                 onChange={(e) => setSubject(e.target.value)}
+                                value={subject}
                             />
                         </Box>
                     }
