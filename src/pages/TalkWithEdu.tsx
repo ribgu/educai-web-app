@@ -3,11 +3,43 @@ import Layout from './Layout'
 import PageHeader from '../components/PageHeader/PageHeader'
 import TalkButton from '../components/TalkButton/TalkButton'
 import { useAudioRecorder } from '../lib/useAudioRecorder'
-import { useAudioTranscriber } from '../lib/useAudioTranscriber'
+import Button from '@mui/material/Button'
 
 export default function TalkWithEdu() {
   const { recording, audioBlobUrl, startRecording, stopRecording } = useAudioRecorder()
-  const { transcription, transcribeAudio, isLoading, error } = useAudioTranscriber()
+
+  // const speechClient = new v2.SpeechClient({
+  //   credentials: {
+  //     client_email: 'my@project.iam.gserviceaccount.com',
+  //     private_key: '***&&&'
+  //   },
+  //   projectId: 'my-project-id'
+  // })
+
+  // const transcribeAudio = async (audioBlobUrl: string) => {
+  //   const arrayBuffer = await fetch(audioBlobUrl).then(response => response.arrayBuffer())
+  //   const unit8Array = new Uint8Array(arrayBuffer)
+  //   // try {
+  //   //   const [response] = await client.recognize({ content: unit8Array })
+  //   //   const transcription = response.results?.map(result => {
+  //   //     if (!result.alternatives) return ''
+  //   //     return result.alternatives[0].transcript
+  //   //   }).join('\n')
+  //   //   return transcription
+  //   // }
+  //   // catch (error) {
+  //   //   console.error('Error transcribing audio:', error)
+  //   // }
+  // }
+
+  const handleTranscription = async () => {
+    if (audioBlobUrl) {
+      // await transcribeAudio(audioBlobUrl).then(transcription => {
+      //   console.log(transcription)
+      // })
+      console.log(audioBlobUrl)
+    }
+  }
 
   return (
     <Layout>
@@ -25,6 +57,7 @@ export default function TalkWithEdu() {
               startRecording={startRecording}
               stopRecording={stopRecording}
             />
+            <Button onClick={handleTranscription}>Transcrever</Button>
           </Box>
         </Box>
       </Box>
