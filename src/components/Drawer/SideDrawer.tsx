@@ -26,6 +26,7 @@ export default function SideDrawer() {
     <Box
       sx={{
         borderRight: '1px solid #e0e0e0',
+        backgroundColor: '#FBFBFB',
         width: '18%',
       }}>
       <List sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height: '100%' }}>
