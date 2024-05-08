@@ -67,13 +67,13 @@ jobs:
           source: "dist/"
           target: "/home/educai/web-app"
 
-    # - name: Run Web-App in Docker Container
-    #   uses: appleboy/ssh-action@v1.0.3
-    #   with:
-    #     host: ${{ secrets.AZURE_VM_HOST }}
-    #     username: ${{ secrets.AZURE_VM_USERNAME }}
-    #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-    #     port: ${{ secrets.AZURE_VM_PORT }}
-    #     script: |
-    #       chmod +x /home/educai/script-backend.sh
-    #       sh /home/educai/script-backend.sh
+    - name: Run Web-App in Docker Container
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.AZURE_VM_HOST }}
+        username: ${{ secrets.AZURE_VM_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.AZURE_VM_PORT }}
+        script: |
+          chmod +x /home/educai/script-frontend.sh
+          sh /home/educai/script-frontend.sh
