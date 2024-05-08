@@ -165,7 +165,7 @@ export default function Turma(props: TurmaProps) {
                     titulo={modal.type === 'DELETE' ? 'Deletar turma' : 'Editar turma'}
                     altIcone={modal.type === 'DELETE' ? 'Deletar turma' : 'Editar turma'}
                     variantButton='none'
-                    icone='/iconsPages/plus-circle.svg'
+                    icone={modal.type === 'DELETE' ? '/iconsPages/iconExcluir.svg' : '/iconsPages/iconEditar.svg'}
                     showModal={modal.isOpen}
                     onClose={() => setModal({...modal, isOpen: false})}
                     onOpen={() => setModal({...modal, isOpen: true})}
