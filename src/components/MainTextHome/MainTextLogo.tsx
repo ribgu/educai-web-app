@@ -1,4 +1,4 @@
-import Typography from "../Typography/Typography"
+import Typography from '../Typography/Typography'
 
 export default function MainTextLogo() {
     return (

@@ -6,7 +6,16 @@ export default function Teste() {
     <div style={{
       width: '500px'
     }}>
-      <Modal variantButton='sm' titulo='Nova turma' icone='../../public/IconsPages/turma.svg' altIcone='Pessoas agrupadas' textoBotaoAbrirModal='Nova Turma' textoBotaoConfirmar='Criar'>
+      <Modal 
+        showModal={true} 
+        onClose={() => console.log('Fechou')} 
+        onOpen={() => console.log('Abriu')} 
+        variantButton='sm' 
+        titulo='Nova turma' 
+        icone='/IconsPages/turma.svg' 
+        altIcone='Pessoas agrupadas' 
+        textoBotaoAbrirModal='Nova Turma'
+      >
         <TextField variant='outlined' label='Nome*'/>
         <TextField variant='outlined' label='Disciplina*'/>
       </Modal>
