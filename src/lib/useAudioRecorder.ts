@@ -42,10 +42,10 @@ export const useAudioRecorder = () => {
   // Se eu não passar um array vazio, o useEffect vai ser executado toda vez que o componente for renderizado
 
   const startRecording = () => {
-    if (mediaRecorder && !recording) {
+    if (mediaRecorder) {
       mediaRecorder.start()
-      setRecording(true)
     }
+    setRecording(true)
   }
 
   const stopRecording = () => {

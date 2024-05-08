@@ -3,41 +3,27 @@ import Layout from './Layout'
 import PageHeader from '../components/PageHeader/PageHeader'
 import TalkButton from '../components/TalkButton/TalkButton'
 import { useAudioRecorder } from '../lib/useAudioRecorder'
-import Button from '@mui/material/Button'
+import useAiClient from '../lib/client/useAIClient'
+import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 export default function TalkWithEdu() {
   const { recording, audioBlobUrl, startRecording, stopRecording } = useAudioRecorder()
+  const [transcription, setTranscription] = useState<string>('')
+  const [response, setResponse] = useState<string>()
+  const client = useAiClient()
+  console.log(transcription)
 
-  // const speechClient = new v2.SpeechClient({
-  //   credentials: {
-  //     client_email: 'my@project.iam.gserviceaccount.com',
-  //     private_key: '***&&&'
-  //   },
-  //   projectId: 'my-project-id'
-  // })
-
-  // const transcribeAudio = async (audioBlobUrl: string) => {
-  //   const arrayBuffer = await fetch(audioBlobUrl).then(response => response.arrayBuffer())
-  //   const unit8Array = new Uint8Array(arrayBuffer)
-  //   // try {
-  //   //   const [response] = await client.recognize({ content: unit8Array })
-  //   //   const transcription = response.results?.map(result => {
-  //   //     if (!result.alternatives) return ''
-  //   //     return result.alternatives[0].transcript
-  //   //   }).join('\n')
-  //   //   return transcription
-  //   // }
-  //   // catch (error) {
-  //   //   console.error('Error transcribing audio:', error)
-  //   // }
-  // }
-
-  const handleTranscription = async () => {
+  const handleSendAudioToEdu = async () => {
     if (audioBlobUrl) {
-      // await transcribeAudio(audioBlobUrl).then(transcription => {
-      //   console.log(transcription)
-      // })
-      console.log(audioBlobUrl)
+      console.log('Sending audio to Edu')
+      const audioBuffer = await fetch(audioBlobUrl).then(response => response.arrayBuffer())
+      const fileName = uuidv4() + '.mp3'
+      const transcribeResponse = await client.transcribe(audioBuffer, fileName)
+      setTranscription(transcribeResponse.data.text)
+      const eduResponse = await client.getResponse(transcribeResponse.data.text)
+      console.log(eduResponse.response)
+      setResponse(eduResponse.response)
     }
   }
 
@@ -49,18 +35,24 @@ export default function TalkWithEdu() {
         </Box>
         <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px', flexDirection: 'column'}}>
           <Box sx={{ width: '100%', height: '80%'}}>
+            {response && (
+              <Box sx={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <p>{response}</p>
+              </Box>
+            )}
           </Box>
           <Box sx={{ width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <TalkButton
-              recording={recording}
+              recording={recording || false}
               audioBlobUrl={audioBlobUrl}
               startRecording={startRecording}
               stopRecording={stopRecording}
+              handleSendAudioToEdu={handleSendAudioToEdu}
             />
-            <Button onClick={handleTranscription}>Transcrever</Button>
           </Box>
         </Box>
       </Box>
     </Layout>
   )
 }
+
