@@ -1,25 +1,86 @@
 import axios, { AxiosInstance } from 'axios'
 import { UserLogin } from '../types/Login'
 import { EduResponse } from '../types/EduResponse'
+import { TurmaType } from '../types/Turma'
 
-type ClientType = 'ia-api' | 'api'
+type ClientProps = {
+  clientType: 'ia-api' | 'api',
+  clientToken: string
+}
 
 export default class Client {
   private axios: AxiosInstance
-  private clientType: ClientType
+  private clientProps: ClientProps
 
-  constructor(clientType: ClientType) {
-    this.clientType = clientType
+  constructor(clientProps: ClientProps) {
+    this.clientProps = clientProps
     this.axios = axios.create({
-      baseURL: this.clientType === 'ia-api' ? import.meta.env.VITE_API_URL_IA : import.meta.env.VITE_API_URL,
+      baseURL: this.clientProps.clientType === 'ia-api' ? import.meta.env.VITE_API_URL_IA : import.meta.env.VITE_API_URL,
       withCredentials: true
     })
+
+    this.axios.interceptors.request.use((config) => {
+      if(!config.url?.includes('user/auth') && !config.url?.includes('user/refreshToken')) {
+        config.headers.Authorization = this.clientProps.clientToken
+      }
+      return config
+    })
+
+    this.axios.interceptors.response.use(
+      response => {
+        return response
+      },
+      error => {
+        const originalRequest = error.config
+
+        console.log(error)
+        if(error.response.status === 500 && !originalRequest._retry && error.response.data.message.includes('Token has expired')) {
+          originalRequest._retry = true
+
+          return this.refreshToken().then(response => {
+            this.clientProps.clientToken = response.data.token
+            sessionStorage.setItem('token', response.data.token)
+
+            return this.axios(originalRequest)
+          }).catch(errorToken => {
+            console.error('Erro ao atualizar token:', errorToken)
+            throw errorToken
+          })
+        }
+
+        return Promise.reject(error)
+      }
+    )
   }
 
   async login(
     body: UserLogin
-  ) {
-    return (await this.axios.get('login', { data: body })).data
+  ): Promise<{token: string}> {
+    return (await this.axios.post('user/auth', body)).data
+  }
+
+  async getUserClassrooms() {
+    return (await this.axios.get('/user/classrooms')).data
+  }
+
+  async createClassroom(body: {title: string, course: string}): Promise<void> {
+    return (await this.axios.post('/classroom', body))
+  }
+
+  async getClassroomById(classroomId: string): Promise<TurmaType> {
+    return (await this.axios.get(`/classroom/${classroomId}`)).data
+  }
+
+  async deleteClassroom(classroomId: string): Promise<void> {
+    return (await this.axios.delete(`/classroom/${classroomId}`))
+  }
+
+  async updateClassroom(classroomId: string, body: {title?: string, course?: string}): Promise<void> {
+    return (await this.axios.patch(`/classroom/${classroomId}`, body))
+  }
+
+  async refreshToken() {
+    return (await this.axios.post('/user/refreshToken'))
   }
 
   async transcribe(
