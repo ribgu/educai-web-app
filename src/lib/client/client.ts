@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 import { UserLogin } from '../types/Login'
+import { EduResponse } from '../types/EduResponse'
 import { TurmaType } from '../types/Turma'
 
 type ClientProps = {
@@ -22,8 +23,8 @@ export default class Client {
       if(!config.url?.includes('user/auth') && !config.url?.includes('user/refreshToken')) {
         config.headers.Authorization = this.clientProps.clientToken
       }
-      return config 
-    })  
+      return config
+    })
 
     this.axios.interceptors.response.use(
       response => {
@@ -53,7 +54,7 @@ export default class Client {
   }
 
   async login(
-    body: UserLogin 
+    body: UserLogin
   ): Promise<{token: string}> {
     return (await this.axios.post('user/auth', body)).data
   }
@@ -80,6 +81,24 @@ export default class Client {
 
   async refreshToken() {
     return (await this.axios.post('/user/refreshToken'))
+  }
+
+  async transcribe(
+    audioBuffer: ArrayBuffer,
+    fileName: string
+  ) {
+    const formData = new FormData()
+    const audioBlob = new Blob([audioBuffer], { type: 'audio/mp3' })
+    formData.append('file', audioBlob, fileName)
+    return (await this.axios.post('transcription', formData))
+  }
+
+  async getResponse(
+    question: string
+  ): Promise<EduResponse>{
+    const request = await this.axios.post('edu-response', { question } )
+    console.log(request)
+    return request.data
   }
 
   // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade

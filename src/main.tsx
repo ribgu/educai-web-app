@@ -13,6 +13,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom'
+import TalkWithEdu from './pages/TalkWithEdu.tsx'
 import AuthProvider from './providers/AuthProvider.tsx'
 
 const router = createBrowserRouter([
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: '/teste',
     element: <Teste />
+  },
+  {
+    path: '/edu',
+    element: <TalkWithEdu />
   }
 ])
 

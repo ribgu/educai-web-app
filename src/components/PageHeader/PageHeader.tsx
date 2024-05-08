@@ -46,7 +46,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
     }
   }
 
-  const isTurmasPage = title === 'Turmas'
+  const isTabsNecessary = title === 'Turmas' || title === 'Falando com o Edu'
 
   const handleChange = (e: React.SyntheticEvent, newTab: Tab) => {
     const url = new URL(window.location.href)
@@ -73,7 +73,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
             {title}
           </Typography>
         </Box>
-        {!isTurmasPage && (
+        {!isTabsNecessary && (
           <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '5px' }}>
             <TabContext value={tab}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -100,20 +100,19 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
             </TabContext>
           </Box>
         )}
-        
-        {
-          isTurmasPage && search &&
+
+        {search &&
           <Box sx={{ width: '60%' }}>
-            <SearchBar 
-              onSearch={search.onSearch} 
-              value={search.searchValue} 
-              setValue={search.setSearchValue} 
+            <SearchBar
+              onSearch={search.onSearch}
+              value={search.searchValue}
+              setValue={search.setSearchValue}
               placeholder='Nome da Turma'
             />
           </Box>
         }
 
-        {isTurmasPage && showButton && (
+        {showButton && (
           <Modal
             titulo='Nova Turma'
             textoBotaoAbrirModal='Nova Turma'
