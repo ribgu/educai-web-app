@@ -16,8 +16,8 @@ export default function TalkButton(props: TalkButtonProps) {
     <Button
       sx={{ width: '24vw', padding: '16px', borderRadius: '10px', marginTop: '24px'}}
       onClick={recording ? stopRecording : startRecording}
-      color="primary"
-      variant="contained"
+      color='primary'
+      variant='contained'
     >
       {recording ? <StopCircle /> : <MicIcon />}
     </Button>
