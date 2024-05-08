@@ -41,7 +41,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: build
+        name: web-app
         path: dist/
         
   CD:
@@ -54,7 +54,7 @@ jobs:
     - name: Download Artifacts
       uses: actions/download-artifact@v4
       with:
-          name: application
+          name: web-app
           path: dist/
           
     - name: Deploy to Azure VM
