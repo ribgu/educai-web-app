@@ -8,7 +8,16 @@ export default {
 
 export const Example = () => {
   return (
-    <Modal variantButton='lg' titulo='Novo Post' icone='./IconsPages/turma.svg' altIcone='Pessoas agrupadas' textoBotaoAbrirModal='Novo Post' textoBotaoConfirmar='Postar'>
+    <Modal 
+      variantButton='lg' 
+      titulo='Novo Post' 
+      icone='/IconsPages/turma.svg' 
+      altIcone='Pessoas agrupadas' 
+      textoBotaoAbrirModal='Novo Post' 
+      showModal={true} 
+      onClose={() => console.log('Fechou')} 
+      onOpen={() => console.log('Abriu')} 
+    >
       <TextField variant='outlined' label='Título*' />
       <TextField variant='outlined' label='Descrição*' />
       <TextField variant='outlined' label='Upload de arquivo' />

@@ -120,7 +120,7 @@ export default function Turma(props: TurmaProps) {
                 }}>
                     <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', 
                     width: '100%', alignItems: 'center', gap: '10px' }}>
-                        <img src='./logos/bookTwo.svg' alt='Ícone de livro' style={{ width: '26px', marginBottom: '3px' }} />
+                        <img src='/logos/bookTwo.svg' alt='Ícone de livro' style={{ width: '26px', marginBottom: '3px' }} />
                         <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap', 
                         fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</Typography>
                     </Box>

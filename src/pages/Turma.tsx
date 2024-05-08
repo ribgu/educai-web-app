@@ -47,7 +47,7 @@ export default function Turma() {
 
             <Modal 
               variantButton='lg' titulo='Novo Post' 
-              icone='../../public/IconsPages/turma.svg' 
+              icone='/IconsPages/turma.svg' 
               altIcone='Pessoas agrupadas' 
               textoBotaoAbrirModal='Novo Post' 
               showModal={modalIsOpen}
