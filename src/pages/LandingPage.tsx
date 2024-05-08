@@ -36,7 +36,7 @@ export default function LandingPage() {
                         </div>
                     </div>
 
-                    <div className='flex flex-col w-full h-[85%] bg-[url(../../public/Gradientes/gradienteHome.png)] bg-no-repeat bg-center justify-center items-center'>
+                    <div className='flex flex-col w-full h-[85%] bg-[url(/Gradientes/gradienteHome.png)] bg-no-repeat bg-center justify-center items-center'>
                         <MainTextLogo />
 
                         <div className='flex w-full justify-center gap-12 mt-12'>
@@ -50,13 +50,13 @@ export default function LandingPage() {
             {/* Solutions */}
             <div className='flex flex-col h-screen items-center justify-center bg-dark'>
                 <div className='flex w-[85%] flex-wrap justify-between gap-y-16'>
-                    <LpCard figure='./IconCards/iconCard01.svg' iconSide='./IconCards/miniIconCard01.svg'
+                    <LpCard figure='/IconCards/iconCard01.svg' iconSide='/IconCards/miniIconCard01.svg'
                         title={<>Create <span className='text-purple-300'>Exercises</span> In Minute</>} subTitle='With AI Copilot' />
-                    <LpCard figure='./IconCards/iconCard02.svg' iconSide='./IconCards/miniIconCard02.svg'
+                    <LpCard figure='/IconCards/iconCard02.svg' iconSide='/IconCards/miniIconCard02.svg'
                         title={<>Students More <span className='text-purple-300'>Engaged</span></>} subTitle='With AI Copilot' />
-                    <LpCard figure='./IconCards/iconCard03.svg' iconSide='./IconCards/miniIconCard03.svg'
+                    <LpCard figure='/IconCards/iconCard03.svg' iconSide='/IconCards/miniIconCard03.svg'
                         title={<>Focus On Language <span className='text-purple-300'>Practice</span></>} subTitle='With AI Copilot' />
-                    <LpCard figure='./public/IconCards/iconCard04.svg' iconSide='./IconCards/miniIconCard04.svg'
+                    <LpCard figure='/IconCards/iconCard04.svg' iconSide='/IconCards/miniIconCard04.svg'
                         title={<>We Believe In <span className='text-purple-300'>Realtime Feedbacks</span></>} subTitle='With AI Copilot' />
                 </div>
             </div>
@@ -91,7 +91,7 @@ export default function LandingPage() {
             <div className='flex flex-col h-screen items-center bg-dark'>
                 <div className='flex flex-col cp w-[80%] h-full justify-center items-center gap-3'>
                     <Typography variant='lp-team-title'>OUR TEAM</Typography>
-                    <img src='../../public/Logos/logoSemIcon.svg'></img>
+                    <img src='./Logos/logoSemIcon.svg'></img>
                     <CardTeam/>
                 </div>
             </div>

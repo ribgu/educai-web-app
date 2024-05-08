@@ -1,26 +1,27 @@
-import SlideLogin from '../components/SlidesLogin/SlidesLogin'
-import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
-import Logo from '../components/Logo/Logo'
-import Divider from '@mui/material/Divider'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
-import { useState } from 'react'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import { useContext, useState } from 'react'
 import { useAsyncCallback } from 'react-async-hook'
-import useClient from '../lib/client/useClient'
 import { useNavigate } from 'react-router-dom'
+import Logo from '../components/Logo/Logo'
+import SlideLogin from '../components/SlidesLogin/SlidesLogin'
+import { AuthContext } from '../contexts/AuthContext'
+import useClient from '../lib/client/useClient'
 
 export default function Login() {
     const client = useClient()
+    const { updateAuthData } = useContext(AuthContext)
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const handleLogin = useAsyncCallback(async () => {
         await client.login({ email, password }).then((res) => {
-            console.log(res) // colocar login e senha na sessão
-            navigate('/turmas')
+            updateAuthData(res.token)
+            navigate('/home')
         })
     })
 
@@ -99,29 +100,7 @@ export default function Login() {
                         gap: '10px',
                         justifyContent: 'center',
                     }}>
-                        <Divider sx={{ width: '45%' }} />
-                        <Typography variant='body2'>ou</Typography>
-                        <Divider sx={{ width: '45%' }} />
                     </Box>
-
-                    <Button sx={{
-                        backgroundColor: 'white',
-                        border: '1px solid #8E8E8E',
-                        color: 'black',
-                        '&:hover': {
-                            border: '1px solid #8E8E8E',
-                            backgroundColor: '#E5E5E5',
-                        },
-                        paddingY: '12px',
-                        gap: '10px'
-                    }} variant='outlined'>
-                        <img style={{
-                            width: '20px',
-                            height: '20px',
-                        }}
-                            src='../../../public/Illustration/iconGoogle.png' alt='Icone G do Google' />
-                        <Typography variant='body2'>Entrar com o Google</Typography>
-                    </Button>
                 </Box>
             </Box>
         </Box>

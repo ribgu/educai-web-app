@@ -8,28 +8,45 @@ import Typography from '@mui/material/Typography/Typography'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Modal from '../Modal/Modal'
+import Button from '@mui/material/Button'
+import { LoadingButton } from '@mui/lab'
+import SearchBar from '../SearchBar/SearchBar'
 
 type PageHeaderProps = {
-  title: string
+  title?: string
+  showButton?: boolean
+  createClassroom?: (title: string, course: string) => Promise<void>
+  search?: {
+    searchValue: string
+    setSearchValue: (value: string) => void
+    onSearch: () => void
+  }
 }
 
 type Tab = 'posts' | 'atividades' | 'pessoas'
 
 export default function PageHeader(PageHeaderProps: PageHeaderProps) {
-  const { title } = PageHeaderProps
+  const { title, showButton, search, createClassroom } = PageHeaderProps
 
   const actualTab = new URLSearchParams(window.location.search).get('tab')
   const [tab, setTab] = useState<Tab>(actualTab ? actualTab as Tab : 'posts')
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [subject, setSubject] = useState('')
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [modalIsLoading, setModalIsLoading] = useState(false)
 
   const createClass = () => {
-    console.log(name)
-    console.log(subject)
+    if(name && subject && createClassroom) {
+      setModalIsLoading(true)
+      createClassroom(name, subject).finally(() => {
+        setModalIsLoading(false)
+        setModalIsOpen(false)
+      })
+    }
   }
 
-  const isTurmasPage = title === 'Turmas'
+  const isTabsNecessary = title === 'Turmas' || title === 'Falando com o Edu'
 
   const handleChange = (e: React.SyntheticEvent, newTab: Tab) => {
     const url = new URL(window.location.href)
@@ -56,7 +73,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
             {title}
           </Typography>
         </Box>
-        {!isTurmasPage && (
+        {!isTabsNecessary && (
           <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '5px' }}>
             <TabContext value={tab}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -83,26 +100,65 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
             </TabContext>
           </Box>
         )}
-        {isTurmasPage && (
+
+        {search &&
+          <Box sx={{ width: '60%' }}>
+            <SearchBar
+              onSearch={search.onSearch}
+              value={search.searchValue}
+              setValue={search.setSearchValue}
+              placeholder='Nome da Turma'
+            />
+          </Box>
+        }
+
+        {showButton && (
           <Modal
             titulo='Nova Turma'
             textoBotaoAbrirModal='Nova Turma'
             altIcone='Nova Turma'
             variantButton='novaTurma'
             icone='/iconsPages/plus-circle.svg'
-            textoBotaoConfirmar='Criar Turma'
-            onClick={createClass}
+            showModal={modalIsOpen}
+            onClose={() => setModalIsOpen(false)}
+            onOpen={() => setModalIsOpen(true)}
           >
             <TextField
               variant='outlined'
-              label='Nome'
+              label='Nome*'
               onChange={(e) => setName(e.target.value)}
               />
             <TextField
              variant='outlined'
-             label='Matéria'
-            onChange={(e) => setSubject(e.target.value)}
-             />
+             label='Matéria*'
+              onChange={(e) => setSubject(e.target.value)}
+            />
+
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginTop: '10px'
+            }}>
+              <Button sx={{
+                color: 'black',
+                borderColor: '#5D1EF4',
+                '&:hover': {
+                  backgroundColor: '#D8D8D8'
+                },
+                paddingY: '12px',
+                width: '48%'
+              }} variant='outlined' onClick={() => setModalIsOpen(false)}>Cancelar</Button>
+
+              <LoadingButton sx={{
+                backgroundColor: '#6730EC',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: '#4D1EAD'
+                },
+                paddingY: '12px',
+                width: '48%'
+              }} variant='contained' onClick={createClass} loading={modalIsLoading}>Criar turma</LoadingButton>
+            </Box>
           </Modal>
         )}
       </Box>

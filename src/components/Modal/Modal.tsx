@@ -7,14 +7,15 @@ import * as React from 'react'
 import { FiPlusCircle } from 'react-icons/fi'
 
 type ModalProps = {
-  variantButton: 'sm' | 'lg' | 'novaTurma'
+  variantButton: 'sm' | 'lg' | 'novaTurma' | 'none'
   titulo: string
   icone: string
   altIcone: string
-  textoBotaoConfirmar: string
-  textoBotaoAbrirModal: string
-  onClick?: () => void
+  textoBotaoAbrirModal?: string
   children: React.ReactNode
+  showModal: boolean
+  onClose: () => void
+  onOpen: () => void
 }
 
 export default function BasicModal(props: ModalProps) {
@@ -22,18 +23,18 @@ export default function BasicModal(props: ModalProps) {
     variantButton,
     titulo,
     icone,
-    textoBotaoConfirmar,
     children,
     altIcone,
-    onClick,
-    textoBotaoAbrirModal
+    textoBotaoAbrirModal,
+    showModal,
+    onClose,
+    onOpen
   } = props
 
   const isNovaTurmaButton = titulo === 'Nova Turma'
 
   const variantsButtonStyle = {
-    'novaTurma':
-    {
+    'novaTurma': {
       width: 'fix-content'
     },
     'sm': {
@@ -41,37 +42,38 @@ export default function BasicModal(props: ModalProps) {
     },
     'lg': {
       width: '100%'
+    },
+    'none': {
+      display: 'none'
     }
   }
 
   const sxButton = variantsButtonStyle[variantButton]
 
-  const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
   return (
     <>
-      <Button sx={{
-        borderRadius: 25,
-        textTransform: 'capitalize',
-        display: 'flex',
-        gap: '16px',
-        justifyContent: 'space-between',
-        borderColor: '#5D1EF4',
-        '&:hover': {
-          backgroundColor: '#D8D8D8'
-        },
-        ...sxButton
-      }} startIcon={<FiPlusCircle size={25}/>} variant='outlined' onClick={handleOpen}>
-        {!isNovaTurmaButton && (
-          <img src='/iconsPages/plus-circle.svg' alt='Circulo com um mais dentro' />
-        )}
-        <Typography variant='body1' color='#170050' fontWeight={700}>{textoBotaoAbrirModal}</Typography>
-      </Button>
+      {variantButton &&
+        <Button sx={{
+          borderRadius: 25,
+          textTransform: 'capitalize',
+          display: 'flex',
+          gap: '16px',
+          justifyContent: variantButton === 'novaTurma' ? 'space-between' : 'center',
+          borderColor: '#5D1EF4',
+          '&:hover': {
+            backgroundColor: '#D8D8D8'
+          },
+          ...sxButton
+        }} startIcon={variantButton === 'novaTurma' && <FiPlusCircle size={25}/>} variant='outlined' onClick={onOpen}>
+          {!isNovaTurmaButton && (
+            <img src='/iconsPages/plus-circle.svg' alt='Circulo com um mais dentro' />
+          )}
+          <Typography variant='body1' color='#170050' fontWeight={700}>{textoBotaoAbrirModal}</Typography>
+        </Button>
+      }
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={showModal}
+        onClose={onClose}
       >
         <Box sx={{
           position: 'absolute',
@@ -108,33 +110,6 @@ export default function BasicModal(props: ModalProps) {
           }} />
 
           {children}
-
-          <Box sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: '10px'
-          }}>
-
-            <Button sx={{
-              color: 'black',
-              borderColor: '#5D1EF4',
-              '&:hover': {
-                backgroundColor: '#D8D8D8'
-              },
-              paddingY: '12px',
-              width: '48%'
-            }} variant='outlined' onClick={handleClose}>Cancelar</Button>
-
-            <Button sx={{
-              backgroundColor: '#6730EC',
-              color: 'white',
-              '&:hover': {
-                backgroundColor: '#4D1EAD'
-              },
-              paddingY: '12px',
-              width: '48%'
-            }} variant='contained' onClick={onClick}>{textoBotaoConfirmar}</Button>
-          </Box>
         </Box>
       </Modal>
     </>

@@ -1,18 +1,20 @@
+import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import ThemeProvider from '@mui/material/styles/ThemeProvider'
-import theme from './lib/theme.ts'
 import './index.css'
-import LandingPage from './pages/LandingPage'
+import theme from './lib/theme.ts'
 import Home from './pages/Home.tsx'
-import Turma from './pages/Turma'
+import LandingPage from './pages/LandingPage'
 import Login from './pages/Login'
 import Teste from './pages/Teste'
+import Turma from './pages/Turma'
 
 import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom'
+import TalkWithEdu from './pages/TalkWithEdu.tsx'
+import AuthProvider from './providers/AuthProvider.tsx'
 
 const router = createBrowserRouter([
   {
@@ -34,13 +36,19 @@ const router = createBrowserRouter([
   {
     path: '/teste',
     element: <Teste />
+  },
+  {
+    path: '/edu',
+    element: <TalkWithEdu />
   }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-    <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>,
 )

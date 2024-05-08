@@ -1,5 +1,5 @@
 import Footer from './Footer'
-import "../../index.css"
+import '../../index.css'
 
 export default {
     title: 'Components/Footer'
