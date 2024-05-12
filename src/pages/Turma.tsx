@@ -45,10 +45,12 @@ export default function Turma() {
             )}
             {tab === 'atividades' && (
               <>
+              {/* Atividades */}
               </>
             )}
             {tab === 'pessoas' && (
               <>
+              {/* Pessoas */}
               </>
             )}
           </Box>
