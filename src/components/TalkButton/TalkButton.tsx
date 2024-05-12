@@ -14,7 +14,6 @@ export default function TalkButton(props: TalkButtonProps) {
   const { recording, startRecording, stopRecording, handleSendAudioToEdu } = props
 
   const onClick = async () => {
-    console.log(recording)
     if (recording) {
       stopRecording()
       handleSendAudioToEdu()
@@ -23,14 +22,8 @@ export default function TalkButton(props: TalkButtonProps) {
     }
   }
 
-  const automaticClick = () => {
-    onClick()
-    onClick()
-  }
-
   return (
     <Button
-      onLoad={automaticClick}
       sx={{ width: '24vw', padding: '16px', borderRadius: '10px', marginTop: '24px'}}
       onClick={onClick}
       color='primary'
