@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { TurmaType } from '../lib/types/Turma'
 import useClient from '../lib/client/useClient'
+import Leaderboard from '../components/Leaderboard/Leaderboard'
 
 export default function Turma() {
   const client = useClient()
@@ -37,7 +38,7 @@ export default function Turma() {
         </Box>
         <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px' }}>
           <Box sx={{
-            width: '50%',
+            width: '65%',
             height: '100%',
             gap: '16px',
             display: 'flex',
@@ -89,6 +90,9 @@ export default function Turma() {
               <Post dtPublicacao={postProps.dtPublicacao} title={postProps.title}/>
             </Box>
           </Box>
+
+          <Leaderboard />
+
         </Box>
       </Box>
     </Layout>
