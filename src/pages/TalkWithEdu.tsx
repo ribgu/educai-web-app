@@ -4,17 +4,20 @@ import PageHeader from '../components/PageHeader/PageHeader'
 import TalkButton from '../components/TalkButton/TalkButton'
 import { useAudioRecorder } from '../lib/useAudioRecorder'
 import useAiClient from '../lib/client/useAIClient'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 export default function TalkWithEdu() {
   const { recording, audioBlobUrl, startRecording, stopRecording } = useAudioRecorder()
   const [transcription, setTranscription] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [response, setResponse] = useState<string>()
   const client = useAiClient()
   console.log(transcription)
 
   const handleSendAudioToEdu = async () => {
+    setResponse('')
+    setIsLoading(true)
     if (audioBlobUrl) {
       console.log('Sending audio to Edu')
       const audioBuffer = await fetch(audioBlobUrl).then(response => response.arrayBuffer())
@@ -24,8 +27,15 @@ export default function TalkWithEdu() {
       const eduResponse = await client.getResponse(transcribeResponse.data.text)
       console.log(eduResponse.response)
       setResponse(eduResponse.response)
+      setIsLoading(false)
     }
   }
+
+  useEffect(() => {
+    if (audioBlobUrl) {
+      handleSendAudioToEdu()
+    }
+  }, [audioBlobUrl])
 
   return (
     <Layout>
@@ -40,6 +50,11 @@ export default function TalkWithEdu() {
                 <p>{response}</p>
               </Box>
             )}
+            {isLoading && (
+              <Box sx={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <p>Edu está gravando audio...</p>
+              </Box>
+            )}
           </Box>
           <Box sx={{ width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <TalkButton
@@ -47,7 +62,6 @@ export default function TalkWithEdu() {
               audioBlobUrl={audioBlobUrl}
               startRecording={startRecording}
               stopRecording={stopRecording}
-              handleSendAudioToEdu={handleSendAudioToEdu}
             />
           </Box>
         </Box>
