@@ -7,17 +7,15 @@ type TalkButtonProps = {
   audioBlobUrl: string | null
   startRecording: () => void
   stopRecording: () => void
-  handleSendAudioToEdu: () => void
 }
 
 export default function TalkButton(props: TalkButtonProps) {
-  const { recording, startRecording, stopRecording, handleSendAudioToEdu } = props
+  const { recording, startRecording, stopRecording } = props
 
   const onClick = async () => {
     console.log(recording)
     if (recording) {
       stopRecording()
-      handleSendAudioToEdu()
     } else {
       startRecording()
     }
