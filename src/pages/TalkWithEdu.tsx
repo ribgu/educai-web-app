@@ -16,6 +16,7 @@ type Messages = {
 export default function TalkWithEdu() {
   const { recording, audioBlobUrl, startRecording, stopRecording } = useAudioRecorder()
   const [transcription, setTranscription] = useState<string>('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [response, setResponse] = useState<string>()
   const client = useAiClient()
@@ -40,16 +41,17 @@ export default function TalkWithEdu() {
     if (audioBlobUrl) {
       handleSendAudioToEdu()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioBlobUrl])
 
   useEffect(() => {
-    if (transcription) {
+    if (transcription && !messages.some(msg => msg.message === transcription && msg.isUser)) {
       setMessages([...messages, { message: transcription, isUser: true }])
     }
     if (response) {
       setMessages([...messages, { message: response, isUser: false }])
     }
-  }, [messages, transcription, response])
+  }, [transcription, response])
 
   return (
     <Layout>
