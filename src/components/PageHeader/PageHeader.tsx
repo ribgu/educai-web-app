@@ -48,11 +48,10 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
 
   const isTabsNecessary = title === 'Turmas' || title === 'Falando com o Edu'
 
-  const handleChange = (e: React.SyntheticEvent, newTab: Tab) => {
+  const handleChange = (_e: React.SyntheticEvent, newTab: Tab) => {
     const url = new URL(window.location.href)
     navigate(`${url.pathname}?tab=${newTab}`)
     setTab(newTab)
-    console.log(e) // se tirar o log o ts reclama que eu nao usei, e pra funcionar as tabs tem que ter o parametro e
   }
 
   return (
