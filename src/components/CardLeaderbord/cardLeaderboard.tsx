@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box/Box'
-import Typography from '../Typography/Typography'
+import Typography from '@mui/material/Typography/Typography'
 
 type CardLeaderboardProps = {
     nome: React.ReactNode,
@@ -19,17 +19,20 @@ export default function CardLeaderboard(props: CardLeaderboardProps) {
             alignItems: 'center',
             justifyContent: 'space-between',
             borderRadius: '8px',
-            gap: '10px',
             paddingX: '16px',
         }}>
-            <Typography variant='h3'>{posicao}</Typography>
+            <Typography variant='h6'>{posicao}</Typography>
             <img src={foto} style={{
                 width: '40px',
                 height: '40px',
                 borderRadius: '50%'
             }} alt="Foto do aluno" />
-            <Typography variant='body1'>{nome}</Typography>
-            <Typography variant='body1'>{acertos}</Typography>
+            <Typography sx={{
+                width: '40%',
+            }} variant='body1'>{nome}</Typography>
+            <Typography sx={{
+                width: '15%',
+            }} variant='body1'>{acertos}</Typography>
         </Box>
     )
 }
