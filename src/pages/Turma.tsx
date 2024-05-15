@@ -56,7 +56,7 @@ export default function Turma() {
             )}
           </Box>
 
-          <Leaderboard />
+          <Leaderboard/>
 
         </Box>
       </Box>
