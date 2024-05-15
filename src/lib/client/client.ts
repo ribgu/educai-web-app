@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from 'axios'
 import { UserLogin } from '../types/Login'
 import { EduResponse } from '../types/EduResponse'
 import { TurmaType } from '../types/Turma'
+import { LeaderboardType } from '../types/Leaderboard'
 
 type ClientProps = {
   clientType: 'ia-api' | 'api',
@@ -77,6 +78,10 @@ export default class Client {
 
   async updateClassroom(classroomId: string, body: {title?: string, course?: string}): Promise<void> {
     return (await this.axios.patch(`/classroom/${classroomId}`, body))
+  }
+
+  async getLeaderboard(classroomId: string): Promise<LeaderboardType> {
+    return (await this.axios.get(`/classroom/${classroomId}/leaderboard`)).data
   }
 
   async refreshToken() {
