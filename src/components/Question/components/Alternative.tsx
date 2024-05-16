@@ -4,18 +4,20 @@ import Radio from '@mui/material/Radio/Radio'
 import CloseIcon from '@mui/icons-material/Close'
 
 type AlternativeProps = {
-    alternative: string
+    text: string
+    selected?: boolean
+    handleSelectAlternative?: () => void
+    handleDeleteAlternative?: () => void
+    handleChangeName?: (value: string) => void
 }
 
 export default function Alternative(props: AlternativeProps) {
-    const { alternative } = props
+    const { text, selected, handleSelectAlternative, handleDeleteAlternative, handleChangeName } = props
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Box sx={{ display: 'flex', width: '100%'}}>
-                <Radio />
-                <TextField size='small' sx={{ width: '100%' }} value={alternative}/>
-            </Box>
-            <IconButton >
+        <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center' }} >
+            <Radio checked={selected} onClick={handleSelectAlternative} />
+            <TextField size='small' value={text} onChange={(e) => handleChangeName?.(e.target.value)} />
+            <IconButton onClick={handleDeleteAlternative}>
                 <CloseIcon />
             </IconButton>
         </Box>
