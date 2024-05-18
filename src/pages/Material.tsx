@@ -6,6 +6,7 @@ import { RiLink } from 'react-icons/ri'
 import { useState } from 'react'
 import FileInput from '../components/FileInput/FileInput'
 import { CiMusicNote1 } from 'react-icons/ci'
+import { LuFile } from 'react-icons/lu'
 
 export default function Material() {
     const [file, setFile] = useState<File | null>(null)
@@ -13,6 +14,11 @@ export default function Material() {
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFile(event.target.files ? event.target.files[0] : null)
     }
+
+    const [instrucoesIsChecked, setInstrucoesIsChecked] = useState(true)
+    const [documentoIsChecked, setDocumentoIsChecked] = useState(false)
+    const [linkYoutubeIsChecked, setLinkYoutubeIsChecked] = useState(false)
+    const [mp3IsChecked, setMp3IsChecked] = useState(false)
 
     return (
         <Layout>
@@ -34,15 +40,10 @@ export default function Material() {
 
                     <FormGroup>
                         <Box sx={{ display: 'flex', gap: '10px' }}>
-                            <CheckBox 
-                                label="Instruções" 
-                                defaultChecked
-                                checked={isChecked}
-                                onChange={handleCheckboxChange} 
-                            />
-                            <CheckBox label="Documento" />
-                            <CheckBox label="Link Youtube" />
-                            <CheckBox label="MP3" />
+                            <CheckBox checked={instrucoesIsChecked} setChecked={setInstrucoesIsChecked} label="Instruções" />
+                            <CheckBox checked={linkYoutubeIsChecked} setChecked={setLinkYoutubeIsChecked} label="Link Youtube" />
+                            <CheckBox checked={mp3IsChecked} setChecked={setMp3IsChecked} label="MP3" />
+                            <CheckBox checked={documentoIsChecked} setChecked={setDocumentoIsChecked} label="Documento" />
                         </Box>
                     </FormGroup>
                 </Box>
@@ -60,7 +61,7 @@ export default function Material() {
                         Entradas
                     </Typography>
 
-                    <TextField 
+                    {instrucoesIsChecked && <TextField 
                         multiline
                         rows={3}
                         InputProps={{
@@ -72,9 +73,9 @@ export default function Material() {
                         }}
                         placeholder='Escreva instruções'
                         sx={{ fontSize: '16px', width: '100%' }}
-                    />
+                    />}
 
-                    <TextField 
+                    {linkYoutubeIsChecked && <TextField 
                         InputProps={{
                             startAdornment: 
                             <InputAdornment position="start">
@@ -84,14 +85,25 @@ export default function Material() {
                         }}
                         placeholder='Link do Youtube'
                         sx={{ fontSize: '16px', width: '100%' }}
-                    />     
+                    /> }    
 
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', width: '100%' }}>
-                        <FileInput 
-                            description='Carregar arquivo de áudio MP3' 
-                            icon={<CiMusicNote1 size={22} color='#7750DE'/>}
-                        />
-                    </Box> 
+                    {mp3IsChecked && 
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', width: '100%' }}>
+                            <FileInput 
+                                description='Carregar arquivo de áudio MP3' 
+                                icon={<CiMusicNote1 size={22} color='#7750DE'/>}
+                            />
+                        </Box>
+                    }
+
+                    {documentoIsChecked && 
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', width: '100%' }}>
+                            <FileInput 
+                                description='Carregar um documento' 
+                                icon={<LuFile size={22} color='#7750DE'/>}
+                            />
+                        </Box>
+                    }
                 </Box>
 
                 <Button 

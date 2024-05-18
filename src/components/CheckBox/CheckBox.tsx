@@ -2,7 +2,8 @@ import { FormControlLabel, Checkbox, Typography } from '@mui/material'
 
 interface CheckBoxProps {
     label: string
-    defaultChecked?: boolean;
+    checked: boolean
+    setChecked: (value: boolean) => void;
 }
 
 export default function CheckBox(props: CheckBoxProps) {
@@ -17,7 +18,8 @@ export default function CheckBox(props: CheckBoxProps) {
             padding: '4px 0px'
         }} control={
             <Checkbox 
-                defaultChecked={props.defaultChecked} 
+                checked={props.checked}
+                onChange={() => props.setChecked && props.setChecked(!props.checked)}
                 sx={{ padding: '0px' }}/>} 
             label={<Typography sx={{ color: '#545454' }}>{props.label}</Typography>} 
         />
