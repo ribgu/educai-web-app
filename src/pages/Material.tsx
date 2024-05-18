@@ -22,7 +22,7 @@ export default function Material() {
 
     return (
         <Layout>
-            <Box sx={{ width: '100%', padding: '25px 100px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Box sx={{ width: '100%', padding: '25px 100px', display: 'flex', flexDirection: 'column', alignItems: 'center', overflowY: 'auto' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
                     <img src="./Illustration/Edu-Robot.svg" alt="Robo do Educ.AI" />
                     <Box sx={{ width: '80%', display: 'flex', justifyItems: 'center', alignItems: 'center', 
