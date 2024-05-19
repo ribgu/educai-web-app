@@ -8,6 +8,7 @@ import { useState } from 'react'
 
 type atividadePageProps = {
     atividades: {
+        id: number
         title: string
         deadline: Date
         asignmentDate: Date
@@ -15,10 +16,11 @@ type atividadePageProps = {
         exercises: number
         answered: number
     }[]
+    onSelectAtividade: (atividade: any) => void
 }
 
 export default function AtividadesPage(props: atividadePageProps) {
-    const { atividades } = props
+    const { atividades, onSelectAtividade } = props
 
     const [modalIsOpen, setModalIsOpen] = useState(false)
     return (
@@ -64,13 +66,16 @@ export default function AtividadesPage(props: atividadePageProps) {
 
             <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
                 {atividades.map((atividade, index) => (
-                    <Atividade key={index} 
-                    title={atividade.title} 
-                    deadline={atividade.deadline} 
-                    asignmentDate={atividade.asignmentDate} 
-                    description={atividade.description}
-                    exercises={atividade.exercises}
-                    answered={atividade.answered} />
+                    <Box key={index} onClick={() => onSelectAtividade(atividade)}>
+                        <Atividade
+                            title={atividade.title}
+                            deadline={atividade.deadline}
+                            asignmentDate={atividade.asignmentDate}
+                            description={atividade.description}
+                            exercises={atividade.exercises}
+                            answered={atividade.answered}
+                        />
+                    </Box>
                 ))}
             </Box>
         </>

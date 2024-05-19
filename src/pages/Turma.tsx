@@ -7,11 +7,14 @@ import { TurmaType } from '../lib/types/Turma'
 import useClient from '../lib/client/useClient'
 import PostsPage from '../components/PostsPage/PostsPage'
 import AtividadesPage from '../components/AtividadesPage/AtividadesPage'
+import ListagemAtividade from '../components/ListagemAtividades/ListagemAtividade'
+import { AtividadeType } from '../lib/types/Atividade'
 
 export default function Turma() {
   const client = useClient()
   const { id } = useParams()
   const [turma, setTurma] = useState<TurmaType>()
+  const [selectedAtividade, setSelectedAtividade] = useState<AtividadeType>()
   const tab = new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas'
 
   const postProps = {
@@ -20,12 +23,20 @@ export default function Turma() {
   }
 
   const atividadeProps = {
+    id: 1,
     title: 'Atividade gu broxa',
     deadline: new Date(),
     asignmentDate: new Date(),
-    description: 'Atividade referente a impotência do meu mano gug1',
+    description: 'Atividade referente a impotência do meu mano gug1, Atividade referente a impotência do meu mano gug1, Atividade referente a impotência do meu mano gug1, Atividade referente a impotência do meu mano gug1',
     exercises: 10,
     answered: 0
+  }
+
+  const atividadeSelectedProps = {
+    icon: 'hello',
+    name: 'Vitao',
+    status: 'Enviado',
+    grade: 10
   }
 
   useEffect(() => {
@@ -53,9 +64,11 @@ export default function Turma() {
               <PostsPage posts={[postProps]} />
             )}
             {tab === 'atividades' && (
-              <>
-              {<AtividadesPage atividades={[atividadeProps]} />}
-              </>
+              selectedAtividade ? (
+                <ListagemAtividade atividades={[atividadeSelectedProps]} nomeAtividade={selectedAtividade.title} />
+              ) : (
+                <AtividadesPage atividades={[atividadeProps]} onSelectAtividade={setSelectedAtividade} />
+              )
             )}
             {tab === 'pessoas' && (
               <>
