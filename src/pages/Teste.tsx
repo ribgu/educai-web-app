@@ -13,17 +13,8 @@ export default function Teste() {
         <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
           <PageHeader title={'aa'} />
         </Box>
-        <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px' }}>
-          <Box sx={{
-            width: '50%',
-            height: '100%',
-            gap: '16px',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '10px'
-          }}>
-            <Question question={question} handleChangeQuestion={handleChangeQuestion} />
-          </Box>
+        <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px', flexDirection: 'column' }}>
+          <Question question={question} handleChangeQuestion={handleChangeQuestion} />
         </Box>
       </Box>
     </Layout>
