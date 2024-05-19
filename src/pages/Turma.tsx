@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { TurmaType } from '../lib/types/Turma'
 import useClient from '../lib/client/useClient'
 import PostsPage from '../components/PostsPage/PostsPage'
+import AtividadesPage from '../components/AtividadesPage/AtividadesPage'
 
 export default function Turma() {
   const client = useClient()
@@ -18,12 +19,20 @@ export default function Turma() {
     title: 'Título do post'
   }
 
+  const atividadeProps = {
+    title: 'Atividade gu broxa',
+    deadline: new Date(),
+    asignmentDate: new Date(),
+    description: 'Atividade referente a impotência do meu mano gug1',
+    exercises: 10,
+    answered: 0
+  }
+
   useEffect(() => {
     if (id) {
       client.getClassroomById(id).then((res) => setTurma(res))
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [id, client])
 
   return (
     <Layout>
@@ -45,7 +54,7 @@ export default function Turma() {
             )}
             {tab === 'atividades' && (
               <>
-              {/* Atividades */}
+              {<AtividadesPage atividades={[atividadeProps]} />}
               </>
             )}
             {tab === 'pessoas' && (
