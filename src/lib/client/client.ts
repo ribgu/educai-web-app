@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
 import { UserLogin } from '../types/Login'
 import { EduResponse } from '../types/EduResponse'
 import { TurmaType } from '../types/Turma'
@@ -99,6 +99,16 @@ export default class Client {
     const request = await this.axios.post('edu-response', { question } )
     console.log(request)
     return request.data
+  }
+
+  async generateEducationalMaterial(payload: {youtubeLink?: string, audio?: File | null, document?: File | null}): Promise<AxiosResponse<ArrayBuffer>> {
+    const formData = new FormData()
+
+    payload.youtubeLink && formData.append('youtubeLink', payload.youtubeLink)
+    payload.audio && formData.append('audio', payload.audio)
+    payload.document &&  formData.append('document', payload.document)
+  
+    return (await this.axios.post('/generate-educational-resource', formData, { responseType: 'arraybuffer' }))
   }
 
   // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade
