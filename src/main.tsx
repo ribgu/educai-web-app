@@ -15,6 +15,7 @@ import {
 } from 'react-router-dom'
 import TalkWithEdu from './pages/TalkWithEdu.tsx'
 import AuthProvider from './providers/AuthProvider.tsx'
+import CriarAtividade from './pages/Atividades/CriarAtividade.tsx'
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
   {
     path: '/edu',
     element: <TalkWithEdu />
-  }
+  },
+  {
+    path: '/turma/:id/atividades/criar',
+    element: <CriarAtividade />
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
