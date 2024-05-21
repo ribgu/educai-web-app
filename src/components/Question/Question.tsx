@@ -1,19 +1,10 @@
 import { Button, IconButton, TextField, Typography } from '@mui/material'
 import Box from '@mui/material/Box/Box'
-import Alternative from './components/Alternative'
+import Option from './components/Option'
 import { Delete } from '@mui/icons-material'
 import CheckIcon from '@mui/icons-material/Check'
 import { useState } from 'react'
-
-export type Alternative = {
-    text: string
-    selected?: boolean
-}
-
-export type QuestionType = {
-    text: string,
-    alternatives: Alternative[]
-}
+import { Question as QuestionType } from '../../lib/types/Question'
 
 type QuestionProps = {
     question: QuestionType
@@ -24,37 +15,35 @@ type QuestionProps = {
 export default function Question(props: QuestionProps) {
     const { question, handleChangeQuestion, deleteQuestion } = props
 
-    const [alternatives, setAlternatives] = useState<Alternative[]>([...question.alternatives])
+    const [options, setOptions] = useState(question.options)
+    const [correctAnswerKey, setCorrectAnswerKey] = useState(question.correctAnswerKey)
 
-    const handleSelectAlternative = (index: number) => {
-        const newAlternatives = alternatives.map((alternative, i) => {
-            if (i === index) {
-                return { ...alternative, selected: true }
-            }
-            return { ...alternative, selected: false }
-        })
-        setAlternatives(newAlternatives)
+    const handleSetCorretAnswerKey = (correctAnswerKey: string) => {
+        setCorrectAnswerKey(correctAnswerKey)
     }
 
-    const handleDeleteAlternative = (index: number) => {
-        const newAlternatives = alternatives.filter((_A, i) => i !== index)
-        setAlternatives(newAlternatives)
+    const handleDeleteAlternative = (key: string) => {
+        const newOptions = options.filter(option => option.key !== key)
+        setOptions(newOptions)
     }
 
     const handleAddAlternative = () => {
-        const newAlternatives = [...alternatives, { text: '', selected: false }]
-        setAlternatives(newAlternatives)
+        const nextAlphabetKey = String.fromCharCode('a'.charCodeAt(0) + options.length)
+        const newOption = { key: nextAlphabetKey, description: '' }
+        setOptions([...options, newOption])
     }
 
-    const handleChangeName = (index: number, value: string) => {
-        const newAlternatives = alternatives.map((alternative, i) => {
-            if (i === index) {
-                return { ...alternative, text: value }
+    const handleChangeName = (key: string, value: string) => {
+        const newOptions = options.map(option => {
+            if (option.key === key) {
+                return { ...option, description: value }
             }
-            return alternative
-        })
-        setAlternatives(newAlternatives)
+            return option
+        }
+        )
+        setOptions(newOptions)
     }
+
     return (
         <Box sx={{ width: '100%', display: 'flex', padding: '16px', border: '1px solid #BEBEBE', borderRadius: '8px', flexDirection: 'column', gap: '8px' }} >
             <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', gap: '8px' }} >
@@ -63,17 +52,18 @@ export default function Question(props: QuestionProps) {
                 </Typography>
                 <Typography variant='body2' color={'green'}>Completa</Typography>
             </Box>
-            <TextField size='small' value={question.text} onChange={(e) => handleChangeQuestion?.(e.target.value)} />
+            <TextField size='small' value={question.description} onChange={(e) => handleChangeQuestion?.(e.target.value)} />
             <Box>
-                {alternatives.map((alternative, index) => (
-                    <Alternative
+                {options.map((option, index) => (
+                    <Option
+                        optionKey={option.key}
                         key={index}
-                        text={alternative.text}
-                        selected={alternative.selected}
-                        handleSelectAlternative={() => handleSelectAlternative(index)}
-                        handleDeleteAlternative={() => handleDeleteAlternative(index)}
-                        handleChangeName={(value) => handleChangeName(index, value)}
-                    />
+                        description={option.description}
+                        correctAnswerKey={correctAnswerKey}
+                        handleSelectAlternative={() => handleSetCorretAnswerKey(option.key)}
+                        handleDeleteAlternative={() => handleDeleteAlternative(option.key)}
+                        handleChangeName={(value) => handleChangeName(option.key, value)}
+                        />
                 ))}
                 <Box sx={{ width: '100%', paddingLeft: '16px' }}>
                     <Button onClick={handleAddAlternative}>
