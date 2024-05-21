@@ -14,7 +14,7 @@ jobs:
       VITE_API_URL: "http://20.51.193.153:8080"
       VITE_API_URL_IA: "http://20.51.193.153:3000"
 
-    # steps:
+    steps:
     # - uses: actions/checkout@v3
     
     # - name: Bump version and push tag
