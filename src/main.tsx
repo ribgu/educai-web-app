@@ -15,6 +15,7 @@ import {
 } from 'react-router-dom'
 import TalkWithEdu from './pages/TalkWithEdu.tsx'
 import AuthProvider from './providers/AuthProvider.tsx'
+import Material from './pages/Material.tsx'
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: '/edu',
     element: <TalkWithEdu />
+  },
+  {
+    path: '/material',
+    element: <Material />
   }
 ])
 
