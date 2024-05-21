@@ -5,6 +5,8 @@ import PageHeader from '../../components/PageHeader/PageHeader'
 import { Button, Typography } from '@mui/material'
 import { useState } from 'react'
 import { Question as QuestionType } from '../../lib/types/Question'
+import FinalizarDialog from '../../components/FinalizarDialog/FinalizarDialog'
+import { classWork } from '../../lib/types/ClassWork'
 
 type QuestionProps = {
   questions?: QuestionType[]
@@ -12,6 +14,11 @@ type QuestionProps = {
 
 export default function CriarAtividade(props: QuestionProps) {
   const { questions: q } = props
+
+  const [title, setTitle] = useState('')
+  const datePosting = new Date().toISOString().split('T')[0]
+  const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0])
+  const [description, setDescription] = useState('')
 
   const [questions, setQuestions] = useState<QuestionType[]>(
     q || [
@@ -27,6 +34,18 @@ export default function CriarAtividade(props: QuestionProps) {
       }
     ]
   )
+
+  const handleCreateClassWork = () => {
+    const classWork: classWork = {
+      title,
+      datePosting,
+      endDate,
+      description,
+      questions
+    }
+
+    console.log(classWork)
+  }
 
   const handleChangeQuestion = (value: string, index: number) => {
     const newQuestions = questions.map((q, i) => {
@@ -62,7 +81,16 @@ export default function CriarAtividade(props: QuestionProps) {
             <Typography sx={{ fontWeight: 600, fontSize: '24px' }}>Criar questionário</Typography>
             <Box sx={{}}>
               <Button>Gerar questões</Button>
-              <Button>Finalizar</Button>
+              <FinalizarDialog
+                title={title}
+                setTitle={setTitle}
+                datePosting={datePosting}
+                endDate={endDate}
+                setEndDate={setEndDate}
+                description={description}
+                setDescription={setDescription}
+                onClick={handleCreateClassWork}
+              />
             </Box>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>

@@ -3,6 +3,7 @@ import { UserLogin } from '../types/Login'
 import { EduResponse } from '../types/EduResponse'
 import { TurmaType } from '../types/Turma'
 import { LeaderboardType } from '../types/Leaderboard'
+import { classWork } from '../types/ClassWork'
 
 type ClientProps = {
   clientType: 'ia-api' | 'api',
@@ -104,6 +105,16 @@ export default class Client {
     const request = await this.axios.post('edu-response', { question } )
     console.log(request)
     return request.data
+  }
+
+  async createClassWork(
+    classWork: classWork,
+    classroomId: string
+  ): Promise<void> {
+    const headers = {
+      'classroomId': classroomId
+    }
+    return (await this.axios.post('/classwork', classWork, { headers }))
   }
 
   // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade
