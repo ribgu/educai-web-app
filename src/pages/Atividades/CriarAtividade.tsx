@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { Question as QuestionType } from '../../lib/types/Question'
 import FinalizarDialog from '../../components/FinalizarDialog/FinalizarDialog'
 import { classWork } from '../../lib/types/ClassWork'
+import useClient from '../../lib/client/useClient'
 
 type QuestionProps = {
   questions?: QuestionType[]
@@ -15,6 +16,7 @@ type QuestionProps = {
 export default function CriarAtividade(props: QuestionProps) {
   const { questions: q } = props
 
+  const client = useClient()
   const [title, setTitle] = useState('')
   const datePosting = new Date().toISOString().split('T')[0]
   const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0])
@@ -45,6 +47,7 @@ export default function CriarAtividade(props: QuestionProps) {
     }
 
     console.log(classWork)
+    // client.createClassWork(classWork, '664d2b55b52bfc62722df41b')
   }
 
   const handleChangeQuestion = (value: string, index: number) => {
