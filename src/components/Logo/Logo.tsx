@@ -1,5 +1,3 @@
-import logos from './logos'
-
 type LogoProps = {
     variant: 'padraoBlack' | 'padraoWhite' | 'bookOne' | 'bookTwo' | 'allWhite'
     width: 'sm' | 'md' | 'lg' | 'ssm' | 'bookSmall'
@@ -21,19 +19,19 @@ export default function Logo(props: LogoProps) {
     return (
         <>
             {variant === 'padraoBlack' && (
-                <img src={logos.padraoBlack} className={widthClass} />
+                <img src='/logos/padraoBlack.svg' className={widthClass} />
             )}
             {variant === 'padraoWhite' && (
-                <img src={logos.padraoWhite} className={widthClass} />
+                <img src='/logos/padraoWhite.svg' className={widthClass} />
             )}
             {variant === 'bookOne' && (
-                <img src={logos.bookOne} className={widthClass} />
+                <img src='/logos/bookOne.svg' className={widthClass} />
             )}
             {variant === 'bookTwo' && (
-                <img src={logos.bookTwo} className={widthClass} />
+                <img src='/logos/allwhite.svg' className={widthClass} />
             )}
             {variant === 'allWhite' && (
-                <img src={logos.allwhite} className={widthClass} />
+                <img src='/logos/bookTwo.svg' className={widthClass} />
             )}
         </>
     )
