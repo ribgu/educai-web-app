@@ -91,7 +91,7 @@ export default function LandingPage() {
             <div className='flex flex-col h-screen items-center bg-dark'>
                 <div className='flex flex-col cp w-[80%] h-full justify-center items-center gap-3'>
                     <Typography variant='lp-team-title'>OUR TEAM</Typography>
-                    <img src='./Logos/logoSemIcon.svg'></img>
+                    <img src='./logos/logoSemIcon.svg'></img>
                     <CardTeam/>
                 </div>
             </div>

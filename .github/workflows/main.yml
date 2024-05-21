@@ -2,7 +2,7 @@ name: React Web-App CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [ fix/ci-cd ]
 
 jobs:
   CI:

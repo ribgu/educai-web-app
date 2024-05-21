@@ -16,15 +16,12 @@ type Messages = {
 export default function TalkWithEdu() {
   const { recording, audioBlobUrl, startRecording, stopRecording } = useAudioRecorder()
   const [transcription, setTranscription] = useState<string>('')
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [response, setResponse] = useState<string>()
   const client = useAiClient()
   const [messages, setMessages] = useState<Messages[]>([])
 
   const handleSendAudioToEdu = async () => {
     setResponse('')
-    setIsLoading(true)
     if (audioBlobUrl) {
       console.log('Sending audio to Edu')
       const audioBuffer = await fetch(audioBlobUrl).then(response => response.arrayBuffer())
@@ -33,7 +30,6 @@ export default function TalkWithEdu() {
       setTranscription(transcribeResponse.data.text)
       const eduResponse = await client.getResponse(transcribeResponse.data.text)
       setResponse(eduResponse.response)
-      setIsLoading(false)
     }
   }
 
