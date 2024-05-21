@@ -1,10 +1,11 @@
-import TextField from '@mui/material/TextField/TextField'
-import Modal from '../Modal/Modal'
 import Box from '@mui/material/Box/Box'
 import Button from '@mui/material/Button/Button'
 import Atividade from '../Atividade/Atividade'
-import { LoadingButton } from '@mui/lab'
 import { useState } from 'react'
+import Divider from '@mui/material/Divider'
+import Typography from '@mui/material/Typography/Typography'
+import AssignmentIcon from '@mui/icons-material/Assignment'
+import BasicModal from '../Modal/Modal'
 
 type atividadePageProps = {
     atividades: {
@@ -25,22 +26,23 @@ export default function AtividadesPage(props: atividadePageProps) {
     const [modalIsOpen, setModalIsOpen] = useState(false)
     return (
         <>
-            <Modal
-                variantButton='lg' titulo='Novo Post'
-                icone='/IconsPages/turma.svg'
-                altIcone='Pessoas agrupadas'
-                textoBotaoAbrirModal='Novo Post'
+            <BasicModal
+                variantButton='lg' titulo='Nova atividade'
+                iconeReact={
+                    <AssignmentIcon />
+                }
+                altIcone='Caderno de atividade'
+                textoBotaoAbrirModal='Nova Atividade'
                 showModal={modalIsOpen}
                 onClose={() => setModalIsOpen(false)}
                 onOpen={() => setModalIsOpen(true)}
             >
-                <TextField id='outlined-basic' variant='outlined' label='Título*' />
-                <TextField id='outlined-basic' variant='outlined' label='Descrição*' />
-                <TextField id='outlined-basic' variant='outlined' label='Upload de arquivo' />
                 <Box sx={{
                     display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
                     justifyContent: 'space-between',
-                    marginTop: '10px'
+                    gap: '20px',
                 }}>
                     <Button sx={{
                         color: 'black',
@@ -49,20 +51,37 @@ export default function AtividadesPage(props: atividadePageProps) {
                             backgroundColor: '#D8D8D8'
                         },
                         paddingY: '12px',
-                        width: '48%'
-                    }} variant='outlined' onClick={() => setModalIsOpen(false)}>Cancelar</Button>
+                        width: '90%',
+                        textTransform: 'none'
+                    }} variant='outlined' onClick={() => setModalIsOpen(false)}>Montar Questionário Manual</Button>
 
-                    <LoadingButton sx={{
+                    <Box sx={{
+                        width: '90%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                    }}>
+                    <Divider sx={{
+                        width: '40%',
+                    }} />
+                    <Typography sx={{fontSize: '12px'}}>ou</Typography>
+                    <Divider sx={{
+                        width: '40%',
+                    }} />
+                    </Box>
+                    
+                    <Button sx={{
                         backgroundColor: '#6730EC',
                         color: 'white',
                         '&:hover': {
                             backgroundColor: '#4D1EAD'
                         },
                         paddingY: '12px',
-                        width: '48%'
-                    }} variant='contained'>Criar turma</LoadingButton>
+                        width: '90%',
+                        textTransform: 'none',
+                    }} variant='contained'>Gerar Questionário por IA</Button>
                 </Box>
-            </Modal>
+            </BasicModal>
 
             <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
                 {atividades.map((atividade, index) => (
