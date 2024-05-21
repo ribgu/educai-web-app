@@ -3,14 +3,16 @@ name: React Web-App CI/CD
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   CI:
     permissions:
       contents: write
     runs-on: ubuntu-latest
+
+    env:
+      VITE_API_URL: "http://20.51.193.153:8080"
+      VITE_API_URL_IA: "http://20.51.193.153:3000"
 
     steps:
     - uses: actions/checkout@v3
