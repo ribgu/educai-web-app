@@ -30,7 +30,7 @@ export default function Login() {
             display: 'flex',
             width: '100vw',
             height: '100vh',
-            backgroundColor: 'white'
+            backgroundColor: '#000'
         }}>
             <Box sx={{
                 display: 'flex',
