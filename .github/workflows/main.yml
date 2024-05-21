@@ -2,7 +2,7 @@ name: React Web-App CI/CD
 
 on:
   push:
-    branches: [ fix/ci-cd ]
+    branches: [ feat/ci-cd ]
 
 jobs:
   CI:
@@ -12,10 +12,10 @@ jobs:
 
     env:
       VITE_API_URL: "http://20.51.193.153:8080"
-      VITE_API_URL_IA: "http://20.51.193.153:3000"
+      VITE_API_URL_IA: "http://localhost:3000"
 
     steps:
-    # - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
     
     # - name: Bump version and push tag
     #   id: tag_version
