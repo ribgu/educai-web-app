@@ -8,7 +8,6 @@ import MenuItem from '@mui/material/MenuItem/MenuItem'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import Divider from '@mui/material/Divider'
 
-
 type AtividadeProps = {
     title: string
     deadline: Date
