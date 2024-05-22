@@ -1,7 +1,9 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
 import { UserLogin } from '../types/Login'
 import { EduResponse } from '../types/EduResponse'
 import { TurmaType } from '../types/Turma'
+import { LeaderboardType } from '../types/Leaderboard'
+import { classWork } from '../types/ClassWork'
 
 type ClientProps = {
   clientType: 'ia-api' | 'api',
@@ -79,6 +81,10 @@ export default class Client {
     return (await this.axios.patch(`/classroom/${classroomId}`, body))
   }
 
+  async getLeaderboard(classroomId: string): Promise<LeaderboardType> {
+    return (await this.axios.get(`/classroom/${classroomId}/leaderboard`)).data
+  }
+
   async refreshToken() {
     return (await this.axios.post('/user/refreshToken'))
   }
@@ -99,6 +105,27 @@ export default class Client {
     const request = await this.axios.post('edu-response', { question } )
     console.log(request)
     return request.data
+  }
+
+  async createClassWork(
+    classWork: classWork,
+    classroomId: string
+  ): Promise<void> {
+    const headers = {
+      'classroomId': classroomId
+    }
+    return (await this.axios.post('/classwork', classWork, { headers }))
+
+  }
+  
+  async generateEducationalMaterial(payload: {youtubeLink?: string, audio?: File | null, document?: File | null}): Promise<AxiosResponse<ArrayBuffer>> {
+    const formData = new FormData()
+
+    payload.youtubeLink && formData.append('youtubeLink', payload.youtubeLink)
+    payload.audio && formData.append('audio', payload.audio)
+    payload.document &&  formData.append('document', payload.document)
+  
+    return (await this.axios.post('/generate-educational-resource', formData, { responseType: 'arraybuffer' }))
   }
 
   // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade

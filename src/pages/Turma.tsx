@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { TurmaType } from '../lib/types/Turma'
 import useClient from '../lib/client/useClient'
 import PostsPage from '../components/PostsPage/PostsPage'
+import Leaderboard from '../components/Leaderboard/Leaderboard'
 import AtividadesPage from '../components/AtividadesPage/AtividadesPage'
 import ListagemAtividade from '../components/ListagemAtividades/ListagemAtividade'
 import { AtividadeType } from '../lib/types/Atividade'
@@ -43,7 +44,7 @@ export default function Turma() {
     if (id) {
       client.getClassroomById(id).then((res) => setTurma(res))
     }
-  }, [id, client])
+  }, [id])
 
   return (
     <Layout>
@@ -53,7 +54,7 @@ export default function Turma() {
         </Box>
         <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px' }}>
           <Box sx={{
-            width: '50%',
+            width: '65%',
             height: '100%',
             gap: '16px',
             display: 'flex',
@@ -67,7 +68,11 @@ export default function Turma() {
               selectedAtividade ? (
                 <ListagemAtividade atividades={[atividadeSelectedProps]} nomeAtividade={selectedAtividade.title} />
               ) : (
-                <AtividadesPage atividades={[atividadeProps]} onSelectAtividade={setSelectedAtividade} />
+                <AtividadesPage
+                atividades={[atividadeProps]}
+                onSelectAtividade={setSelectedAtividade}
+                classRoomId={id as string}
+                />
               )
             )}
             {tab === 'pessoas' && (
@@ -76,6 +81,9 @@ export default function Turma() {
               </>
             )}
           </Box>
+
+          <Leaderboard/>
+
         </Box>
       </Box>
     </Layout>

@@ -1,5 +1,5 @@
 type TypographyProps = {
-    variant: 'h1' | 'h2' | 'h2-light' | 'h3' | 'body1' | 'body2' | 'lp-title' | 'lp-card-title' | 'lp-main-sentece' | 'body2-bold' | 'lp-team-title' | 'lp-name-team'
+    variant: 'h1' | 'h2' | 'h2-light' | 'h3' | 'body1' | 'body2' | 'lp-title' | 'lp-card-title' | 'lp-main-sentece' | 'body2-bold' | 'lp-team-title' | 'lp-name-team' | 'title-leaderboard'
     children: React.ReactNode
     color?: string
 }
@@ -19,7 +19,8 @@ export default function Typography(props: TypographyProps) {
         h3: 'font-montserrat text-2xl font-bold', // 24px
         body1: 'font-montserrat text-base font-normal', // 16px
         body2: 'text-white font-montserrat text-sm font-normal', // 14px
-        'body2-bold': 'font-montserrat text-sm font-medium' // 14px
+        'body2-bold': 'font-montserrat text-sm font-medium', // 14px
+        'title-leaderboard': 'font-montserrat text-lg font-bold',
     }
 
     const className = variantsClasnames[variant]
