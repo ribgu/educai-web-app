@@ -6,8 +6,9 @@ import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography/Typography'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import BasicModal from '../Modal/Modal'
+import { useNavigate } from 'react-router-dom'
 
-type atividadePageProps = {
+type AtividadePageProps = {
     atividades: {
         id: number
         title: string
@@ -18,10 +19,17 @@ type atividadePageProps = {
         answered: number
     }[]
     onSelectAtividade: (atividade: any) => void
+    classRoomId: string
 }
 
-export default function AtividadesPage(props: atividadePageProps) {
-    const { atividades, onSelectAtividade } = props
+export default function AtividadesPage(props: AtividadePageProps) {
+    const { atividades, onSelectAtividade, classRoomId } = props
+    const navigate = useNavigate()
+
+    const handleManualCreate = () => {
+        setModalIsOpen(false)
+        navigate(`/turma/criar-atividade?classRoomId=${classRoomId}?tab=atividades`)
+    }
 
     const [modalIsOpen, setModalIsOpen] = useState(false)
     return (
@@ -53,7 +61,8 @@ export default function AtividadesPage(props: atividadePageProps) {
                         paddingY: '12px',
                         width: '90%',
                         textTransform: 'none'
-                    }} variant='outlined' onClick={() => setModalIsOpen(false)}>Montar Questionário Manual</Button>
+                    }} variant='outlined'
+                    onClick={handleManualCreate}>Montar Questionário Manual</Button>
 
                     <Box sx={{
                         width: '90%',
@@ -69,7 +78,7 @@ export default function AtividadesPage(props: atividadePageProps) {
                         width: '40%',
                     }} />
                     </Box>
-                    
+
                     <Button sx={{
                         backgroundColor: '#6730EC',
                         color: 'white',

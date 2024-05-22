@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     element: <TalkWithEdu />
   },
   {
-    path: '/turma/:id/atividades/criar',
+    path: '/turma/criar-atividade',
     element: <CriarAtividade />
   },
 ])

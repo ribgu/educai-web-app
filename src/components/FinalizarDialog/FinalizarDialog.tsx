@@ -16,8 +16,6 @@ export default function FinalizarDialog(props: FinalizarDialogProps) {
   const {
     title,
     setTitle,
-    endDate,
-    setEndDate,
     description,
     setDescription,
     onClick
