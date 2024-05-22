@@ -44,7 +44,7 @@ export default function Turma() {
     if (id) {
       client.getClassroomById(id).then((res) => setTurma(res))
     }
-  }, [id, client])
+  }, [id])
 
   return (
     <Layout>
@@ -68,7 +68,11 @@ export default function Turma() {
               selectedAtividade ? (
                 <ListagemAtividade atividades={[atividadeSelectedProps]} nomeAtividade={selectedAtividade.title} />
               ) : (
-                <AtividadesPage atividades={[atividadeProps]} onSelectAtividade={setSelectedAtividade} />
+                <AtividadesPage
+                atividades={[atividadeProps]}
+                onSelectAtividade={setSelectedAtividade}
+                classRoomId={id as string}
+                />
               )
             )}
             {tab === 'pessoas' && (

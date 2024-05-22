@@ -3,6 +3,7 @@ import { UserLogin } from '../types/Login'
 import { EduResponse } from '../types/EduResponse'
 import { TurmaType } from '../types/Turma'
 import { LeaderboardType } from '../types/Leaderboard'
+import { classWork } from '../types/ClassWork'
 
 type ClientProps = {
   clientType: 'ia-api' | 'api',
@@ -106,6 +107,17 @@ export default class Client {
     return request.data
   }
 
+  async createClassWork(
+    classWork: classWork,
+    classroomId: string
+  ): Promise<void> {
+    const headers = {
+      'classroomId': classroomId
+    }
+    return (await this.axios.post('/classwork', classWork, { headers }))
+
+  }
+  
   async generateEducationalMaterial(payload: {youtubeLink?: string, audio?: File | null, document?: File | null}): Promise<AxiosResponse<ArrayBuffer>> {
     const formData = new FormData()
 
