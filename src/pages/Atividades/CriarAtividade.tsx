@@ -2,13 +2,14 @@ import Box from '@mui/material/Box/Box'
 import Question from '../../components/Question/Question'
 import Layout from '../Layout'
 import PageHeader from '../../components/PageHeader/PageHeader'
-import { Button, Typography } from '@mui/material'
+import { Button, Modal, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Question as QuestionType } from '../../lib/types/Question'
 import FinalizarDialog from '../../components/FinalizarDialog/FinalizarDialog'
 import { classWork } from '../../lib/types/ClassWork'
 import useClient from '../../lib/client/useClient'
 import { TurmaType } from '../../lib/types/Turma'
+import GerarQuestaoModal from './GerarQuestaoModal/GerarQuestaoModal'
 
 type QuestionProps = {
   questions?: QuestionType[]
@@ -24,6 +25,7 @@ export default function CriarAtividade(props: QuestionProps) {
   const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0])
   const [description, setDescription] = useState('')
   const classroomId = new URLSearchParams(window.location.search).get('classRoomId')?.split('?')[0]
+  const [openModal, setOpenModal] = useState<boolean>(false)
 
   const [questions, setQuestions] = useState<QuestionType[]>(
     q || [
@@ -108,7 +110,7 @@ export default function CriarAtividade(props: QuestionProps) {
           }}>
             <Typography sx={{ fontWeight: 600, fontSize: '24px' }}>Criar questionário</Typography>
             <Box sx={{}}>
-              <Button>Gerar questões</Button>
+              <Button onClick={() => setOpenModal(true)}>Gerar questões</Button>
               <Button
                 onClick={handleAddQuestion}
               >Adicinar Questão</Button>
@@ -136,6 +138,19 @@ export default function CriarAtividade(props: QuestionProps) {
           </Box>
         </Box>
       </Box>
+
+      <Modal open={openModal} onClose={() => setOpenModal(false)} 
+      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Box sx={{
+          gap: '10px',
+          backgroundColor: '#FFF',
+          padding: '24px',
+          borderRadius: '10px',
+          width: '50%',
+        }}>
+          <GerarQuestaoModal />
+        </Box>
+      </Modal>
     </Layout>
   )
 }
