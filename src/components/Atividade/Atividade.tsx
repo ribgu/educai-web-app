@@ -9,12 +9,12 @@ import AssignmentIcon from '@mui/icons-material/Assignment'
 import Divider from '@mui/material/Divider'
 
 type AtividadeProps = {
+    id: string
     title: string
-    deadline: Date
-    asignmentDate: Date
+    datePosting: Date
+    endDate: Date
     description: string
-    exercises: number
-    answered: number
+    totalQuestions: number
 }
 
 const formatDate = (date: Date) => {
@@ -25,7 +25,7 @@ const formatDate = (date: Date) => {
 }
 
 export default function Atividade(atividade: AtividadeProps) {
-    const { title, deadline, asignmentDate, description, exercises, answered} = atividade
+    const {id, title, datePosting, endDate, description, totalQuestions} = atividade
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
 
@@ -62,7 +62,7 @@ export default function Atividade(atividade: AtividadeProps) {
                     <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap' }}>{title}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px', justifyContent: 'flex-end' }}>
-                    Prazo: <b>{formatDate(deadline)}</b>
+                    Prazo: <b>{formatDate(endDate)}</b>
                 </Box>
                 <IconButton size='small' onClick={handleClick}>
                     <MoreVertIcon />
@@ -84,11 +84,11 @@ export default function Atividade(atividade: AtividadeProps) {
             </Box>
             <Box sx={{ width: '100%', height: '80%', padding: '8px', display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '10px' }}>
                 <Box sx={{ width: '50%', height: '100%', padding: '8px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
-                    <Typography sx={{width: '100%', height: '20%', padding: '8px', justifySelf: 'flex-start'}}>Data de publicação: <b>{formatDate(asignmentDate)}</b>    </Typography>
+                    <Typography sx={{width: '100%', height: '20%', padding: '8px', justifySelf: 'flex-start'}}>Data de publicação: <b>{formatDate(datePosting)}</b>    </Typography>
                     {description && <Typography sx={{ width: '100%', fontSize: '14px', padding: '8px', justifySelf: 'center',textAlign: 'justify' }}>{description}</Typography>}
                 </Box>
                 <Box sx={{ width: '50%', height: '100%', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px' }}>
-                    <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem'}}>{exercises}</b> EXERCICIOS</Typography>
+                    <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem'}}>{totalQuestions}</b> EXERCICIOS</Typography>
                     <Divider sx={{ borderBottomWidth: 2, borderColor: '#5E5E5E', borderRadius: '1px'}}/>
                     <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem', gap: '10px'}}>{answered}</b> ALUNOS ENTREGARAM</Typography>
                 </Box>

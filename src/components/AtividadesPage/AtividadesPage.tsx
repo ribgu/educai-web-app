@@ -9,13 +9,12 @@ import BasicModal from '../Modal/Modal'
 
 type atividadePageProps = {
     atividades: {
-        id: number
+        id: string
         title: string
-        deadline: Date
-        asignmentDate: Date
+        datePosting: Date
+        endDate: Date
         description: string
-        exercises: number
-        answered: number
+        totalQuestions: number
     }[]
     onSelectAtividade: (atividade: any) => void
 }
@@ -88,11 +87,10 @@ export default function AtividadesPage(props: atividadePageProps) {
                     <Box key={index} onClick={() => onSelectAtividade(atividade)}>
                         <Atividade
                             title={atividade.title}
-                            deadline={atividade.deadline}
-                            asignmentDate={atividade.asignmentDate}
+                            datePosting={atividade.datePosting}
+                            endDate={atividade.endDate}
                             description={atividade.description}
-                            exercises={atividade.exercises}
-                            answered={atividade.answered}
+                            totalQuestions={atividade.totalQuestions}
                         />
                     </Box>
                 ))}
