@@ -10,10 +10,11 @@ type QuestionProps = {
     question: QuestionType
     handleChangeQuestion: (value: string) => void
     deleteQuestion?: () => void
+    index: number
 }
 
 export default function Question(props: QuestionProps) {
-    const { question, handleChangeQuestion, deleteQuestion } = props
+    const { question, handleChangeQuestion, deleteQuestion, index } = props
 
     const [options, setOptions] = useState(question.options)
     const [correctAnswerKey, setCorrectAnswerKey] = useState(question.correctAnswerKey)
@@ -48,7 +49,7 @@ export default function Question(props: QuestionProps) {
         <Box sx={{ width: '100%', display: 'flex', padding: '16px', border: '1px solid #BEBEBE', borderRadius: '8px', flexDirection: 'column', gap: '8px' }} >
             <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', gap: '8px' }} >
                 <Typography variant='h6'>
-                    Questão 1
+                    Questão {index + 1}
                 </Typography>
                 <Typography variant='body2' color={'green'}>Completa</Typography>
             </Box>

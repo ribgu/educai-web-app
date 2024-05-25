@@ -95,7 +95,7 @@ export default function CriarAtividade(props: QuestionProps) {
 
   return (
     <Layout>
-      <Box sx={{ width: '100%' }} >
+      <Box sx={{ width: '100%', overflowY: 'auto' }} >
         <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
           <PageHeader title={turma?.title} />
         </Box>
@@ -126,9 +126,10 @@ export default function CriarAtividade(props: QuestionProps) {
               />
             </Box>
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px', paddingBottom: '20px' }}>
             {questions.map((q, i) => (
               <Question
+                index={i}
                 question={q}
                 key={i}
                 handleChangeQuestion={(value) => handleChangeQuestion(value, i)}

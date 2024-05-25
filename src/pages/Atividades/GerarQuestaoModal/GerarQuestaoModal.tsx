@@ -5,10 +5,10 @@ import React, { useState } from 'react'
 import { CiMusicNote1 } from 'react-icons/ci'
 import { LuFile } from 'react-icons/lu'
 import FileInput from '../../../components/FileInput/FileInput'
-// import useClient from '../../../lib/client/useAIClient'
+import useClient from '../../../lib/client/useAIClient'
 
 export default function GerarQuestaoModal() {
-    // const client = useClient()
+    const client = useClient()
 
     const [document, setDocument] = useState<File | null>(null)
     const [audio, setAudio] = useState<File | null>(null)
@@ -33,9 +33,20 @@ export default function GerarQuestaoModal() {
 
     const handleClick = async () => {
         if (!instrucoes && !linkYoutube && !audio && !document) {
-            setErrorMessage('Pelo menos uma entrada deve ser preenchida!')
+            setErrorMessage('A entrada acima deve ser preenchida!')
             return
         }
+
+        let payload = {}
+
+        selectedValue == 'linkYoutube' && (payload = { ...payload, youtubeLink: linkYoutube })
+        selectedValue == 'mp3' && (payload = { ...payload, audio })
+        selectedValue == 'documento' && (payload = { ...payload, document })
+        selectedValue == 'instrucao' && (payload = { ...payload, instructions: instrucoes })
+
+        const response = await client.generateQuestion(payload)
+
+        console.log(response.data)
 
         setErrorMessage('')
     }
