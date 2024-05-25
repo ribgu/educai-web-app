@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography/Typography'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import BasicModal from '../Modal/Modal'
 import { useNavigate } from 'react-router-dom'
+import { classWork } from '../../lib/types/ClassWork'
 
 type AtividadePageProps = {
     atividades: {
@@ -19,6 +20,24 @@ type AtividadePageProps = {
     }[]
     onSelectAtividade: (atividade: any) => void
     classRoomId: string
+}
+
+const questionsByClasswork = () => {
+    //REQ
+    
+    return {
+        id: '664d2b87b52bfc62722df421',
+        title: 'ajsia',
+        datePosting: 'string',
+        endDate: 'string',
+        description: 'string',
+        questions: [{
+            id: '665d656f56565c56b58712',
+            description: 'DESCRIÇÃO ATIVIDADE',
+            options: {
+                id: '655dcd765544cfb44657b5746c',
+            }
+        }]}
 }
 
 export default function AtividadesPage(props: AtividadePageProps) {
@@ -95,6 +114,7 @@ export default function AtividadesPage(props: AtividadePageProps) {
                 {atividades.map((atividade, index) => (
                     <Box key={index} onClick={() => onSelectAtividade(atividade)}>
                         <Atividade
+                            id={atividade.id}
                             title={atividade.title}
                             datePosting={atividade.datePosting}
                             endDate={atividade.endDate}
