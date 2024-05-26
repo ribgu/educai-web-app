@@ -6,8 +6,15 @@ import { CiMusicNote1 } from 'react-icons/ci'
 import { LuFile } from 'react-icons/lu'
 import FileInput from '../../../components/FileInput/FileInput'
 import useClient from '../../../lib/client/useAIClient'
+import { Question } from '../../../lib/types/Question'
 
-export default function GerarQuestaoModal() {
+interface GerarQuestaoModalProps {
+    handleAddQuestion: (question: Question) => void;
+}
+
+export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
+    const { handleAddQuestion } = props
+    
     const client = useClient()
 
     const [document, setDocument] = useState<File | null>(null)
@@ -45,9 +52,9 @@ export default function GerarQuestaoModal() {
         selectedValue == 'instrucao' && (payload = { ...payload, instructions: instrucoes })
 
         const response = await client.generateQuestion(payload)
-
-        console.log(response.data)
-
+        
+        handleAddQuestion(response)
+        
         setErrorMessage('')
     }
 

@@ -4,6 +4,7 @@ import { EduResponse } from '../types/EduResponse'
 import { TurmaType } from '../types/Turma'
 import { LeaderboardType } from '../types/Leaderboard'
 import { classWork } from '../types/ClassWork'
+import { Question } from '../types/Question'
 
 type ClientProps = {
   clientType: 'ia-api' | 'api',
@@ -124,20 +125,20 @@ export default class Client {
     payload.instructions && formData.append('instructions', payload.instructions)
     payload.youtubeLink && formData.append('youtubeLink', payload.youtubeLink)
     payload.audio && formData.append('audio', payload.audio)
-    payload.document &&  formData.append('document', payload.document)
+    payload.document && formData.append('document', payload.document)
   
     return (await this.axios.post('/generate-educational-resource', formData, { responseType: 'arraybuffer' }))
   }
 
-  async generateQuestion(payload: {intructions?: string, youtubeLink?: string, audio?: File | null, document?: File | null}): Promise<AxiosResponse<ArrayBuffer>> {
+  async generateQuestion(payload: {instructions?: string, youtubeLink?: string, audio?: File | null, document?: File | null}): Promise<Question> {
     const formData = new FormData()
 
+    payload.instructions && formData.append('instructions', payload.instructions)
     payload.youtubeLink && formData.append('youtubeLink', payload.youtubeLink)
     payload.audio && formData.append('audio', payload.audio)
     payload.document &&  formData.append('document', payload.document)
-    payload.intructions &&  formData.append('intructions', payload.intructions)
-  
-    return (await this.axios.post('/generate-question', formData, { responseType: 'arraybuffer' }))
+
+    return (await this.axios.post('/generate-question', formData)).data
   }
 
   // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade

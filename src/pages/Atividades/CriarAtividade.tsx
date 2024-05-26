@@ -78,7 +78,11 @@ export default function CriarAtividade(props: QuestionProps) {
     }
   }, [classRoomId])
 
-  const handleAddQuestion = () => {
+  const handleAddQuestion = (question?: QuestionType) => {
+    if(question) {
+      return setQuestions([...questions, question])
+    }
+
     const newQuestion: QuestionType = {
       description: '',
       correctAnswerKey: 'a',
@@ -108,11 +112,11 @@ export default function CriarAtividade(props: QuestionProps) {
             justifyContent: 'space-between',
             alignItems: 'center'
           }}>
-            <Typography sx={{ fontWeight: 600, fontSize: '24px' }}>Criar questionário</Typography>
+            <Typography sx={{ fontWeight: 700, fontSize: 18 }}>Criar questionário</Typography>
             <Box sx={{}}>
               <Button onClick={() => setOpenModal(true)}>Gerar questões</Button>
               <Button
-                onClick={handleAddQuestion}
+                onClick={() => handleAddQuestion()}
               >Adicinar Questão</Button>
               <FinalizarDialog
                 title={title}
@@ -149,7 +153,7 @@ export default function CriarAtividade(props: QuestionProps) {
           borderRadius: '10px',
           width: '50%',
         }}>
-          <GerarQuestaoModal />
+          <GerarQuestaoModal handleAddQuestion={handleAddQuestion} />
         </Box>
       </Modal>
     </Layout>
