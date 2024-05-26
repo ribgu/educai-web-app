@@ -29,6 +29,7 @@ export default function CriarAtividade(props: QuestionProps) {
   const classroomId = new URLSearchParams(window.location.search).get('classRoomId')?.split('?')[0]
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [finishButtonIsEnabled, setFinishButtonIsEnabled] = useState<boolean>(false)
+  const [createInProgress, setCreateInProgress] = useState<boolean>(false)
 
   const [questions, setQuestions] = useState<QuestionType[]>(
     q || [
@@ -48,12 +49,16 @@ export default function CriarAtividade(props: QuestionProps) {
   useEffect(() => {
     const allQuestionsAreComplete = questions.every(q => q.description && q.options.every(o => o.description))
 
-    if(allQuestionsAreComplete) {
+    if(allQuestionsAreComplete && questions.length > 0) {
       setFinishButtonIsEnabled(true)
+    } else {
+      setFinishButtonIsEnabled(false)
     }
   }, [questions])
 
-  const handleCreateClassWork = () => {
+  const handleCreateClassWork = async () => {
+    setCreateInProgress(true)
+
     const classWork: classWork = {
       title,
       datePosting,
@@ -62,13 +67,64 @@ export default function CriarAtividade(props: QuestionProps) {
       questions
     }
 
-    if (classroomId) client.createClassWork(classWork, classroomId)
+    if (classroomId) 
+      await client.createClassWork(classWork, classroomId)
+
+    setCreateInProgress(false)
   }
 
   const handleChangeQuestionDescription = (value: string, index: number) => {
     const newQuestions = questions.map((q, i) => {
       if (i === index) {
         return { ...q, description: value }
+      }
+      return q
+    })
+
+    setQuestions(newQuestions)
+  }
+
+  const handleAddAlternative = (index: number) => {
+    const newQuestions = questions.map((q, i) => {
+      if (i === index) {
+        const nextAlphabetKey = String.fromCharCode('a'.charCodeAt(0) + q.options.length)
+        return { ...q, options: [...q.options, { key: nextAlphabetKey, description: '' }] }
+      }
+      return q
+    })
+
+    setQuestions(newQuestions)
+  }
+
+  const handleDeleteAlternative = (questionIndex: number, alternativeKey: string) => {
+    const newQuestions = questions.map((q, i) => {
+      if (i === questionIndex) {
+        const newOptions = q.options
+          .filter((o) => o.key !== alternativeKey)
+          .map((o, index) => {
+            const newKey = String.fromCharCode(65 + index).toLowerCase()
+            return { ...o, key: newKey }
+          })
+  
+        return { ...q, options: newOptions }
+      }
+  
+      return q
+    })
+  
+    setQuestions(newQuestions)
+  }
+
+  const handleChangeAlternativeDescription = (questionIndex: number, alternativeKey: string, value: string) => {
+    const newQuestions = questions.map((q, i) => {
+      if (i === questionIndex) {
+        const newOptions = q.options.map((o) => {
+          if (o.key === alternativeKey) {
+            return { ...o, description: value }
+          }
+          return o
+        })
+        return { ...q, options: newOptions }
       }
       return q
     })
@@ -151,6 +207,7 @@ export default function CriarAtividade(props: QuestionProps) {
               </Button>
               
               <FinalizarDialog
+                createInProgress={createInProgress}
                 title={title}
                 setTitle={setTitle}
                 datePosting={datePosting}
@@ -175,9 +232,12 @@ export default function CriarAtividade(props: QuestionProps) {
             {questions.map((q, i) => (
               <Question
                 index={i}
+                handleAddAlternative={() => handleAddAlternative(i)}
+                handleDeleteAlternative={(j) => handleDeleteAlternative(i, j)}
+                handleChangeQuestionDescription={(value) => handleChangeQuestionDescription(value, i)}
+                handleChangeAlternativeDescription={(key, value) => handleChangeAlternativeDescription(i, key, value)}
                 question={q}
                 key={i}
-                handleChangeQuestionDescription={(value) => handleChangeQuestionDescription(value, i)}
                 deleteQuestion={() => deleteQuestion(i)}
               />
             ))}

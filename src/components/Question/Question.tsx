@@ -7,49 +7,29 @@ import { IoMdClose } from 'react-icons/io'
 import { IoCheckmarkSharp } from 'react-icons/io5'
 import { FaRegCheckCircle, FaRegTrashAlt } from 'react-icons/fa'
 
-type QuestionProps = {
+interface QuestionProps {
     question: QuestionType
-    handleChangeQuestionDescription: (value: string) => void
-    deleteQuestion?: () => void
     index: number
+    handleChangeAlternativeDescription: (key: string, value: string) => void
+    handleChangeQuestionDescription: (value: string) => void
+    handleDeleteAlternative: (key: string) => void
+    handleAddAlternative: () => void
+    deleteQuestion?: () => void
 }
 
 export default function Question(props: QuestionProps) {
-    const { question, handleChangeQuestionDescription, deleteQuestion, index } = props
+    const { question, index, handleChangeQuestionDescription, handleChangeAlternativeDescription, deleteQuestion, handleAddAlternative, handleDeleteAlternative } = props
     
     const [questionIsComplete, setQuestionIsComplete] = useState<boolean>(false)
-    const [options, setOptions] = useState(question.options)
     const [correctAnswerKey, setCorrectAnswerKey] = useState(question.correctAnswerKey)
 
     useEffect(() => {
-        const isComplete = options.every(option => option.description !== '') && question.description !== ''
+        const isComplete = question.options.every(option => option.description !== '') && question.description !== ''
         setQuestionIsComplete(isComplete)
-    }, [question, options])
+    }, [question])
 
     const handleSetCorretAnswerKey = (correctAnswerKey: string) => {
         setCorrectAnswerKey(correctAnswerKey)
-    }
-
-    const handleDeleteAlternative = (key: string) => {
-        const newOptions = options.filter(option => option.key !== key)
-        setOptions(newOptions)
-    }
-
-    const handleAddAlternative = () => {
-        const nextAlphabetKey = String.fromCharCode('a'.charCodeAt(0) + options.length)
-        const newOption = { key: nextAlphabetKey, description: '' }
-        setOptions([...options, newOption])
-    }
-
-    const handleChangeName = (key: string, value: string) => {
-        const newOptions = options.map(option => {
-            if (option.key === key) {
-                return { ...option, description: value }
-            }
-            return option
-        }
-        )
-        setOptions(newOptions)
     }
 
     return (
@@ -66,15 +46,15 @@ export default function Question(props: QuestionProps) {
             </Box>
             <TextField size='small' value={question.description} onChange={(e) => handleChangeQuestionDescription?.(e.target.value)} />
             <Box sx={{ borderBottom: '1px solid #BEBEBE', marginTop: '12px' }}>
-                {options.map((option, index) => (
+                {question.options.map((option, index) => (
                     <Option
                         optionKey={option.key}
                         key={index}
                         description={option.description}
                         correctAnswerKey={correctAnswerKey}
+                        handleChangeName={(value) => handleChangeAlternativeDescription(option.key, value)}
                         handleSelectAlternative={() => handleSetCorretAnswerKey(option.key)}
                         handleDeleteAlternative={() => handleDeleteAlternative(option.key)}
-                        handleChangeName={(value) => handleChangeName(option.key, value)}
                     />
                 ))}
                 <Box sx={{ width: '100%', paddingLeft: '16px', marginBottom: '12px' }}>

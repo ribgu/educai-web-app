@@ -1,4 +1,4 @@
-import { Box, Button, FormControlLabel, FormGroup, InputAdornment, Radio, RadioGroup, TextField, Typography } from '@mui/material'
+import { Box, FormControlLabel, FormGroup, InputAdornment, Radio, RadioGroup, TextField, Typography } from '@mui/material'
 import { IoChatbubblesOutline } from 'react-icons/io5'
 import { RiLink } from 'react-icons/ri'
 import React, { useState } from 'react'
@@ -7,6 +7,7 @@ import { LuFile } from 'react-icons/lu'
 import FileInput from '../../../components/FileInput/FileInput'
 import useClient from '../../../lib/client/useAIClient'
 import { Question } from '../../../lib/types/Question'
+import { LoadingButton } from '@mui/lab'
 
 interface GerarQuestaoModalProps {
     handleAddQuestion: (question: Question) => void;
@@ -23,8 +24,8 @@ export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
     const [linkYoutube, setLinkYoutube] = useState<string>('')
 
     const [errorMessage, setErrorMessage] = useState<string>('')
-
     const [selectedValue, setSelectedValue] = useState('instrucao')
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedValue((event.target as HTMLInputElement).value)
@@ -44,6 +45,8 @@ export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
             return
         }
 
+        setIsLoading(true)
+
         let payload = {}
 
         selectedValue == 'linkYoutube' && (payload = { ...payload, youtubeLink: linkYoutube })
@@ -56,6 +59,7 @@ export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
         handleAddQuestion(response)
         
         setErrorMessage('')
+        setIsLoading(false)
     }
 
     return (
@@ -140,13 +144,14 @@ export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
                 {errorMessage}
             </Typography>}
 
-            <Button
+            <LoadingButton
+                loading={isLoading}
                 onClick={handleClick}
                 variant="contained"
                 sx={{
                     marginTop: '26px',
                     textTransform: 'none',
-                }}>Gerar Questão</Button>
+                }}>Gerar Questão</LoadingButton>
         </Box>
     )
 }

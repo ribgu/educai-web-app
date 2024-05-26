@@ -5,6 +5,7 @@ import Button from '@mui/material/Button/Button'
 import Post from '../Post/Post'
 import { LoadingButton } from '@mui/lab'
 import { useState } from 'react'
+import { TbSchool } from 'react-icons/tb'
 
 type postsPageProps = {
     posts: {
@@ -21,7 +22,11 @@ export default function PostsPage(props: postsPageProps) {
         <>
             <Modal
                 variantButton='lg' titulo='Novo Post'
-                icone='/IconsPages/turma.svg'
+                iconeReact={
+                    <div style={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '8px' }}>
+                      <TbSchool color='#341069' size={30} />
+                    </div>      
+                }
                 altIcone='Pessoas agrupadas'
                 textoBotaoAbrirModal='Novo Post'
                 showModal={modalIsOpen}
@@ -37,13 +42,16 @@ export default function PostsPage(props: postsPageProps) {
                     marginTop: '10px'
                 }}>
                     <Button sx={{
-                        color: 'black',
                         borderColor: '#5D1EF4',
                         '&:hover': {
                             backgroundColor: '#D8D8D8'
                         },
                         paddingY: '12px',
-                        width: '48%'
+                        width: '48%',
+                        textTransform: 'none',
+                        borderRadius: '10px',
+                        fontWeight: 700,
+                        color: '#170050'
                     }} variant='outlined' onClick={() => setModalIsOpen(false)}>Cancelar</Button>
 
                     <LoadingButton sx={{
@@ -53,8 +61,11 @@ export default function PostsPage(props: postsPageProps) {
                             backgroundColor: '#4D1EAD'
                         },
                         paddingY: '12px',
-                        width: '48%'
-                    }} variant='contained'>Criar turma</LoadingButton>
+                        width: '48%',
+                        textTransform: 'none',
+                        borderRadius: '10px',
+                        fontWeight: 700
+                    }} variant='contained'>Postar</LoadingButton>
                 </Box>
             </Modal>
 

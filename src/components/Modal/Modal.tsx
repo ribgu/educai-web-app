@@ -106,7 +106,7 @@ export default function BasicModal(props: ModalProps) {
             }}
           >
             {iconeReact || <img src={icone} alt={altIcone} />}
-            <Typography variant='h6' component='h2'>
+            <Typography variant='h6' component='h2' sx={{ fontWeight: 700 }}>
               {titulo}
             </Typography>
           </Box>
@@ -120,7 +120,6 @@ export default function BasicModal(props: ModalProps) {
               marginBottom: '10px'
             }}
           />
-
           {children}
         </Box>
       </Modal>
