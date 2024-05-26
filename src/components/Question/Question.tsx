@@ -1,23 +1,30 @@
 import { Button, IconButton, TextField, Typography } from '@mui/material'
 import Box from '@mui/material/Box/Box'
 import Option from './components/Option'
-import { Delete } from '@mui/icons-material'
-import CheckIcon from '@mui/icons-material/Check'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Question as QuestionType } from '../../lib/types/Question'
+import { IoMdClose } from 'react-icons/io'
+import { IoCheckmarkSharp } from 'react-icons/io5'
+import { FaRegCheckCircle, FaRegTrashAlt } from 'react-icons/fa'
 
 type QuestionProps = {
     question: QuestionType
-    handleChangeQuestion: (value: string) => void
+    handleChangeQuestionDescription: (value: string) => void
     deleteQuestion?: () => void
     index: number
 }
 
 export default function Question(props: QuestionProps) {
-    const { question, handleChangeQuestion, deleteQuestion, index } = props
-
+    const { question, handleChangeQuestionDescription, deleteQuestion, index } = props
+    
+    const [questionIsComplete, setQuestionIsComplete] = useState<boolean>(false)
     const [options, setOptions] = useState(question.options)
     const [correctAnswerKey, setCorrectAnswerKey] = useState(question.correctAnswerKey)
+
+    useEffect(() => {
+        const isComplete = options.every(option => option.description !== '') && question.description !== ''
+        setQuestionIsComplete(isComplete)
+    }, [question, options])
 
     const handleSetCorretAnswerKey = (correctAnswerKey: string) => {
         setCorrectAnswerKey(correctAnswerKey)
@@ -46,15 +53,19 @@ export default function Question(props: QuestionProps) {
     }
 
     return (
-        <Box sx={{ width: '100%', display: 'flex', padding: '16px', border: '1px solid #BEBEBE', borderRadius: '8px', flexDirection: 'column', gap: '8px' }} >
+        <Box sx={{ width: '100%', display: 'flex', padding: '24px', border: '1px solid #BEBEBE', borderRadius: '8px', flexDirection: 'column', gap: '8px' }} >
             <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', gap: '8px' }} >
                 <Typography variant='h6'>
                     Questão {index + 1}
                 </Typography>
-                <Typography variant='body2' color={'green'}>Completa</Typography>
+                <Typography variant='body2' color={questionIsComplete ? 'green' : 'red'}>
+                    {questionIsComplete ? 'Completa' : 'Incompleta'}
+                </Typography>
+
+                {questionIsComplete ? <IoCheckmarkSharp color='green'/> : <IoMdClose color='red'/>}
             </Box>
-            <TextField size='small' value={question.description} onChange={(e) => handleChangeQuestion?.(e.target.value)} />
-            <Box>
+            <TextField size='small' value={question.description} onChange={(e) => handleChangeQuestionDescription?.(e.target.value)} />
+            <Box sx={{ borderBottom: '1px solid #BEBEBE', marginTop: '12px' }}>
                 {options.map((option, index) => (
                     <Option
                         optionKey={option.key}
@@ -64,21 +75,21 @@ export default function Question(props: QuestionProps) {
                         handleSelectAlternative={() => handleSetCorretAnswerKey(option.key)}
                         handleDeleteAlternative={() => handleDeleteAlternative(option.key)}
                         handleChangeName={(value) => handleChangeName(option.key, value)}
-                        />
+                    />
                 ))}
-                <Box sx={{ width: '100%', paddingLeft: '16px' }}>
-                    <Button onClick={handleAddAlternative}>
+                <Box sx={{ width: '100%', paddingLeft: '16px', marginBottom: '12px' }}>
+                    <Button sx={{ marginTop: '12px' }} onClick={handleAddAlternative}>
                         Adicionar alternativa
                     </Button>
                 </Box>
             </Box>
-            <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #BEBEBE' }} >
+            <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between', paddingInline: '8px' }} >
                 <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', gap: '8px' }}>
-                    <CheckIcon />
-                    <Typography variant='body2'>Selecione uma das opções acima para ser a correta</Typography>
+                    <FaRegCheckCircle size={20} color='#7750DE'/>
+                    <Typography variant='body2' color='#7750DE'>Selecione uma das opções acima para ser a correta</Typography>
                 </Box>
                 <IconButton onClick={deleteQuestion}>
-                    <Delete />
+                    <FaRegTrashAlt size={20} color='#7750DE'/>
                 </IconButton>
             </Box>
         </Box>

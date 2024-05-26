@@ -10,6 +10,8 @@ import { classWork } from '../../lib/types/ClassWork'
 import useClient from '../../lib/client/useClient'
 import { TurmaType } from '../../lib/types/Turma'
 import GerarQuestaoModal from './GerarQuestaoModal/GerarQuestaoModal'
+import { LuPlusCircle } from 'react-icons/lu'
+import { BsStars } from 'react-icons/bs'
 
 type QuestionProps = {
   questions?: QuestionType[]
@@ -26,6 +28,7 @@ export default function CriarAtividade(props: QuestionProps) {
   const [description, setDescription] = useState('')
   const classroomId = new URLSearchParams(window.location.search).get('classRoomId')?.split('?')[0]
   const [openModal, setOpenModal] = useState<boolean>(false)
+  const [finishButtonIsEnabled, setFinishButtonIsEnabled] = useState<boolean>(false)
 
   const [questions, setQuestions] = useState<QuestionType[]>(
     q || [
@@ -42,6 +45,14 @@ export default function CriarAtividade(props: QuestionProps) {
     ]
   )
 
+  useEffect(() => {
+    const allQuestionsAreComplete = questions.every(q => q.description && q.options.every(o => o.description))
+
+    if(allQuestionsAreComplete) {
+      setFinishButtonIsEnabled(true)
+    }
+  }, [questions])
+
   const handleCreateClassWork = () => {
     const classWork: classWork = {
       title,
@@ -54,7 +65,7 @@ export default function CriarAtividade(props: QuestionProps) {
     if (classroomId) client.createClassWork(classWork, classroomId)
   }
 
-  const handleChangeQuestion = (value: string, index: number) => {
+  const handleChangeQuestionDescription = (value: string, index: number) => {
     const newQuestions = questions.map((q, i) => {
       if (i === index) {
         return { ...q, description: value }
@@ -80,6 +91,7 @@ export default function CriarAtividade(props: QuestionProps) {
 
   const handleAddQuestion = (question?: QuestionType) => {
     if(question) {
+      setOpenModal(false)
       return setQuestions([...questions, question])
     }
 
@@ -113,11 +125,31 @@ export default function CriarAtividade(props: QuestionProps) {
             alignItems: 'center'
           }}>
             <Typography sx={{ fontWeight: 700, fontSize: 18 }}>Criar questionário</Typography>
-            <Box sx={{}}>
-              <Button onClick={() => setOpenModal(true)}>Gerar questões</Button>
+            <Box sx={{ display: 'flex', gap: '16px' }}>
               <Button
-                onClick={() => handleAddQuestion()}
-              >Adicinar Questão</Button>
+                onClick={() => setOpenModal(true)}
+                variant="contained"
+                startIcon={<LuPlusCircle color='#6730EC' size={22}/>}
+                endIcon={<BsStars color='#6730EC' size={20}/>}
+                sx={{
+                  display: 'inline-flex',
+                  gap: '8px',
+                  backgroundColor: '#FFF',
+                  color: '#170050',
+                  border: '1px solid #6730EC', 
+                  borderRadius: '10px', 
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  textTransform: 'none',
+                  transition: 'background-color 0.3s, box-shadow 0.3s', 
+                  '&:hover': {
+                    backgroundColor: '#E6CCFF', 
+                  },
+                }}
+              >
+                Gerar Questões
+              </Button>
+              
               <FinalizarDialog
                 title={title}
                 setTitle={setTitle}
@@ -127,16 +159,25 @@ export default function CriarAtividade(props: QuestionProps) {
                 description={description}
                 setDescription={setDescription}
                 onClick={handleCreateClassWork}
+                enabled={finishButtonIsEnabled}
               />
             </Box>
           </Box>
+
+          <Button 
+            sx={{ textTransform: 'none', backgroundColor: '#7750DE', borderRadius: '10px', padding: '8px', fontWeight: 600, marginBottom: '12px' }}
+            variant='contained' 
+            onClick={() => handleAddQuestion()}>
+              Adicionar nova questão
+          </Button>
+
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px', paddingBottom: '20px' }}>
             {questions.map((q, i) => (
               <Question
                 index={i}
                 question={q}
                 key={i}
-                handleChangeQuestion={(value) => handleChangeQuestion(value, i)}
+                handleChangeQuestionDescription={(value) => handleChangeQuestionDescription(value, i)}
                 deleteQuestion={() => deleteQuestion(i)}
               />
             ))}

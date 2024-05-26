@@ -1,7 +1,9 @@
+import { LoadingButton } from '@mui/lab'
 import { Box, Button, Dialog, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
 
 type FinalizarDialogProps = {
+  enabled: boolean
   title: string
   setTitle: (value: string) => void
   datePosting: string
@@ -18,7 +20,8 @@ export default function FinalizarDialog(props: FinalizarDialogProps) {
     setTitle,
     description,
     setDescription,
-    onClick
+    onClick,
+    enabled
   } = props
 
   const [open, setOpen] = useState(false)
@@ -27,7 +30,14 @@ export default function FinalizarDialog(props: FinalizarDialogProps) {
 
   return (
     <>
-      <Button onClick={handleOpen}>Finalizar</Button>
+      <LoadingButton 
+        sx={{ paddingInline: '80px', borderRadius: '10px', textTransform: 'none', fontWeight: 600 }} 
+        variant='contained' 
+        onClick={handleOpen}
+        disabled={!enabled}>
+          Finalizar
+      </LoadingButton>
+
       <Dialog open={open} onClose={handleClose}>
         <Box sx={{padding: '40px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <Typography>
