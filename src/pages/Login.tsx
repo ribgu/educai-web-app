@@ -22,6 +22,8 @@ export default function Login() {
         await client.login({ email, password }).then((res) => {
             updateAuthData(res.token)
             navigate('/home')
+        }).catch((erro) => {
+            console.log(erro)
         })
     })
 

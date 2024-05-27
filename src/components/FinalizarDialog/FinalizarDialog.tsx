@@ -4,13 +4,18 @@ import { useEffect, useState } from 'react'
 import { TbSchool } from 'react-icons/tb'
 import Modal from '../Modal/Modal'
 
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+
 type FinalizarDialogProps = {
   enabled: boolean
   title: string
   setTitle: (value: string) => void
   datePosting: string
-  endDate: string
-  setEndDate: (value: string) => void
+  endDate: string | null
+  setEndDate: (value: string | null) => void
   description: string
   setDescription: (value: string) => void
   onClick: () => void,
@@ -25,7 +30,9 @@ export default function FinalizarDialog(props: FinalizarDialogProps) {
     setDescription,
     onClick,
     enabled,
-    createInProgress
+    createInProgress,
+    endDate,
+    setEndDate
   } = props
 
   const [open, setOpen] = useState(false)
@@ -67,14 +74,33 @@ export default function FinalizarDialog(props: FinalizarDialogProps) {
           variant='outlined'
           placeholder='Nome'
           onChange={(e) => setTitle(e.target.value)}
-          />
+        />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={['DatePicker']}>
+            <DatePicker 
+              sx={{ 
+                width: '100%',
+                '& .MuiSvgIcon-root': {
+                  color: '#7750DE',
+                },
+                '& .MuiPickersDay-daySelected': {
+                  backgroundColor: '#FFF',
+                },
+              }}
+              label="Selecione o prazo de entrega"
+              value={endDate}
+              onChange={(newValue) => setEndDate(newValue)}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
         <TextField
           value={description}
           onChange={(event) => setDescription(event.target.value)}
           multiline
           rows={3}
           placeholder='Descrição'
-          sx={{ fontSize: '16px', width: '100%' }}/>
+          sx={{ fontSize: '16px', width: '100%' }}
+        />
 
         <Box sx={{
           display: 'flex',

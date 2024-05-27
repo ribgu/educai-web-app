@@ -24,7 +24,7 @@ export default function CriarAtividade(props: QuestionProps) {
   const [title, setTitle] = useState('')
   const [turma, setTurma] = useState<TurmaType>()
   const datePosting = new Date().toISOString().split('T')[0]
-  const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0])
+  const [endDate, setEndDate] = useState<string | null>(null)
   const [description, setDescription] = useState('')
   const classroomId = new URLSearchParams(window.location.search).get('classRoomId')?.split('?')[0]
   const [openModal, setOpenModal] = useState<boolean>(false)
@@ -59,16 +59,18 @@ export default function CriarAtividade(props: QuestionProps) {
   const handleCreateClassWork = async () => {
     setCreateInProgress(true)
 
-    const classWork: classWork = {
-      title,
-      datePosting,
-      endDate,
-      description,
-      questions
-    }
+    if(endDate) {
+      const classWork: classWork = {
+        title,
+        datePosting,
+        endDate,
+        description,
+        questions
+      }
 
-    if (classroomId) 
-      await client.createClassWork(classWork, classroomId)
+      if (classroomId) 
+        await client.createClassWork(classWork, classroomId)
+    }
 
     setCreateInProgress(false)
   }
