@@ -1,5 +1,4 @@
 import Stack from '@mui/material/Stack'
-import Logo from '../Logo/Logo'
 import ProfileHeader from '../ProfileHeader/ProfileHeader'
 import { useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
@@ -20,7 +19,7 @@ export default function TopBar() {
       alignItems: 'center',
       padding: '20px 48px'
     }}>
-      <Logo variant='allWhite' width='ssm' />
+      <img src='/logos/padraoWhite.svg' alt='Logo' style={{width: '140px'}}/>
       <ProfileHeader name={username} imageUrl='https://avatars.githubusercontent.com/u/6713782?v=4' />
     </Stack>
   )

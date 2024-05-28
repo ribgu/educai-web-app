@@ -21,10 +21,10 @@ export default function Material() {
 
     const [errorMessage, setErrorMessage] = useState<string>('')
 
-    const [instrucoesIsChecked, setInstrucoesIsChecked] = useState<boolean>(false)
-    const [documentoIsChecked, setDocumentoIsChecked] = useState<boolean>(true)
+    const [instrucoesIsChecked, setInstrucoesIsChecked] = useState<boolean>(true)
+    const [documentoIsChecked, setDocumentoIsChecked] = useState<boolean>(false)
     const [linkYoutubeIsChecked, setLinkYoutubeIsChecked] = useState<boolean>(false)
-    const [mp3IsChecked, setMp3IsChecked] = useState<boolean>(true)
+    const [mp3IsChecked, setMp3IsChecked] = useState<boolean>(false)
 
     const [openModal, setOpenModal] = useState<boolean>(false)
 
