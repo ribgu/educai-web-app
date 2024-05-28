@@ -2,28 +2,16 @@ import Box from '@mui/material/Box/Box'
 import Question from '../components/Question/Question'
 import Layout from './Layout'
 import PageHeader from '../components/PageHeader/PageHeader'
+import { useState } from 'react'
+import { Button, Typography } from '@mui/material'
+import Alternative from '../components/Question/components/Option'
 
 export default function Teste() {
-  const alternatives = ['a', 'b', 'c', 'd']
+  const [question, setQuestion] = useState('Questão mockada')
+  const handleChangeQuestion = (value: string) => setQuestion(value)
   return (
     <Layout>
-      <Box sx={{ width: '100%' }} >
-        <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
-          <PageHeader title={'aa'} />
-        </Box>
-        <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px' }}>
-          <Box sx={{
-            width: '50%',
-            height: '100%',
-            gap: '16px',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '10px'
-          }}>
-            <Question alternatives={alternatives} question='Questão mockada'/>
-          </Box>
-        </Box>
-      </Box>
+      <Alternative text='mock' />
     </Layout>
   )
 }

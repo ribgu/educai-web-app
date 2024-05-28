@@ -9,7 +9,8 @@ import { FiPlusCircle } from 'react-icons/fi'
 type ModalProps = {
   variantButton: 'sm' | 'lg' | 'novaTurma' | 'none'
   titulo: string
-  icone: string
+  icone?: string
+  iconeReact?: React.ReactNode
   altIcone: string
   textoBotaoAbrirModal?: string
   children: React.ReactNode
@@ -23,6 +24,7 @@ export default function BasicModal(props: ModalProps) {
     variantButton,
     titulo,
     icone,
+    iconeReact,
     children,
     altIcone,
     textoBotaoAbrirModal,
@@ -52,62 +54,72 @@ export default function BasicModal(props: ModalProps) {
 
   return (
     <>
-      {variantButton &&
-        <Button sx={{
-          borderRadius: 25,
-          textTransform: 'capitalize',
-          display: 'flex',
-          gap: '16px',
-          justifyContent: variantButton === 'novaTurma' ? 'space-between' : 'center',
-          borderColor: '#5D1EF4',
-          '&:hover': {
-            backgroundColor: '#D8D8D8'
-          },
-          ...sxButton
-        }} startIcon={variantButton === 'novaTurma' && <FiPlusCircle size={25}/>} variant='outlined' onClick={onOpen}>
+      {variantButton && (
+        <Button
+          sx={{
+            borderRadius: 25,
+            textTransform: 'capitalize',
+            display: 'flex',
+            gap: '16px',
+            justifyContent: variantButton === 'novaTurma' ? 'space-between' : 'center',
+            borderColor: '#5D1EF4',
+            '&:hover': {
+              backgroundColor: '#D8D8D8'
+            },
+            ...sxButton
+          }}
+          startIcon={variantButton === 'novaTurma' && <FiPlusCircle size={25} />}
+          variant='outlined'
+          onClick={onOpen}
+        >
           {!isNovaTurmaButton && (
             <img src='/iconsPages/plus-circle.svg' alt='Circulo com um mais dentro' />
           )}
-          <Typography variant='body1' color='#170050' fontWeight={700}>{textoBotaoAbrirModal}</Typography>
+          <Typography variant='body1' color='#170050' fontWeight={700}>
+            {textoBotaoAbrirModal}
+          </Typography>
         </Button>
-      }
-      <Modal
-        open={showModal}
-        onClose={onClose}
-      >
-        <Box sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 450,
-          display: 'flex',
-          flexDirection: 'column',
-          bgcolor: 'white',
-          border: '2px solid #808080',
-          borderRadius: 8,
-          boxShadow: 24,
-          p: 5,
-          gap: '10px'
-        }}>
-          <Box sx={{
+      )}
+      <Modal open={showModal} onClose={onClose}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 450,
             display: 'flex',
-            alignItems: 'center',
+            flexDirection: 'column',
+            bgcolor: 'white',
+            border: '2px solid #808080',
+            borderRadius: 8,
+            boxShadow: 24,
+            p: 5,
             gap: '10px'
-          }}>
-            <img src={icone} alt={altIcone} />
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}
+          >
+            {iconeReact || <img src={icone} alt={altIcone} />}
             <Typography variant='h6' component='h2'>
               {titulo}
             </Typography>
           </Box>
 
-          <Divider sx={{
-            width: '100%',
-            border: 0,
-            height: '2px',
-            background: 'linear-gradient(to right, #E0D5F4 0%, #A578F9 50%, #DBCFF2 100%)',
-            marginBottom: '10px'
-          }} />
+          <Divider
+            sx={{
+              width: '100%',
+              border: 0,
+              height: '2px',
+              background: 'linear-gradient(to right, #E0D5F4 0%, #A578F9 50%, #DBCFF2 100%)',
+              marginBottom: '10px'
+            }}
+          />
 
           {children}
         </Box>

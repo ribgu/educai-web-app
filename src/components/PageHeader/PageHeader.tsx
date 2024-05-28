@@ -12,6 +12,8 @@ import Button from '@mui/material/Button'
 import { LoadingButton } from '@mui/lab'
 import SearchBar from '../SearchBar/SearchBar'
 
+type Tab = 'posts' | 'atividades' | 'pessoas'
+
 type PageHeaderProps = {
   title?: string
   showButton?: boolean
@@ -21,14 +23,13 @@ type PageHeaderProps = {
     setSearchValue: (value: string) => void
     onSearch: () => void
   }
+  tab?: Tab
 }
-
-type Tab = 'posts' | 'atividades' | 'pessoas'
 
 export default function PageHeader(PageHeaderProps: PageHeaderProps) {
   const { title, showButton, search, createClassroom } = PageHeaderProps
 
-  const actualTab = new URLSearchParams(window.location.search).get('tab')
+  const actualTab = PageHeaderProps.tab ? PageHeaderProps.tab : new URLSearchParams(window.location.search).get('tab')
   const [tab, setTab] = useState<Tab>(actualTab ? actualTab as Tab : 'posts')
   const navigate = useNavigate()
   const [name, setName] = useState('')
