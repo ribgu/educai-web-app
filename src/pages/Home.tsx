@@ -7,6 +7,8 @@ import { useContext, useEffect, useState } from 'react'
 import useClient from '../lib/client/useClient'
 import { AuthContext } from '../contexts/AuthContext'
 import { TurmaType, TurmasType } from '../lib/types/Turma'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Home() {
   const { role } = useContext(AuthContext)
@@ -15,6 +17,19 @@ export default function Home() {
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
   const [turmaSearch, setTurmaSearch] = useState<TurmaType | null>(null)
+  const regex = /[^a-zA-Z0-9\s]/g
+  const errorToast = (message : string) => {
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 2600,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+      })
+  }
 
   const handleClick = (classroomId: string) => {
     navigate(`/turma/${classroomId}`)
@@ -31,19 +46,23 @@ export default function Home() {
   }
 
   function binarySearch(turmas: TurmasType, title: string): TurmaType | null {
+    if(regex.test(title)) {
+      errorToast('Caracteres especiais são invalidos.')
+    }
+
     let left = 0
     let right = turmas.length - 1
 
     while (left <= right) {
-        const mid = Math.floor((left + right) / 2)
-        if (turmas[mid].title === title) {
-          return turmas[mid]
-        }
-        if (turmas[mid].title < title) {
-          left = mid + 1
-        } else {
-          right = mid - 1
-        }
+      const mid = Math.floor((left + right) / 2)
+      if (turmas[mid].title === title) {
+        return turmas[mid]
+      }
+      if (turmas[mid].title < title) {
+        left = mid + 1
+      } else {
+        right = mid - 1
+      }
     }
 
     return null
@@ -51,7 +70,7 @@ export default function Home() {
 
   function mergeSort(turmas: TurmasType): TurmasType {
     if (turmas.length <= 1) {
-        return turmas
+      return turmas
     }
 
     const middle = Math.floor(turmas.length / 2)
@@ -62,26 +81,30 @@ export default function Home() {
   }
 
   function merge(left: TurmasType, right: TurmasType): TurmasType {
-    // eslint-disable-next-line prefer-const
-    let resultArray = [] 
+    let resultArray = []
     let leftIndex = 0, rightIndex = 0
 
     while (leftIndex < left.length && rightIndex < right.length) {
-        if (left[leftIndex].title < right[rightIndex].title) {
-            resultArray.push(left[leftIndex])
-            leftIndex++
-        } else {
-            resultArray.push(right[rightIndex])
-            rightIndex++
-        }
+      if (left[leftIndex].title < right[rightIndex].title) {
+        resultArray.push(left[leftIndex])
+        leftIndex++
+      } else {
+        resultArray.push(right[rightIndex])
+        rightIndex++
+      }
     }
 
     return resultArray
-        .concat(left.slice(leftIndex))
-        .concat(right.slice(rightIndex))
-}
+      .concat(left.slice(leftIndex))
+      .concat(right.slice(rightIndex))
+  }
 
   const createClassroom = async (title: string, course: string): Promise<void> => {
+    if (regex.test(title) || regex.test(course)) {
+      errorToast('Não foi possivel criar a turma, atente-se aos caracteres especiais.')
+      return
+    }
+    
     return await client.createClassroom({ title, course }).then(() => updateClassrooms())
   }
 
@@ -93,22 +116,24 @@ export default function Home() {
     <Layout>
       <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
         <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
-          <PageHeader 
-            search={{ searchValue: search, setSearchValue: setSearch, onSearch: searchClassrooms }} 
-            createClassroom={createClassroom} 
-            showButton={role === 'TEACHER'} 
-            title='Turmas' 
+          <PageHeader
+            search={{ searchValue: search, setSearchValue: setSearch, onSearch: searchClassrooms }}
+            createClassroom={createClassroom}
+            showButton={role === 'TEACHER'}
+            title='Turmas'
           />
         </Box>
-        <Box sx={{ display: 'grid', padding: '24px 42px', gap: 2, 
-        gridTemplateColumns: 'repeat(auto-fill, minmax(20%, 1fr))', gridTemplateRows: 'max-content',
-        flex: '1', overflowY: 'auto'}}>
+        <Box sx={{
+          display: 'grid', padding: '24px 42px', gap: 2,
+          gridTemplateColumns: 'repeat(auto-fill, minmax(20%, 1fr))', gridTemplateRows: 'max-content',
+          flex: '1', overflowY: 'auto'
+        }}>
           {turmas && !turmaSearch && turmas.map((turma, index) => (
-            <Turma 
-              key={index} 
-              title={turma.title} 
-              course={turma.course} 
-              studentsCount={turma.studentsCount} 
+            <Turma
+              key={index}
+              title={turma.title}
+              course={turma.course}
+              studentsCount={turma.studentsCount}
               onClick={() => handleClick(turma.id)}
               id={turma.id}
               isTeacher={role === 'TEACHER'}
@@ -119,19 +144,31 @@ export default function Home() {
 
           {
             turmaSearch &&
-              <Turma 
-                title={turmaSearch.title} 
-                course={turmaSearch.course} 
-                studentsCount={turmaSearch.studentsCount} 
-                onClick={() => handleClick(turmaSearch.id)}
-                id={turmaSearch.id}
-                isTeacher={role === 'TEACHER'}
-                nextSubmission={turmaSearch.nextSubmission}
-                updateClassrooms={updateClassrooms}
-              />
+            <Turma
+              title={turmaSearch.title}
+              course={turmaSearch.course}
+              studentsCount={turmaSearch.studentsCount}
+              onClick={() => handleClick(turmaSearch.id)}
+              id={turmaSearch.id}
+              isTeacher={role === 'TEACHER'}
+              nextSubmission={turmaSearch.nextSubmission}
+              updateClassrooms={updateClassrooms}
+            />
           }
         </Box>
       </Box>
+      <ToastContainer
+        position='bottom-right'
+        autoClose={2600}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
     </Layout>
   )
 }
