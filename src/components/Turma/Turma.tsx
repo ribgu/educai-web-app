@@ -27,9 +27,9 @@ export default function Turma(props: TurmaProps) {
         isOpen: false,
         type: null
     })
-
     const [name, setName] = useState(title)
     const [subject, setSubject] = useState(course)
+    const regex = /[^a-zA-Z0-9\s]/g
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation()
@@ -76,7 +76,7 @@ export default function Turma(props: TurmaProps) {
 
     const updateClassroomData = () => {
         setModal({...modal, isLoading: true})
-
+        
         // eslint-disable-next-line prefer-const
         let body = {} as {title?: string, course?: string}
 
@@ -184,13 +184,22 @@ export default function Turma(props: TurmaProps) {
                             <TextField
                                 variant='outlined'
                                 label='Nome'
-                                onChange={(e) => setName(e.target.value)}
+                                onChange={(e) => {
+                                    const rawValue = e.target.value
+                                    const cleanValue = rawValue.replace(regex, '')
+                                    setName(cleanValue)
+                                }}
                                 value={name}
                             />
                             <TextField
                                 variant='outlined'
                                 label='Matéria'
-                                onChange={(e) => setSubject(e.target.value)}
+                                onChange={(e) => {
+                                    const rawValue = e.target.value
+                                    const cleanValue = rawValue.replace(regex, '')
+                                    setSubject(cleanValue)
+                                }
+                                }
                                 value={subject}
                             />
                         </Box>
