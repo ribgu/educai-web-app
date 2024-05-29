@@ -3,13 +3,15 @@ import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useAsyncCallback } from 'react-async-hook'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../components/Logo/Logo'
 import SlideLogin from '../components/SlidesLogin/SlidesLogin'
 import { AuthContext } from '../contexts/AuthContext'
 import useClient from '../lib/client/useClient'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Login() {
     const client = useClient()
@@ -17,13 +19,41 @@ export default function Login() {
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const errorToast = (message: string) => {
+        toast.error(message, {
+            position: 'bottom-right',
+            autoClose: 2600,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+        })
+    }
+
+    useEffect(() => {
+        const onEnter = (e : any) => {
+            if (e.key === 'Enter') {
+                handleLogin.execute
+            }
+        }
+        window.addEventListener('keypress', onEnter)
+    })
 
     const handleLogin = useAsyncCallback(async () => {
+        if (email === '' || password === '') {
+            errorToast('Preencha todos os campos antes de realizar o login.')
+            return
+        }
         await client.login({ email, password }).then((res) => {
             updateAuthData(res.token)
             navigate('/home')
-        }).catch((erro) => {
-            console.log(erro)
+        }).catch((e) => {
+            console.log(e)
+            if (e.name === 'AxiosError') {
+                errorToast('Email ou senha invalidos, tente novamente.')
+            }
         })
     })
 
@@ -105,6 +135,18 @@ export default function Login() {
                     </Box>
                 </Box>
             </Box>
+            <ToastContainer
+                position='bottom-right'
+                autoClose={2600}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme='light'
+            />
         </Box>
     )
 }

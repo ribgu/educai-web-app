@@ -160,7 +160,7 @@ export default function DrawerItem(props: ItemProps) {
           <Collapse in={open} timeout="auto" unmountOnExit> {/* ta estatico, precisa conectar com a API */}
             <List component="div" disablePadding>
               {turmas ? turmas.map((turma, index) => (
-                <Link key={index} to={`/turma/${turma.id}`}>
+                <Link key={index} to={`/turma/${turma.id}?tab=posts`}>
                   <ListItemButton sx={{
                     display: 'flex',
                     gap: '10px',
