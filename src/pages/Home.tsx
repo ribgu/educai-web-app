@@ -32,7 +32,7 @@ export default function Home() {
   }
 
   const handleClick = (classroomId: string) => {
-    navigate(`/turma/${classroomId}`)
+    navigate(`/turma/${classroomId}?tab=posts`)
   }
 
   useEffect(() => {
