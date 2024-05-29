@@ -6,11 +6,16 @@ import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import { alpha } from '@mui/material/styles'
-import { Box, TextField } from '@mui/material'
+import { Box, TextField, Tooltip, Typography } from '@mui/material'
+import useClient from '../lib/client/useClient'
+import { DictonaryResponse } from '../lib/types/DictonaryResponse'
+import VolumeUpIcon from '@mui/icons-material/VolumeUp'
 
 export default function Dictionary() {
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState('')
+    const [resultData, setResultData] = useState<DictonaryResponse | null>(null)
+    const client = useClient()
 
     const handleOpen = () => {
         setOpen(true)
@@ -21,8 +26,14 @@ export default function Dictionary() {
     }
 
     const handleSearch = () => {
-        console.log(search)
-        setSearch('')
+        client.getWordDefinition(search).then((data) => {
+            setResultData(data)
+        })
+    }
+
+    const listenAudio = (audioUrl: string) => {
+        const audio = new Audio(audioUrl)
+        audio.play()
     }
 
     return (
@@ -47,7 +58,7 @@ export default function Dictionary() {
             <Dialog
                 open={open}
                 onClose={handleClose}
-                sx={{padding: '32px' }}
+                sx={{ padding: '32px' }}
             >
                 <DialogTitle
                     sx={{
@@ -61,15 +72,37 @@ export default function Dictionary() {
                     Dicionário
                 </DialogTitle>
                 <DialogContent>
-                    <Box sx={{ display:'flex', flexDirection: 'row', alignItems: 'center', marginTop: '8px'}}>
-                        <TextField label='Pesquisar' variant='outlined' fullWidth />
+                    <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '8px' }}>
+                        <TextField label='Pesquisar' variant='outlined' fullWidth value={search} onChange={(e) => setSearch(e.target.value)} />
                         <Button
-                            sx={{ marginLeft: 1, height: '100%', padding: '16px', paddingX: '24px'}}
+                            sx={{ marginLeft: 1, height: '100%', padding: '16px', paddingX: '24px' }}
                             variant='contained'
                             color='primary'
                             onClick={handleSearch}
                         >Buscar</Button>
                     </Box>
+                    {resultData && (
+                        <Box sx={{ marginTop: '16px' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'center' }}>
+                                <Typography variant='h4' sx={{ fontWeight: 'bold' }}>Meanings</Typography>
+                                {resultData.audio && (
+                                    <Tooltip title='Ouvir pronúncia' placement='right'>
+                                        <IconButton size='small' sx={{ marginTop: '4px' }} onClick={() => listenAudio(resultData.audio)}>
+                                            <VolumeUpIcon sx={{ color: 'black' }} />
+                                        </IconButton>
+                                    </Tooltip>
+                                )}
+                            </Box>
+                            {resultData.meanings.map((meaning, index) => (
+                                <>
+                                    <Typography key={index} variant='h6' sx={{ fontWeight: 'bold' }}>{meaning.partOfSpeech}</Typography>
+                                    {meaning.definitions.map((definition, index) => (
+                                        <Typography key={index}> - {definition}</Typography>
+                                    ))}
+                                </>
+                            ))}
+                        </Box>
+                    )}
                 </DialogContent>
             </Dialog>
         </>
