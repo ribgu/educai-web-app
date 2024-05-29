@@ -23,6 +23,8 @@ export default function Dictionary() {
 
     const handleClose = () => {
         setOpen(false)
+        setSearch('')
+        setResultData(null)
     }
 
     const handleSearch = () => {
