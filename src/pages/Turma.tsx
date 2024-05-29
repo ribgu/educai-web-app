@@ -12,19 +12,14 @@ export default function Turma() {
   const client = useClient()
   const { id } = useParams()
   const [turma, setTurma] = useState<TurmaType>()
-  const tab = new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas'
-
-  const postProps = {
-    dtPublicacao: new Date(),
-    title: 'Título do post'
-  }
+  const tab = (new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas') || 'posts'
 
   useEffect(() => {
     if (id) {
       client.getClassroomById(id).then((res) => setTurma(res))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [id])
 
   return (
     <Layout>
@@ -41,8 +36,8 @@ export default function Turma() {
             flexDirection: 'column',
             padding: '10px'
           }}>
-            {tab === 'posts' && (
-              <PostsPage posts={[postProps]} />
+            {tab === 'posts' && id && (
+              <PostsPage classroomId={id} />
             )}
             {tab === 'atividades' && (
               <>
