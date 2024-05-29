@@ -5,31 +5,97 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { useState } from 'react'
 import Menu from '@mui/material/Menu/Menu'
 import MenuItem from '@mui/material/MenuItem/MenuItem'
+import { PostType }  from '../../lib/types/Post'
+import { useEffect } from 'react'
+import useClient from '../../lib/client/useClient'
+import Modal from '../Modal/Modal'
+import TextField from '@mui/material/TextField'
+import { LoadingButton } from '@mui/lab'
+import Button from '@mui/material/Button/Button'
 
-type PostProps = {
-    title: string
-    dtPublicacao: Date
-    description?: string
-    fileName?: string
+interface PostProps extends PostType {
+    updatePost: () => void
 }
 
 export default function Post(post: PostProps) {
-    const { title, dtPublicacao, description, fileName } = post
+    const client = useClient()
+    const { id, title, description, datePosting, url, updatePost } = post
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
 
+    const [name, setName] = useState(title)
+    const [text, setText] = useState(description)
+    const [file, setFile] = useState(url)
+
+    const [modal, setModal] = useState<{ isLoading: boolean, isOpen: boolean, type: 'EDIT' | 'DELETE' | null }>({
+        isLoading: false,
+        isOpen: false,
+        type: null
+    })
+
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation()
         setAnchorEl(event.currentTarget)
     }
 
-    const handleClose = (editOrDelete: string) => {
+    useEffect(() => {
+        if(modal.isOpen) {
+            setName(title)
+            setText(description)
+            setFile(url)
+        }
+    }, [modal.isOpen])
+
+    const handleClose = (event: React.MouseEvent<HTMLLIElement, MouseEvent>, editOrDelete: string) => {
+        event.stopPropagation()
         setAnchorEl(null)
 
         if (editOrDelete === 'edit') {
-            console.log('Editando')
+            setModal({
+                ...modal,
+                isOpen: true,
+                type: 'EDIT'
+            })
         } else if (editOrDelete === 'delete') {
-            console.log('Deletando')
+            setModal({
+                ...modal,
+                isOpen: true,
+                type: 'DELETE'
+            })
         }
+    }
+
+    const deletePost = () => {
+        setModal({...modal, isLoading: true})
+        client.deletePost(id).finally(() => {
+            setModal({
+                isLoading: false,
+                type: null,
+                isOpen: false
+            })
+            updatePost()
+        })
+    }
+
+    const updatePostData = () => {
+        setModal({...modal, isLoading: true})
+
+        const body = {} as {title?: string, description?: string}
+
+        if(name.trim())
+            body.title = name
+
+        if(description.trim())
+            body.description = description
+
+        client.updatePost(id, body).finally(() => {
+            setModal({
+                isLoading: false,
+                type: null,
+                isOpen: false
+            })
+            updatePost()
+        })
     }
 
     return (
@@ -45,7 +111,7 @@ export default function Post(post: PostProps) {
                 borderColor: '#BEBEBE'
             }}>
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px' }}>
-                    <img src='/logos/bookTwo.svg' alt='Ícone de livroa' style={{ width: '26px', marginBottom: '5px' }} />
+                    <img src='/logos/bookTwo.svg' alt='Ícone de livro' style={{ width: '26px', marginBottom: '5px' }} />
                     <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap' }}>{title}</Typography>
                 </Box>
                 <IconButton size='small' onClick={handleClick}>
@@ -58,19 +124,85 @@ export default function Post(post: PostProps) {
                     open={open}
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={() => { handleClose('edit') }}>
+                    <MenuItem onClick={(event) => { handleClose(event, 'edit') }}>
                         Editar
                     </MenuItem>
-                    <MenuItem onClick={() => { handleClose('delete') }}>
+                    <MenuItem onClick={(event) => { handleClose(event, 'delete') }}>
                         Apagar
                     </MenuItem>
                 </Menu>
             </Box>
             <Box sx={{ width: '100%', height: '65%', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px' }}>
-                <Typography>Data de publicação: <b>{dtPublicacao.toDateString()}</b>    </Typography>
+                <Typography>Data de publicação: <b>{datePosting}</b>    </Typography>
                 {description && <Typography sx={{ fontSize: '14px' }}>{description}</Typography>}
-                {fileName && <a><Typography>{fileName}</Typography></a>}
+                {url && <a href={url} target='_blank' rel='noopener noreferrer'><Typography>Baixar Arquivo</Typography></a>}
             </Box>
+
+            <Box>
+                <Modal
+                titulo={modal.type === 'DELETE' ? 'Deletar post' : 'Editar post'}
+                altIcone={modal.type === 'DELETE' ? 'Deletar post' : 'Editar post'}
+                variantButton='none'
+                icone={modal.type === 'DELETE' ? '/iconsPages/iconExcluir.svg' : '/iconsPages/iconEditar.svg'}
+                showModal={modal.isOpen}
+                onClose={() => setModal({...modal, isOpen: false})}
+                onOpen={() => setModal({...modal, isOpen: true})}>
+
+                    <Typography sx={{ fontSize: 16, color: '#5E5E5E' }}>
+                        {
+                            modal.type === 'DELETE' 
+                            ? <>Tem certeza que deseja deletar o post <strong>{title}?</strong></>
+                            : 'Preenche os campos abaixo com as informações atualizadas'
+                        }
+                    </Typography>
+
+                    {
+                        modal.type === 'EDIT' &&
+                        <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <TextField
+                                variant='outlined'
+                                label='Título'
+                                onChange={(e) => setName(e.target.value)}
+                                value={name}
+                            />
+                            <TextField
+                                variant='outlined'
+                                label='Descrição'
+                                onChange={(e) => setText(e.target.value)}
+                                value={text}
+                            />
+                            <TextField
+                                type='file'
+                            />
+                        </Box>
+                    }
+
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <Button sx={{
+                            color: 'black',
+                            borderColor: '#5D1EF4',
+                            '&:hover': {
+                            backgroundColor: '#D8D8D8'
+                            },
+                            paddingY: '12px',
+                            width: '48%'
+                        }} variant='outlined' onClick={() => setModal({...modal, isOpen: false})}>{modal.type === 'DELETE' ? 'Não' : 'Cancelar'}</Button>
+
+                        <LoadingButton sx={{
+                            backgroundColor: '#6730EC',
+                            color: 'white',
+                            '&:hover': {
+                            backgroundColor: '#4D1EAD'
+                            },
+                            paddingY: '12px',
+                            width: '48%'
+                        }} variant='contained' onClick={modal.type === 'DELETE' ? deletePost : updatePostData} 
+                        loading={modal.isLoading}>{modal.type === 'DELETE' ? 'Sim' : 'Atualizar'}</LoadingButton>
+                    </Box>
+                </Modal>
+            </Box>
+
         </Box>
     )
 }
+
