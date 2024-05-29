@@ -34,7 +34,7 @@ export default function Login() {
 
     useEffect(() => {
         const onEnter = (e : any) => {
-            if (e.key == 'Enter') {
+            if (e.key === 'Enter') {
                 handleLogin.execute
             }
         }
@@ -42,7 +42,7 @@ export default function Login() {
     })
 
     const handleLogin = useAsyncCallback(async () => {
-        if (email == '' || password == '') {
+        if (email === '' || password === '') {
             errorToast('Preencha todos os campos antes de realizar o login.')
             return
         }
@@ -51,7 +51,7 @@ export default function Login() {
             navigate('/home')
         }).catch((e) => {
             console.log(e)
-            if (e.name == 'AxiosError') {
+            if (e.name === 'AxiosError') {
                 errorToast('Email ou senha invalidos, tente novamente.')
             }
         })

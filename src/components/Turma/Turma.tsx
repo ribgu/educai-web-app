@@ -77,7 +77,6 @@ export default function Turma(props: TurmaProps) {
     const updateClassroomData = () => {
         setModal({...modal, isLoading: true})
         
-        // eslint-disable-next-line prefer-const
         let body = {} as {title?: string, course?: string}
 
         if(name.trim())

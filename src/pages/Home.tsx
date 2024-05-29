@@ -81,7 +81,6 @@ export default function Home() {
   }
 
   function merge(left: TurmasType, right: TurmasType): TurmasType {
-    // eslint-disable-next-line prefer-const
     let resultArray = []
     let leftIndex = 0, rightIndex = 0
 
