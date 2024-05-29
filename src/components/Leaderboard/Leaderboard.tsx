@@ -35,7 +35,7 @@ export default function Leaderboard() {
         gap: '10px',
         alignItems: 'center',
       }}>
-        <img src='./IconsPages/iconLeaderboard.svg' alt='Pódio com uma estrela no topo'/>
+        <img src='/IconsPages/iconLeaderboard.svg' alt='Pódio com uma estrela no topo'/>
         <Typography variant='h6'>Leaderboard</Typography>
       </Box>
       <Typography variant='subtitle2'>Alunos que mais acertaram questões</Typography>
