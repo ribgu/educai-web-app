@@ -1,4 +1,4 @@
-import { Box, FormControlLabel, FormGroup, InputAdornment, Radio, RadioGroup, TextField, Typography } from '@mui/material'
+import { Box, Button, FormControlLabel, FormGroup, InputAdornment, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from '@mui/material'
 import { IoChatbubblesOutline } from 'react-icons/io5'
 import { RiLink } from 'react-icons/ri'
 import React, { useState } from 'react'
@@ -8,13 +8,15 @@ import FileInput from '../../../components/FileInput/FileInput'
 import useClient from '../../../lib/client/useAIClient'
 import { Question } from '../../../lib/types/Question'
 import { LoadingButton } from '@mui/lab'
+import { GenerateQuestionPayload } from '../../../lib/types/GenerateQuestionPayload'
 
 interface GerarQuestaoModalProps {
     handleAddQuestion: (question: Question) => void;
+    handleCancel: () => void;
 }
 
 export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
-    const { handleAddQuestion } = props
+    const { handleAddQuestion, handleCancel } = props
     
     const client = useClient()
 
@@ -22,6 +24,10 @@ export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
     const [audio, setAudio] = useState<File | null>(null)
     const [instrucoes, setInstrucoes] = useState<string>('')
     const [linkYoutube, setLinkYoutube] = useState<string>('')
+
+    const [theme, setTheme] = useState<string>('')
+    const [relatedTheme, setRelatedTheme] = useState<string>('')
+    const [difficulty, setDifficulty] = useState<string>('')
 
     const [errorMessage, setErrorMessage] = useState<string>('')
     const [selectedValue, setSelectedValue] = useState('instrucao')
@@ -40,19 +46,27 @@ export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
     }
 
     const handleClick = async () => {
-        if (!instrucoes && !linkYoutube && !audio && !document) {
-            setErrorMessage('A entrada acima deve ser preenchida!')
+        if (!instrucoes && !linkYoutube && !audio && !document || (!theme || !relatedTheme || !difficulty)) {
+            setErrorMessage('As entradas acima devem ser preenchidas!')
             return
         }
 
         setIsLoading(true)
 
-        let payload = {}
+        let payload = {} as GenerateQuestionPayload
 
         selectedValue == 'linkYoutube' && (payload = { ...payload, youtubeLink: linkYoutube })
         selectedValue == 'mp3' && (payload = { ...payload, audio })
         selectedValue == 'documento' && (payload = { ...payload, document })
         selectedValue == 'instrucao' && (payload = { ...payload, instructions: instrucoes })
+
+        payload = {
+            ...payload,
+            theme,
+            relatedTheme,
+            difficulty,
+            numberOfQuestions: 1
+        } as GenerateQuestionPayload
 
         const response = await client.generateQuestion(payload)
         
@@ -63,7 +77,34 @@ export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
     }
 
     return (
-        <Box sx={{ width: '100%', padding: '25px 50px', display: 'flex', flexDirection: 'column', minHeight: '40vh' }}>
+        <Box sx={{ width: '100%', padding: '25px 50px', display: 'flex', flexDirection: 'column', minHeight: '40vh', gap: '16px' }}>
+            <Select
+                displayEmpty
+                value={difficulty}
+                onChange={(event) => handleValueChange(event.target.value as string, setDifficulty)}
+            >   
+                <MenuItem disabled value=''>
+                    <em>Dificuldade</em>
+                </MenuItem>
+                <MenuItem value={'easy'}>Fácil</MenuItem>
+                <MenuItem value={'medium'}>Médio</MenuItem>
+                <MenuItem value={'hard'}>Difícl</MenuItem>
+            </Select>
+
+            <TextField
+                label='Conteúdo da questão'
+                onChange={(event) => handleValueChange(event.target.value, setTheme)}
+                placeholder='Ex: To be verb'
+                sx={{ fontSize: '16px', width: '100%' }}
+            />
+
+            <TextField
+                label='Tema a ser relacionado'
+                onChange={(event) => handleValueChange(event.target.value, setRelatedTheme)}
+                placeholder='Ex: Tecnologia'
+                sx={{ fontSize: '16px', width: '100%' }}
+            />
+            
             <Box sx={{ paddingBottom: '20px' }}>
                 <Typography sx={{ color: '#545454', fontWeight: 400, fontSize: 16, marginBottom: '6px' }}>
                     Escolha uma entradas:
@@ -144,14 +185,42 @@ export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
                 {errorMessage}
             </Typography>}
 
-            <LoadingButton
-                loading={isLoading}
-                onClick={handleClick}
-                variant="contained"
-                sx={{
-                    marginTop: '26px',
-                    textTransform: 'none',
-                }}>Gerar Questão</LoadingButton>
+            <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginTop: '10px'
+                }}>
+                    <Button sx={{
+                        borderColor: '#5D1EF4',
+                        '&:hover': {
+                            backgroundColor: '#D8D8D8'
+                        },
+                        paddingY: '12px',
+                        width: '48%',
+                        textTransform: 'none',
+                        borderRadius: '10px',
+                        fontWeight: 700,
+                        color: '#170050'
+                    }} variant='outlined' onClick={handleCancel}>Cancelar</Button>
+
+                    <LoadingButton sx={{
+                        backgroundColor: '#6730EC',
+                        color: 'white',
+                        '&:hover': {
+                            backgroundColor: '#4D1EAD'
+                        },
+                        paddingY: '12px',
+                        width: '48%',
+                        textTransform: 'none',
+                        borderRadius: '10px',
+                        fontWeight: 700
+                    }} 
+                    variant='contained'
+                    loading={isLoading}
+                    onClick={handleClick}>
+                        Gerar Questão
+                    </LoadingButton>
+            </Box>
         </Box>
     )
 }

@@ -2,7 +2,7 @@ import Box from '@mui/material/Box/Box'
 import Question from '../../components/Question/Question'
 import Layout from '../Layout'
 import PageHeader from '../../components/PageHeader/PageHeader'
-import { Button, Modal, Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Question as QuestionType } from '../../lib/types/Question'
 import FinalizarDialog from '../../components/FinalizarDialog/FinalizarDialog'
@@ -12,6 +12,7 @@ import { TurmaType } from '../../lib/types/Turma'
 import GerarQuestaoModal from './GerarQuestaoModal/GerarQuestaoModal'
 import { LuPlusCircle } from 'react-icons/lu'
 import { BsStars } from 'react-icons/bs'
+import Modal from '../../components/Modal/Modal'
 
 type QuestionProps = {
   questions?: QuestionType[]
@@ -247,17 +248,22 @@ export default function CriarAtividade(props: QuestionProps) {
         </Box>
       </Box>
 
-      <Modal open={openModal} onClose={() => setOpenModal(false)} 
-      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box sx={{
-          gap: '10px',
-          backgroundColor: '#FFF',
-          padding: '24px',
-          borderRadius: '10px',
-          width: '50%',
-        }}>
-          <GerarQuestaoModal handleAddQuestion={handleAddQuestion} />
-        </Box>
+      <Modal
+        width='50%'
+        titulo='Gerar questão com IA'
+        textoBotaoAbrirModal='Gerar questão IA'
+        altIcone=''
+        variantButton='none'
+        iconeReact={
+          <div style={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '12px' }}>
+            <BsStars color='#341069' size={24} />
+          </div>      
+        }
+        showModal={openModal}
+        onClose={() => setOpenModal(false)}
+        onOpen={() => setOpenModal(true)}
+      >
+        <GerarQuestaoModal handleAddQuestion={handleAddQuestion} handleCancel={() => setOpenModal(false)}/>
       </Modal>
     </Layout>
   )

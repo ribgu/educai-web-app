@@ -4,12 +4,13 @@ import IconButton from '@mui/material/IconButton/IconButton'
 import Menu from '@mui/material/Menu/Menu'
 import MenuItem from '@mui/material/MenuItem/MenuItem'
 import Typography from '@mui/material/Typography/Typography'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { TurmaType } from '../../lib/types/Turma'
 import Modal from '../Modal/Modal'
 import { Button, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import useClient from '../../lib/client/useClient'
+import { AuthContext } from '../../contexts/AuthContext'
 
 interface TurmaProps extends TurmaType {
     isTeacher: boolean
@@ -19,6 +20,7 @@ interface TurmaProps extends TurmaType {
 
 export default function Turma(props: TurmaProps) {
     const client = useClient()
+    const { role } = useContext(AuthContext)
     const { title, course, nextSubmission, studentsCount, isTeacher, id, onClick, updateClassrooms } = props
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
@@ -77,6 +79,7 @@ export default function Turma(props: TurmaProps) {
     const updateClassroomData = () => {
         setModal({...modal, isLoading: true})
         
+        // eslint-disable-next-line prefer-const
         let body = {} as {title?: string, course?: string}
 
         if(name.trim())
@@ -123,9 +126,11 @@ export default function Turma(props: TurmaProps) {
                         <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap', 
                         fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</Typography>
                     </Box>
-                    <IconButton sx={{ justifyContent: 'end' }} size='small' onClick={handleClick}>
-                        <MoreVertIcon />
-                    </IconButton>
+                    {role === 'TEACHER' && 
+                        <IconButton sx={{ justifyContent: 'end' }} size='small' onClick={handleClick}>
+                            <MoreVertIcon />
+                        </IconButton>
+                    }
                     <Menu
                         anchorEl={anchorEl}
                         keepMounted
