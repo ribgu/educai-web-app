@@ -62,7 +62,9 @@ export default function PostsPage(props: postsPageProps) {
 
     // Função de criar um post
     const createPost = async (title: string, description: string, datePosting: string, file: File): Promise<void> => {
-        return await client.createPost({ title, description, datePosting, classroomId }, file).then(() => updatePosts())
+        const formattedDatePosting = datePosting.split('T')[0] 
+        const newPost = await client.createPost({ title, description, datePosting: formattedDatePosting, classroomId }, file)
+        setPosts((prevPosts) => [newPost, ...prevPosts])
     }
 
     const createAPost = () => {
@@ -137,7 +139,7 @@ export default function PostsPage(props: postsPageProps) {
             <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column', overflow: 'auto'}}>
                 {Array.isArray(posts) && posts.length > 0 ? (
                     posts.map((post, index) => (
-                        <Post key={index} id={post.id} datePosting={post.datePosting} title={post.title} description={post.description} url={post.url} updatePost={updatePosts} />
+                        <Post key={index} id={post.id} datePosting={post.datePosting} title={post.title} description={post.description} file={post.file} updatePost={updatePosts} />
                     ))
                 ) : (
                     <Typography variant="h6" align="center">Nenhum post...</Typography>

@@ -85,7 +85,7 @@ export default class Client {
     return (await this.axios.get(`/classroom/${classroomId}/leaderboard`)).data
   }
 
-  async createPost(body: {title: string, description: string, datePosting: string, classroomId: string}, file: File): Promise<void> {
+  async createPost(body: {title: string, description: string, datePosting: string, classroomId: string}, file: File): Promise<PostType> {
     const formData = new FormData()
     formData.append('title', body.title)
     formData.append('description', body.description)
@@ -93,8 +93,9 @@ export default class Client {
     formData.append('classroomId', body.classroomId)
     formData.append('file', file)
     
-    return (await this.axios.post('/posts', formData))
-  }
+    const response = await this.axios.post('/posts', formData)
+    return response.data
+}
   
   async deletePost(postId: string): Promise<void> {
     return (await this.axios.delete(`/posts/${postId}`))

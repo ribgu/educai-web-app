@@ -19,13 +19,13 @@ interface PostProps extends PostType {
 
 export default function Post(post: PostProps) {
     const client = useClient()
-    const { id, title, description, datePosting, url, updatePost } = post
+    const { id, title, description, datePosting, file, updatePost } = post
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
 
     const [name, setName] = useState(title)
     const [text, setText] = useState(description)
-    const [file, setFile] = useState(url)
+    const [fileUrl, setFile] = useState(file)
 
     const [modal, setModal] = useState<{ isLoading: boolean, isOpen: boolean, type: 'EDIT' | 'DELETE' | null }>({
         isLoading: false,
@@ -42,7 +42,7 @@ export default function Post(post: PostProps) {
         if(modal.isOpen) {
             setName(title)
             setText(description)
-            setFile(url)
+            setFile(file)
         }
     }, [modal.isOpen])
 
@@ -133,9 +133,14 @@ export default function Post(post: PostProps) {
                 </Menu>
             </Box>
             <Box sx={{ width: '100%', height: '65%', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px' }}>
-                <Typography>Data de publicação: <b>{datePosting}</b>    </Typography>
+                <Typography>Data de publicação: <b>{datePosting}</b></Typography>
                 {description && <Typography sx={{ fontSize: '14px' }}>{description}</Typography>}
-                {url && <a href={url} target='_blank' rel='noopener noreferrer'><Typography>Baixar Arquivo</Typography></a>}
+                {file && <a href={file} target='_blank' rel='noopener noreferrer'><Typography sx={{
+                    fontSize: '14px',
+                    color: 'blue',
+                    textDecoration: 'underline'
+                
+                }}>Baixar arquivo anexado</Typography></a>}
             </Box>
 
             <Box>
