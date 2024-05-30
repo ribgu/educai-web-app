@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { TurmaType } from '../lib/types/Turma'
 import useClient from '../lib/client/useClient'
 import PostsPage from '../components/PostsPage/PostsPage'
+import AnswerQuestionPage from '../components/AnswerQuestionPage/AnswerQuestionPage'
 import Leaderboard from '../components/Leaderboard/Leaderboard'
 import AtividadesPage from '../components/AtividadesPage/AtividadesPage'
 import ListagemAtividade from '../components/ListagemAtividades/ListagemAtividade'
@@ -66,7 +67,8 @@ export default function Turma() {
             )}
             {tab === 'atividades' && (
               selectedAtividade ? (
-                <ListagemAtividade atividades={[atividadeSelectedProps]} nomeAtividade={selectedAtividade.title} />
+                //<ListagemAtividade atividades={[atividadeSelectedProps]} nomeAtividade={selectedAtividade.title} />
+                <AnswerQuestionPage />
               ) : (
                 <AtividadesPage
                 atividades={[atividadeProps]}

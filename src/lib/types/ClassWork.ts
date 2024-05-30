@@ -1,6 +1,6 @@
 import { Question } from './Question'
 
-export type classWork = {
+export interface ClassworkType {
   title: string
   datePosting: string
   endDate: string
