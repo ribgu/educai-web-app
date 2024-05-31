@@ -4,6 +4,7 @@ import { EduResponse } from '../types/EduResponse'
 import { TurmaType } from '../types/Turma'
 import { LeaderboardType } from '../types/Leaderboard'
 import { classWork } from '../types/ClassWork'
+import { DictonaryResponse } from '../types/DictonaryResponse'
 
 type ClientProps = {
   clientType: 'ia-api' | 'api',
@@ -128,6 +129,8 @@ export default class Client {
     return (await this.axios.post('/generate-educational-resource', formData, { responseType: 'arraybuffer' }))
   }
 
-  // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade
+  async getWordDefinition(word: string): Promise<DictonaryResponse> {
+    return (await this.axios.get(`/dictionary/${word}/definition`)).data
+  }
 
 }
