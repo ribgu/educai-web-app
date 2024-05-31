@@ -1,6 +1,6 @@
-import IconButton from '@mui/material/IconButton/IconButton'
+import IconButton from '@mui/material/IconButton'
 import BookIcon from '@mui/icons-material/Book'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
@@ -12,26 +12,24 @@ import { DictonaryResponse } from '../lib/types/DictonaryResponse'
 import VolumeUpIcon from '@mui/icons-material/VolumeUp'
 import { Stack } from '../lib/stack'
 
+const stack = new Stack<string>() // Instância da pilha para palavras
+
 export default function Dictionary() {
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState('')
     const [resultData, setResultData] = useState<DictonaryResponse | null>(null)
-    const [searchHistory, setSearchHistory] = useState<string[]>([])
     const client = useClient()
-    const stack = new Stack<string>() // Instância da pilha para palavras
+    const [history, setHistory] = useState<string[]>([])
 
     useEffect(() => {
-        const history: string[] = []
-        let temp = stack.peek()
-        while (!stack.isEmpty()) {
-            history.push(temp as string)
-            stack.pop()
-            temp = stack.peek()
-        }
-        history.reverse() // Inverte para mostrar o histórico mais recente
-        setSearchHistory(history)
-        history.forEach(word => stack.push(word)) // Reempilha para manter o estado original
-    }, [resultData])
+        // Atualiza o histórico quando o componente monta
+        setHistory([...stack.storage])
+    }, [])
+
+    useEffect(() => {
+        // Atualiza o histórico sempre que a pilha mudar
+        setHistory([...stack.storage])
+    }, [stack.storage.length])
 
     const handleOpen = () => {
         setOpen(true)
@@ -42,13 +40,23 @@ export default function Dictionary() {
         setSearch('')
         setResultData(null)
         stack.clear()
+        setHistory([])
     }
 
-    const handleSearch = () => {
-        client.getWordDefinition(search).then((data) => {
-            setResultData(data)
-            stack.push(search) // Adiciona pesquisa na pilha
-        })
+    const handleSearch = async () => {
+        const data = await client.getWordDefinition(search)
+        setResultData(data)
+        if (search) {
+            stack.push(search)
+            setHistory([...stack.storage])
+        }
+    }
+
+    const handleResearch = async (word: string) => {
+        setSearch('')
+        setSearch(word)
+        console.log('Pesquisando', word)
+        await handleSearch()
     }
 
     const listenAudio = (audioUrl: string) => {
@@ -101,18 +109,26 @@ export default function Dictionary() {
                             onClick={handleSearch}
                         >Buscar</Button>
                     </Box>
-                    {searchHistory.length > 0 && (
-                        <Box sx={{ marginTop: '16px' }}>
-                            <Typography variant='h6' sx={{ fontWeight: 'bold', marginBottom: '8px' }}>Histórico de Pesquisa</Typography>
-                            {searchHistory.map((item, index) => (
-                                <Typography key={index}> - {item}</Typography>
-                            ))}
-                        </Box>
-                    )}
+                    <Box sx={{ marginTop: '16px' }}>
+                        <Typography variant='h6' sx={{ fontWeight: 'bold' }}>Histórico de Pesquisa</Typography>
+                        {history.length === 0 ? (
+                            <Typography sx={{ fontStyle: 'italic' }}>Nenhuma pesquisa realizada</Typography>
+                        ) : (
+                            history.map((word, index) => (
+                                <Typography key={index} sx={{
+                                    textDecoration: 'underline',
+                                    cursor: 'pointer',
+                                    color: 'blue'
+                                }}
+                                    onClick={() => handleResearch(word)}
+                                >{index + 1} - {word}</Typography>
+                            ))
+                        )}
+                    </Box>
                     {resultData && (
                         <Box sx={{ marginTop: '16px' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'center' }}>
-                                <Typography variant='h4' sx={{ fontWeight: 'bold' }}>Meanings</Typography>
+                                <Typography variant='h4' sx={{ fontWeight: 'bold' }}>Significados</Typography>
                                 {resultData.audio && (
                                     <Tooltip title='Ouvir pronúncia' placement='right'>
                                         <IconButton size='small' sx={{ marginTop: '4px' }} onClick={() => listenAudio(resultData.audio)}>
@@ -122,12 +138,12 @@ export default function Dictionary() {
                                 )}
                             </Box>
                             {resultData.meanings.map((meaning, index) => (
-                                <>
-                                    <Typography key={index} variant='h6' sx={{ fontWeight: 'bold' }}>{meaning.partOfSpeech}</Typography>
-                                    {meaning.definitions.map((definition, index) => (
-                                        <Typography key={index}> - {definition}</Typography>
+                                <div key={index}>
+                                    <Typography variant='h6' sx={{ fontWeight: 'bold' }}>{meaning.partOfSpeech}</Typography>
+                                    {meaning.definitions.map((definition, idx) => (
+                                        <Typography key={idx}> - {definition}</Typography>
                                     ))}
-                                </>
+                                </div>
                             ))}
                         </Box>
                     )}
