@@ -9,6 +9,8 @@ import { PostType } from '../../lib/types/Post'
 import useClient from '../../lib/client/useClient'
 import Typography from '@mui/material/Typography/Typography'
 import { ChangeEvent } from 'react'
+import FileInput from '../FileInput/FileInput'
+import { LuFile } from 'react-icons/lu'
 
 type postsPageProps = {
     classroomId: string
@@ -74,6 +76,7 @@ export default function PostsPage(props: postsPageProps) {
                 setModalIsLoading(false)
                 setModalIsOpen(false)
                 updatePosts()
+                setFile(null)
             })
         }
     }
@@ -92,7 +95,10 @@ export default function PostsPage(props: postsPageProps) {
                 altIcone='Pessoas agrupadas'
                 textoBotaoAbrirModal='Novo Post'
                 showModal={modalIsOpen}
-                onClose={() => setModalIsOpen(false)}
+                onClose={() => { 
+                    setModalIsOpen(false)
+                    setFile(null)
+                }}
                 onOpen={() => setModalIsOpen(true)}
             >
                 <TextField 
@@ -107,8 +113,7 @@ export default function PostsPage(props: postsPageProps) {
                 onChange={(e) => setDescription(e.target.value)}
                  />
 
-                <TextField type='file'
-                 onChange={handleFileChange}/>
+                 <FileInput id='document' onChange={handleFileChange} value={file} description='Carregar um documento' icon={<LuFile size={22} color='#7750DE' />}></FileInput>
 
                 <Box sx={{
                     display: 'flex',
@@ -123,7 +128,10 @@ export default function PostsPage(props: postsPageProps) {
                         },
                         paddingY: '12px',
                         width: '48%'
-                    }} variant='outlined' onClick={() => setModalIsOpen(false)}>Cancelar</Button>
+                    }} variant='outlined' onClick={() => {
+                        setModalIsOpen(false)
+                        setFile(null)
+                    }}>Cancelar</Button>
 
                     <LoadingButton sx={{
                         backgroundColor: '#6730EC',
