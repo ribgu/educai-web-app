@@ -1,27 +1,27 @@
 export class Stack<T> {
-    private items: T[] = []
+    public storage: T[] = []
 
-    push(element: T) {
-        this.items.push(element)
+    push(item: T) {
+        this.storage.push(item)
     }
 
-    pop(): T | undefined {
-        return this.items.pop()
+    pop() {
+        return this.storage.pop()
     }
 
-    peek(): T | undefined {
-        return this.items[this.items.length - 1]
+    peek() {
+        return this.storage[this.storage.length - 1]
     }
 
-    isEmpty(): boolean {
-        return this.items.length === 0
+    isEmpty() {
+        return this.storage.length === 0
     }
 
-    size(): number {
-        return this.items.length
+    get length() {
+        return this.storage.length
     }
 
     clear() {
-        this.items = []
+        this.storage = []
     }
 }
