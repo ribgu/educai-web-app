@@ -26,7 +26,7 @@ export default function Post(post: PostProps) {
     const [text, setText] = useState(description)
     const [fileUrl, setFile] = useState(file)
     const [url, setUrl] = useState('')
-
+    
     const [modal, setModal] = useState<{ isLoading: boolean, isOpen: boolean, type: 'EDIT' | 'DELETE' | null }>({
         isLoading: false,
         isOpen: false,
@@ -104,6 +104,11 @@ export default function Post(post: PostProps) {
         })
     }
 
+    const formatDate = (dateString: string): string => {
+        const date = new Date(dateString)
+        return date.toLocaleDateString('pt-BR')
+    }
+
     return (
         <Box sx={{ width: '100%', height: '18vh', border: '2px solid #BEBEBE', borderRadius: '10px' }}>
             <Box sx={{
@@ -118,7 +123,7 @@ export default function Post(post: PostProps) {
             }}>
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px' }}>
                     <img src='/logos/bookTwo.svg' alt='Ícone de livro' style={{ width: '26px', marginBottom: '5px' }} />
-                    <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap' }}>{title}</Typography>
+                    <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap', fontWeight: 'bold' }}>{title}</Typography>
                 </Box>
                 <IconButton size='small' onClick={handleClick}>
                     <MoreVertIcon />
@@ -139,7 +144,7 @@ export default function Post(post: PostProps) {
                 </Menu>
             </Box>
             <Box sx={{ width: '100%', height: '65%', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px' }}>
-                <Typography>Data de publicação: <b>{datePosting}</b></Typography>
+                <Typography sx={{ fontSize: '12px' }}>Data de publicação: <b>{formatDate(datePosting)}</b></Typography>
                 {description && <Typography sx={{ fontSize: '14px' }}>{description}</Typography>}
                 {url && <a href={url} target='_blank' rel='noopener noreferrer'><Typography sx={{
                     fontSize: '14px',
