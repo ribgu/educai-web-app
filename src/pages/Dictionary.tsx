@@ -1,6 +1,6 @@
 import IconButton from '@mui/material/IconButton/IconButton'
 import BookIcon from '@mui/icons-material/Book'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
@@ -10,12 +10,28 @@ import { Box, TextField, Tooltip, Typography } from '@mui/material'
 import useClient from '../lib/client/useClient'
 import { DictonaryResponse } from '../lib/types/DictonaryResponse'
 import VolumeUpIcon from '@mui/icons-material/VolumeUp'
+import { Stack } from '../lib/stack'
 
 export default function Dictionary() {
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState('')
     const [resultData, setResultData] = useState<DictonaryResponse | null>(null)
+    const [searchHistory, setSearchHistory] = useState<string[]>([])
     const client = useClient()
+    const stack = new Stack<string>() // Instância da pilha para palavras
+
+    useEffect(() => {
+        const history: string[] = []
+        let temp = stack.peek()
+        while (!stack.isEmpty()) {
+            history.push(temp as string)
+            stack.pop()
+            temp = stack.peek()
+        }
+        history.reverse() // Inverte para mostrar o histórico mais recente
+        setSearchHistory(history)
+        history.forEach(word => stack.push(word)) // Reempilha para manter o estado original
+    }, [resultData])
 
     const handleOpen = () => {
         setOpen(true)
@@ -25,11 +41,13 @@ export default function Dictionary() {
         setOpen(false)
         setSearch('')
         setResultData(null)
+        stack.clear()
     }
 
     const handleSearch = () => {
         client.getWordDefinition(search).then((data) => {
             setResultData(data)
+            stack.push(search) // Adiciona pesquisa na pilha
         })
     }
 
@@ -83,6 +101,14 @@ export default function Dictionary() {
                             onClick={handleSearch}
                         >Buscar</Button>
                     </Box>
+                    {searchHistory.length > 0 && (
+                        <Box sx={{ marginTop: '16px' }}>
+                            <Typography variant='h6' sx={{ fontWeight: 'bold', marginBottom: '8px' }}>Histórico de Pesquisa</Typography>
+                            {searchHistory.map((item, index) => (
+                                <Typography key={index}> - {item}</Typography>
+                            ))}
+                        </Box>
+                    )}
                     {resultData && (
                         <Box sx={{ marginTop: '16px' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'center' }}>
