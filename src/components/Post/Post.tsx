@@ -2,11 +2,10 @@ import Box from '@mui/material/Box/Box'
 import IconButton from '@mui/material/IconButton/IconButton'
 import Typography from '@mui/material/Typography/Typography'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Menu from '@mui/material/Menu/Menu'
 import MenuItem from '@mui/material/MenuItem/MenuItem'
-import { PostType }  from '../../lib/types/Post'
-import { useEffect } from 'react'
+import { PostType } from '../../lib/types/Post'
 import useClient from '../../lib/client/useClient'
 import Modal from '../Modal/Modal'
 import TextField from '@mui/material/TextField'
@@ -19,13 +18,14 @@ interface PostProps extends PostType {
 
 export default function Post(post: PostProps) {
     const client = useClient()
-    const { id, title, description, datePosting, file, updatePost } = post
+    const { id, title, description, datePosting, file, originalFileName, updatePost } = post
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
 
     const [name, setName] = useState(title)
     const [text, setText] = useState(description)
     const [fileUrl, setFile] = useState(file)
+    const [url, setUrl] = useState('')
 
     const [modal, setModal] = useState<{ isLoading: boolean, isOpen: boolean, type: 'EDIT' | 'DELETE' | null }>({
         isLoading: false,
@@ -39,10 +39,10 @@ export default function Post(post: PostProps) {
     }
 
     useEffect(() => {
-        if(modal.isOpen) {
+        if (modal.isOpen) {
             setName(title)
             setText(description)
-            setFile(file)
+            setFile(fileUrl)
         }
     }, [modal.isOpen])
 
@@ -66,7 +66,7 @@ export default function Post(post: PostProps) {
     }
 
     const deletePost = () => {
-        setModal({...modal, isLoading: true})
+        setModal({ ...modal, isLoading: true })
         client.deletePost(id).finally(() => {
             setModal({
                 isLoading: false,
@@ -77,16 +77,22 @@ export default function Post(post: PostProps) {
         })
     }
 
+    useEffect(() => {
+        if (file) {
+            client.getUrlArquivoPost(id).then((data) => setUrl(data))
+        }
+    }, [id, file])
+
     const updatePostData = () => {
-        setModal({...modal, isLoading: true})
+        setModal({ ...modal, isLoading: true })
 
-        const body = {} as {title?: string, description?: string}
+        const body = {} as { title?: string, description?: string }
 
-        if(name.trim())
+        if (name.trim())
             body.title = name
 
-        if(description.trim())
-            body.description = description
+        if (text.trim())
+            body.description = text
 
         client.updatePost(id, body).finally(() => {
             setModal({
@@ -135,29 +141,29 @@ export default function Post(post: PostProps) {
             <Box sx={{ width: '100%', height: '65%', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px' }}>
                 <Typography>Data de publicação: <b>{datePosting}</b></Typography>
                 {description && <Typography sx={{ fontSize: '14px' }}>{description}</Typography>}
-                {file && <a href={file} target='_blank' rel='noopener noreferrer'><Typography sx={{
+                {url && <a href={url} target='_blank' rel='noopener noreferrer'><Typography sx={{
                     fontSize: '14px',
                     color: 'blue',
                     textDecoration: 'underline'
-                
-                }}>Baixar arquivo anexado</Typography></a>}
+
+                }}>{originalFileName}</Typography></a>}
             </Box>
 
             <Box>
                 <Modal
-                titulo={modal.type === 'DELETE' ? 'Deletar post' : 'Editar post'}
-                altIcone={modal.type === 'DELETE' ? 'Deletar post' : 'Editar post'}
-                variantButton='none'
-                icone={modal.type === 'DELETE' ? '/iconsPages/iconExcluir.svg' : '/iconsPages/iconEditar.svg'}
-                showModal={modal.isOpen}
-                onClose={() => setModal({...modal, isOpen: false})}
-                onOpen={() => setModal({...modal, isOpen: true})}>
+                    titulo={modal.type === 'DELETE' ? 'Deletar post' : 'Editar post'}
+                    altIcone={modal.type === 'DELETE' ? 'Deletar post' : 'Editar post'}
+                    variantButton='none'
+                    icone={modal.type === 'DELETE' ? '/iconsPages/iconExcluir.svg' : '/iconsPages/iconEditar.svg'}
+                    showModal={modal.isOpen}
+                    onClose={() => setModal({ ...modal, isOpen: false })}
+                    onOpen={() => setModal({ ...modal, isOpen: true })}>
 
                     <Typography sx={{ fontSize: 16, color: '#5E5E5E' }}>
                         {
-                            modal.type === 'DELETE' 
-                            ? <>Tem certeza que deseja deletar o post <strong>{title}?</strong></>
-                            : 'Preenche os campos abaixo com as informações atualizadas'
+                            modal.type === 'DELETE'
+                                ? <>Tem certeza que deseja deletar o post <strong>{title}?</strong></>
+                                : 'Preenche os campos abaixo com as informações atualizadas'
                         }
                     </Typography>
 
@@ -176,33 +182,30 @@ export default function Post(post: PostProps) {
                                 onChange={(e) => setText(e.target.value)}
                                 value={text}
                             />
-                            <TextField
-                                type='file'
-                            />
                         </Box>
                     }
 
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Button sx={{
                             color: 'black',
                             borderColor: '#5D1EF4',
                             '&:hover': {
-                            backgroundColor: '#D8D8D8'
+                                backgroundColor: '#D8D8D8'
                             },
                             paddingY: '12px',
                             width: '48%'
-                        }} variant='outlined' onClick={() => setModal({...modal, isOpen: false})}>{modal.type === 'DELETE' ? 'Não' : 'Cancelar'}</Button>
+                        }} variant='outlined' onClick={() => setModal({ ...modal, isOpen: false })}>{modal.type === 'DELETE' ? 'Não' : 'Cancelar'}</Button>
 
                         <LoadingButton sx={{
                             backgroundColor: '#6730EC',
                             color: 'white',
                             '&:hover': {
-                            backgroundColor: '#4D1EAD'
+                                backgroundColor: '#4D1EAD'
                             },
                             paddingY: '12px',
                             width: '48%'
-                        }} variant='contained' onClick={modal.type === 'DELETE' ? deletePost : updatePostData} 
-                        loading={modal.isLoading}>{modal.type === 'DELETE' ? 'Sim' : 'Atualizar'}</LoadingButton>
+                        }} variant='contained' onClick={modal.type === 'DELETE' ? deletePost : updatePostData}
+                            loading={modal.isLoading}>{modal.type === 'DELETE' ? 'Sim' : 'Atualizar'}</LoadingButton>
                     </Box>
                 </Modal>
             </Box>
@@ -210,4 +213,3 @@ export default function Post(post: PostProps) {
         </Box>
     )
 }
-

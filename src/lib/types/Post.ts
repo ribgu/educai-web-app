@@ -4,6 +4,7 @@ export type PostType = {
     description: string
     file: string
     datePosting: string
+    originalFileName: string
   }
   
 export interface PostsType extends Array<PostType> {}
