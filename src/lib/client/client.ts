@@ -3,6 +3,7 @@ import { UserLogin } from '../types/Login'
 import { EduResponse } from '../types/EduResponse'
 import { TurmaType } from '../types/Turma'
 import { LeaderboardType } from '../types/Leaderboard'
+import { PostType } from '../types/Post'
 import { classWork } from '../types/ClassWork'
 import { DictonaryResponse } from '../types/DictonaryResponse'
 
@@ -86,6 +87,36 @@ export default class Client {
     return (await this.axios.get(`/classroom/${classroomId}/leaderboard`)).data
   }
 
+  async createPost(body: { title: string, description: string, datePosting: string, classroomId: string }, file: File): Promise<{ post: PostType, url: string }> {
+    const formData = new FormData()
+    formData.append('title', body.title)
+    formData.append('description', body.description)
+    formData.append('datePosting', body.datePosting)
+    formData.append('classroomId', body.classroomId)
+    formData.append('file', file)
+    
+    const response = await this.axios.post('/posts', formData)
+    const post: PostType = response.data
+    const url = await this.getUrlArquivoPost(post.id)
+    return { post, url }
+}
+
+  async getUrlArquivoPost(postId: string): Promise<string> {
+    return (await this.axios.get(`/posts/${postId}/download`)).data
+  }
+
+  async deletePost(postId: string): Promise<void> {
+    return (await this.axios.delete(`/posts/${postId}`))
+  }
+
+  async updatePost(postId: string, body: {title?: string, description?: string}): Promise<void> {
+    return (await this.axios.patch(`/posts/${postId}`, body))
+  }
+
+  async getPostsByClassroom(classroomId: string): Promise<PostType[]> {
+    return (await this.axios.get(`/classroom/${classroomId}/posts`)).data
+  }
+
   async refreshToken() {
     return (await this.axios.post('/user/refreshToken'))
   }
@@ -108,6 +139,16 @@ export default class Client {
     return request.data
   }
 
+  async uploadFile(formData: FormData): Promise<{ url: string }> {
+    const response = await this.axios.post('/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
+  }
+
+  // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade
   async createClassWork(
     classWork: classWork,
     classroomId: string
