@@ -1,6 +1,6 @@
-import IconButton from '@mui/material/IconButton/IconButton'
+import IconButton from '@mui/material/IconButton'
 import BookIcon from '@mui/icons-material/Book'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
@@ -10,12 +10,24 @@ import { Box, TextField, Tooltip, Typography } from '@mui/material'
 import useClient from '../lib/client/useClient'
 import { DictonaryResponse } from '../lib/types/DictonaryResponse'
 import VolumeUpIcon from '@mui/icons-material/VolumeUp'
+import { Stack } from '../lib/stack'
+
+const stack = new Stack<string>()
 
 export default function Dictionary() {
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState('')
     const [resultData, setResultData] = useState<DictonaryResponse | null>(null)
     const client = useClient()
+    const [history, setHistory] = useState<string[]>([])
+
+    useEffect(() => {
+        setHistory([...stack.storage])
+    }, [])
+
+    useEffect(() => {
+        setHistory([...stack.storage])
+    }, [stack.storage.length])
 
     const handleOpen = () => {
         setOpen(true)
@@ -25,12 +37,20 @@ export default function Dictionary() {
         setOpen(false)
         setSearch('')
         setResultData(null)
+        stack.clear()
+        setHistory([])
     }
 
-    const handleSearch = () => {
-        client.getWordDefinition(search).then((data) => {
-            setResultData(data)
-        })
+    const handleSearch = async (word: string) => {
+        if (word !== search) {
+            setSearch(word)
+        }
+        const data = await client.getWordDefinition(search)
+        setResultData(data)
+        if (search && !stack.storage.includes(search)) {
+            stack.push(search)
+            setHistory([...stack.storage])
+        }
     }
 
     const listenAudio = (audioUrl: string) => {
@@ -80,13 +100,29 @@ export default function Dictionary() {
                             sx={{ marginLeft: 1, height: '100%', padding: '16px', paddingX: '24px' }}
                             variant='contained'
                             color='primary'
-                            onClick={handleSearch}
+                            onClick={() => handleSearch(search)}
                         >Buscar</Button>
+                    </Box>
+                    <Box sx={{ marginTop: '16px' }}>
+                        <Typography variant='h6' sx={{ fontWeight: 'bold' }}>Histórico de Pesquisa</Typography>
+                        {history.length === 0 ? (
+                            <Typography sx={{ fontStyle: 'italic' }}>Nenhuma pesquisa realizada</Typography>
+                        ) : (
+                            history.map((word, index) => (
+                                <Typography key={index} sx={{
+                                    textDecoration: 'underline',
+                                    cursor: 'pointer',
+                                    color: 'blue'
+                                }}
+                                    onClick={() => handleSearch(word)}
+                                >{index + 1} - {word}</Typography>
+                            ))
+                        )}
                     </Box>
                     {resultData && (
                         <Box sx={{ marginTop: '16px' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'center' }}>
-                                <Typography variant='h4' sx={{ fontWeight: 'bold' }}>Meanings</Typography>
+                                <Typography variant='h4' sx={{ fontWeight: 'bold' }}>Significados</Typography>
                                 {resultData.audio && (
                                     <Tooltip title='Ouvir pronúncia' placement='right'>
                                         <IconButton size='small' sx={{ marginTop: '4px' }} onClick={() => listenAudio(resultData.audio)}>
@@ -96,12 +132,12 @@ export default function Dictionary() {
                                 )}
                             </Box>
                             {resultData.meanings.map((meaning, index) => (
-                                <>
-                                    <Typography key={index} variant='h6' sx={{ fontWeight: 'bold' }}>{meaning.partOfSpeech}</Typography>
-                                    {meaning.definitions.map((definition, index) => (
-                                        <Typography key={index}> - {definition}</Typography>
+                                <div key={index}>
+                                    <Typography variant='h6' sx={{ fontWeight: 'bold' }}>{meaning.partOfSpeech}</Typography>
+                                    {meaning.definitions.map((definition, idx) => (
+                                        <Typography key={idx}> - {definition}</Typography>
                                     ))}
-                                </>
+                                </div>
                             ))}
                         </Box>
                     )}
