@@ -12,7 +12,7 @@ import { DictonaryResponse } from '../lib/types/DictonaryResponse'
 import VolumeUpIcon from '@mui/icons-material/VolumeUp'
 import { Stack } from '../lib/stack'
 
-const stack = new Stack<string>() // Instância da pilha para palavras
+const stack = new Stack<string>()
 
 export default function Dictionary() {
     const [open, setOpen] = useState(false)
@@ -22,12 +22,10 @@ export default function Dictionary() {
     const [history, setHistory] = useState<string[]>([])
 
     useEffect(() => {
-        // Atualiza o histórico quando o componente monta
         setHistory([...stack.storage])
     }, [])
 
     useEffect(() => {
-        // Atualiza o histórico sempre que a pilha mudar
         setHistory([...stack.storage])
     }, [stack.storage.length])
 
