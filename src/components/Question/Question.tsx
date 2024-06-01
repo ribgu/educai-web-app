@@ -44,7 +44,7 @@ export default function Question(props: QuestionProps) {
 
                 {questionIsComplete ? <IoCheckmarkSharp color='green'/> : <IoMdClose color='red'/>}
             </Box>
-            <TextField size='small' value={question.description} onChange={(e) => handleChangeQuestionDescription?.(e.target.value)} />
+            <TextField size='small' spellCheck={false} multiline value={question.description} onChange={(e) => handleChangeQuestionDescription?.(e.target.value)} />
             <Box sx={{ borderBottom: '1px solid #BEBEBE', marginTop: '12px' }}>
                 {question.options.map((option, index) => (
                     <Option

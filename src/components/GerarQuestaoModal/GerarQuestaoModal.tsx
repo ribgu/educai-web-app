@@ -4,15 +4,15 @@ import { RiLink } from 'react-icons/ri'
 import React, { useState } from 'react'
 import { CiMusicNote1 } from 'react-icons/ci'
 import { LuFile } from 'react-icons/lu'
-import FileInput from '../../../components/FileInput/FileInput'
-import useClient from '../../../lib/client/useAIClient'
-import { Question } from '../../../lib/types/Question'
+import FileInput from '../FileInput/FileInput'
+import useClient from '../../lib/client/useClient'
+import { Question } from '../../lib/types/Question' 
 import { LoadingButton } from '@mui/lab'
-import { GenerateQuestionPayload } from '../../../lib/types/GenerateQuestionPayload'
+import { GenerateQuestionPayload } from '../../lib/types/GenerateQuestionPayload' 
 
 interface GerarQuestaoModalProps {
-    handleAddQuestion: (question: Question) => void;
-    handleCancel: () => void;
+    handleAddQuestion: (question: Question) => void
+    handleCancel: () => void
 }
 
 export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
@@ -88,7 +88,7 @@ export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
                 </MenuItem>
                 <MenuItem value={'easy'}>Fácil</MenuItem>
                 <MenuItem value={'medium'}>Médio</MenuItem>
-                <MenuItem value={'hard'}>Difícl</MenuItem>
+                <MenuItem value={'hard'}>Difícil</MenuItem>
             </Select>
 
             <TextField

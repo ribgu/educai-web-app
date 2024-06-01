@@ -11,6 +11,8 @@ import { Button, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import useClient from '../../lib/client/useClient'
 import { AuthContext } from '../../contexts/AuthContext'
+import { TbEdit } from 'react-icons/tb'
+import { FiTrash2 } from 'react-icons/fi'
 
 interface TurmaProps extends TurmaType {
     isTeacher: boolean
@@ -169,7 +171,11 @@ export default function Turma(props: TurmaProps) {
                     titulo={modal.type === 'DELETE' ? 'Deletar turma' : 'Editar turma'}
                     altIcone={modal.type === 'DELETE' ? 'Deletar turma' : 'Editar turma'}
                     variantButton='none'
-                    icone={modal.type === 'DELETE' ? '/iconsPages/iconExcluir.svg' : '/iconsPages/iconEditar.svg'}
+                    iconeReact={
+                        <div style={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '8px' }}>
+                          {modal.type === 'DELETE' ? <FiTrash2 color='#341069' size={22} /> : <TbEdit color='#341069' size={22} />}
+                        </div>      
+                    }
                     showModal={modal.isOpen}
                     onClose={() => setModal({...modal, isOpen: false})}
                     onOpen={() => setModal({...modal, isOpen: true})}
@@ -178,13 +184,13 @@ export default function Turma(props: TurmaProps) {
                         {
                             modal.type === 'DELETE' 
                             ? <>Tem certeza que deseja deletar a turma <strong>{title}?</strong></>
-                            : 'Preenche os campos abaixo com as informações atualizadas'
+                            : 'Preencha os campos abaixo com as informações atualizadas'
                         }
                     </Typography>
 
                     {
                         modal.type === 'EDIT' &&
-                        <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                             <TextField
                                 variant='outlined'
                                 label='Nome'
@@ -211,23 +217,29 @@ export default function Turma(props: TurmaProps) {
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Button sx={{
-                            color: 'black',
                             borderColor: '#5D1EF4',
                             '&:hover': {
-                            backgroundColor: '#D8D8D8'
+                                backgroundColor: '#D8D8D8'
                             },
                             paddingY: '12px',
-                            width: '48%'
+                            width: '48%',
+                            textTransform: 'none',
+                            borderRadius: '10px',
+                            fontWeight: 700,
+                            color: '#170050'
                         }} variant='outlined' onClick={() => setModal({...modal, isOpen: false})}>{modal.type === 'DELETE' ? 'Não' : 'Cancelar'}</Button>
 
                         <LoadingButton sx={{
                             backgroundColor: '#6730EC',
                             color: 'white',
                             '&:hover': {
-                            backgroundColor: '#4D1EAD'
+                                backgroundColor: '#4D1EAD'
                             },
                             paddingY: '12px',
-                            width: '48%'
+                            width: '48%',
+                            textTransform: 'none',
+                            borderRadius: '10px',
+                            fontWeight: 700
                         }} variant='contained' onClick={modal.type === 'DELETE' ? deleteClassroom : updateClassroomData} 
                         loading={modal.isLoading}>{modal.type === 'DELETE' ? 'Sim' : 'Atualizar'}</LoadingButton>
                     </Box>
