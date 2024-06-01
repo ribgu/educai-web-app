@@ -43,20 +43,16 @@ export default function Dictionary() {
         setHistory([])
     }
 
-    const handleSearch = async () => {
+    const handleSearch = async (word: string) => {
+        if (word !== search) {
+            setSearch(word)
+        }
         const data = await client.getWordDefinition(search)
         setResultData(data)
-        if (search) {
+        if (search && !stack.storage.includes(search)) {
             stack.push(search)
             setHistory([...stack.storage])
         }
-    }
-
-    const handleResearch = async (word: string) => {
-        setSearch('')
-        setSearch(word)
-        console.log('Pesquisando', word)
-        await handleSearch()
     }
 
     const listenAudio = (audioUrl: string) => {
@@ -106,7 +102,7 @@ export default function Dictionary() {
                             sx={{ marginLeft: 1, height: '100%', padding: '16px', paddingX: '24px' }}
                             variant='contained'
                             color='primary'
-                            onClick={handleSearch}
+                            onClick={() => handleSearch(search)}
                         >Buscar</Button>
                     </Box>
                     <Box sx={{ marginTop: '16px' }}>
@@ -120,7 +116,7 @@ export default function Dictionary() {
                                     cursor: 'pointer',
                                     color: 'blue'
                                 }}
-                                    onClick={() => handleResearch(word)}
+                                    onClick={() => handleSearch(word)}
                                 >{index + 1} - {word}</Typography>
                             ))
                         )}
