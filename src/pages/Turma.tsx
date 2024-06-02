@@ -10,13 +10,15 @@ import Leaderboard from '../components/Leaderboard/Leaderboard'
 import AtividadesPage from '../components/AtividadesPage/AtividadesPage'
 import ListagemAtividade from '../components/ListagemAtividades/ListagemAtividade'
 import { AtividadeType } from '../lib/types/Atividade'
+import CriarAtividade from './Atividades/CriarAtividade'
+import CriarAtividadeIA from './Atividades/CriarAtividadeIA'
 
 export default function Turma() {
   const client = useClient()
   const { id } = useParams()
   const [turma, setTurma] = useState<TurmaType>()
   const [selectedAtividade, setSelectedAtividade] = useState<AtividadeType>()
-  const tab = new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas'
+  const tab = new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas' | 'criar-atividade' | 'criar-atividade-ia'
 
   const postProps = {
     dtPublicacao: new Date(),
@@ -48,43 +50,57 @@ export default function Turma() {
 
   return (
     <Layout>
-      <Box sx={{ width: '100%' }} >
+      <Box sx={{ width: '100%', overflowY: 'auto' }} >
         <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
           <PageHeader title={turma?.title} />
         </Box>
-        <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px' }}>
-          <Box sx={{
-            width: '65%',
-            height: '100%',
-            gap: '16px',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '10px'
-          }}>
-            {tab === 'posts' && (
-              <PostsPage posts={[postProps]} />
-            )}
-            {tab === 'atividades' && (
-              selectedAtividade ? (
-                <ListagemAtividade atividades={[atividadeSelectedProps]} nomeAtividade={selectedAtividade.title} />
-              ) : (
-                <AtividadesPage
-                atividades={[atividadeProps]}
-                onSelectAtividade={setSelectedAtividade}
-                classRoomId={id as string}
-                />
-              )
-            )}
-            {tab === 'pessoas' && (
-              <>
-              {/* Pessoas */}
-              </>
-            )}
+
+        {tab === 'criar-atividade' && (
+          <>
+            <CriarAtividade />
+          </>
+        )}
+
+        {tab === 'criar-atividade-ia' && (
+          <>
+            <CriarAtividadeIA />
+          </>
+        )}
+
+        {tab !== 'criar-atividade' && tab !== 'criar-atividade-ia' &&
+          <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px' }}>
+            <Box sx={{
+              width: '65%',
+              height: '100%',
+              gap: '16px',
+              display: 'flex',
+              flexDirection: 'column',
+              padding: '10px'
+            }}>
+              {tab === 'posts' && (
+                <PostsPage posts={[postProps]} />
+              )}
+              {tab === 'atividades' && (
+                selectedAtividade ? (
+                  <ListagemAtividade atividades={[atividadeSelectedProps]} nomeAtividade={selectedAtividade.title} />
+                ) : (
+                  <AtividadesPage
+                  atividades={[atividadeProps]}
+                  onSelectAtividade={setSelectedAtividade}
+                  classRoomId={id as string}
+                  />
+                )
+              )}
+              {tab === 'pessoas' && (
+                <>
+                {/* Pessoas */}
+                </>
+              )}
+            </Box>
+
+            <Leaderboard/>
           </Box>
-
-          <Leaderboard/>
-
-        </Box>
+        }
       </Box>
     </Layout>
   )

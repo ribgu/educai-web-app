@@ -1,7 +1,5 @@
 import Box from '@mui/material/Box/Box'
 import Question from '../../components/Question/Question'
-import Layout from '../Layout'
-import PageHeader from '../../components/PageHeader/PageHeader'
 import { Button, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Question as QuestionType } from '../../lib/types/Question'
@@ -23,6 +21,7 @@ export default function CriarAtividade(props: QuestionProps) {
 
   const client = useClient()
   const [title, setTitle] = useState('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [turma, setTurma] = useState<TurmaType>()
   const datePosting = new Date().toISOString().split('T')[0]
   const [endDate, setEndDate] = useState<string | null>(null)
@@ -169,11 +168,8 @@ export default function CriarAtividade(props: QuestionProps) {
   }
 
   return (
-    <Layout>
+    <>
       <Box sx={{ width: '100%', overflowY: 'auto' }} >
-        <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
-          <PageHeader title={turma?.title} />
-        </Box>
         <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px', flexDirection: 'column' }}>
           <Box sx={{
             display: 'flex',
@@ -203,7 +199,7 @@ export default function CriarAtividade(props: QuestionProps) {
                   transition: 'background-color 0.3s, box-shadow 0.3s', 
                   '&:hover': {
                     backgroundColor: '#E6CCFF', 
-                  },
+                  }
                 }}
               >
                 Gerar Questões
@@ -255,9 +251,9 @@ export default function CriarAtividade(props: QuestionProps) {
         altIcone=''
         variantButton='none'
         iconeReact={
-          <div style={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '12px' }}>
+          <Box sx={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '12px' }}>
             <BsStars color='#341069' size={24} />
-          </div>      
+          </Box>      
         }
         showModal={openModal}
         onClose={() => setOpenModal(false)}
@@ -265,6 +261,6 @@ export default function CriarAtividade(props: QuestionProps) {
       >
         <GerarQuestaoModal handleAddQuestion={handleAddQuestion} handleCancel={() => setOpenModal(false)}/>
       </Modal>
-    </Layout>
+    </>
   )
 }

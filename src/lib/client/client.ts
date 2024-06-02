@@ -131,7 +131,7 @@ export default class Client {
     return (await this.axios.post('/generate-educational-resource', formData, { responseType: 'arraybuffer' }))
   }
 
-  async generateQuestion(payload: GenerateQuestionPayload): Promise<Question> {
+  async generateQuestion(payload: GenerateQuestionPayload): Promise<Question[]> {
     const formData = new FormData()
 
     payload.instructions && formData.append('instructions', payload.instructions)

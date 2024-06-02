@@ -23,9 +23,9 @@ export default function PostsPage(props: postsPageProps) {
             <Modal
                 variantButton='lg' titulo='Novo Post'
                 iconeReact={
-                    <div style={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '8px' }}>
+                    <Box sx={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '8px' }}>
                       <TbSchool color='#341069' size={30} />
-                    </div>      
+                    </Box>      
                 }
                 altIcone='Pessoas agrupadas'
                 textoBotaoAbrirModal='Novo Post'

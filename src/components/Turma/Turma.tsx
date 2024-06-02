@@ -172,9 +172,9 @@ export default function Turma(props: TurmaProps) {
                     altIcone={modal.type === 'DELETE' ? 'Deletar turma' : 'Editar turma'}
                     variantButton='none'
                     iconeReact={
-                        <div style={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '8px' }}>
+                        <Box sx={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '8px' }}>
                           {modal.type === 'DELETE' ? <FiTrash2 color='#341069' size={22} /> : <TbEdit color='#341069' size={22} />}
-                        </div>      
+                        </Box>      
                     }
                     showModal={modal.isOpen}
                     onClose={() => setModal({...modal, isOpen: false})}

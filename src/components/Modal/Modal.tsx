@@ -17,7 +17,7 @@ type ModalProps = {
   children: React.ReactNode
   showModal: boolean
   onClose: () => void
-  onOpen: () => void
+  onOpen?: () => void
 }
 
 export default function BasicModal(props: ModalProps) {

@@ -5,10 +5,11 @@ import React, { useState } from 'react'
 import { CiMusicNote1 } from 'react-icons/ci'
 import { LuFile } from 'react-icons/lu'
 import FileInput from '../FileInput/FileInput'
-import useClient from '../../lib/client/useClient'
 import { Question } from '../../lib/types/Question' 
 import { LoadingButton } from '@mui/lab'
 import { GenerateQuestionPayload } from '../../lib/types/GenerateQuestionPayload' 
+import { IoIosArrowDown } from 'react-icons/io'
+import useClient from '../../lib/client/useAIClient'
 
 interface GerarQuestaoModalProps {
     handleAddQuestion: (question: Question) => void
@@ -70,7 +71,7 @@ export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
 
         const response = await client.generateQuestion(payload)
         
-        handleAddQuestion(response)
+        handleAddQuestion(response[0])
         
         setErrorMessage('')
         setIsLoading(false)
@@ -79,6 +80,7 @@ export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
     return (
         <Box sx={{ width: '100%', padding: '25px 50px', display: 'flex', flexDirection: 'column', minHeight: '40vh', gap: '16px' }}>
             <Select
+                IconComponent={props => <IoIosArrowDown {...props} color='#7750DE' size={25} />}
                 displayEmpty
                 value={difficulty}
                 onChange={(event) => handleValueChange(event.target.value as string, setDifficulty)}
@@ -181,9 +183,11 @@ export default function GerarQuestaoModal(props: GerarQuestaoModalProps) {
                 }
             </Box>
 
-            {errorMessage && <Typography sx={{ color: '#FF0000', fontWeight: 400, fontSize: 14, marginTop: '10px' }}>
-                {errorMessage}
-            </Typography>}
+            {errorMessage && 
+                <Typography sx={{ color: '#FF0000', fontWeight: 400, fontSize: 14, marginTop: '10px' }}>
+                    {errorMessage}
+                </Typography>
+            }
 
             <Box sx={{
                     display: 'flex',

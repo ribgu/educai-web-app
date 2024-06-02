@@ -61,9 +61,9 @@ export default function FinalizarDialog(props: FinalizarDialogProps) {
         altIcone='Nova Atividade'
         variantButton='none'
         iconeReact={
-          <div style={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '8px' }}>
+          <Box sx={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '8px' }}>
             <TbSchool color='#341069' size={30} />
-          </div>      
+          </Box>      
         }
         showModal={open}
         onClose={handleClose}
