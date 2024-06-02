@@ -10,6 +10,7 @@ import Leaderboard from '../components/Leaderboard/Leaderboard'
 import AtividadesPage from '../components/AtividadesPage/AtividadesPage'
 import ListagemAtividade from '../components/ListagemAtividades/ListagemAtividade'
 import { AtividadeType } from '../lib/types/Atividade'
+import PessoasPage from '../components/PessoasPage/PessoasPage'
 
 export default function Turma() {
   const client = useClient()
@@ -71,9 +72,7 @@ export default function Turma() {
               )
             )}
             {tab === 'pessoas' && (
-              <>
-              {/* Pessoas */}
-              </>
+              <PessoasPage classroomId='id'></PessoasPage>
             )}
           </Box>
 
