@@ -4,43 +4,21 @@ import AnswerQuestion from '../AnswerQuestion/AnswerQuestion'
 import Button from '@mui/material/Button'
 import { ClassworkType } from '../../lib/types/Classwork'
 import { useState, useEffect } from 'react'
+import useClient from '../../lib/client/useClient'
 
-const mockClasswork: ClassworkType = {
-  title: 'Exemplo de Atividade',
-  datePosting: '2023-05-30',
-  endDate: '2023-06-15',
-  description: 'Descrição da atividade',
-  questions: [
-    {
-      description: 'Qual a capital da França?',
-      correctAnswerKey: 'paris',
-      options: [
-        { key: 'paris', description: 'Paris' },
-        { key: 'londres', description: 'Londres' },
-        { key: 'berlim', description: 'Berlim' },
-        { key: 'madrid', description: 'Madrid' }
-      ]
-    },
-    {
-      description: 'Qual a capital da Alemanha?',
-      correctAnswerKey: 'berlim',
-      options: [
-        { key: 'paris', description: 'Paris' },
-        { key: 'londres', description: 'Londres' },
-        { key: 'berlim', description: 'Berlim' },
-        { key: 'madrid', description: 'Madrid' },
-        { key: 'Buenos Aires', description: 'Buenos Aires' }
-      ]
-    }
-  ]
+type AnswerQuestionPageProps = {
+  classworkId: string
 }
 
-export default function AnswerQuestionPage() {
+export default function AnswerQuestionPage(props: AnswerQuestionPageProps) {
+  const { classworkId } = props
   const [classwork, setClasswork] = useState<ClassworkType>()
+  const client = useClient()
 
   useEffect(() => {
-    setClasswork(mockClasswork)
-  }, [])
+    client.getClassworkById(classworkId).then((res) => setClasswork(res))
+  }
+  , [classworkId])
 
   return (
     <Box>

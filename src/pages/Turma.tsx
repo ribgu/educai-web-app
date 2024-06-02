@@ -63,7 +63,7 @@ export default function Turma() {
             {tab === 'atividades' && (
               selectedAtividade ? (
                 //<ListagemAtividade atividades={[atividadeSelectedProps]} nomeAtividade={selectedAtividade.title} />
-                <AnswerQuestionPage />
+                <AnswerQuestionPage classworkId='665b6e9dbbbc1a7918322558' />
               ) : (
                 <AtividadesPage
                 atividades={[atividadeProps]}
