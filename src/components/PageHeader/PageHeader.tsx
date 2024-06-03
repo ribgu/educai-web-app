@@ -30,8 +30,16 @@ type PageHeaderProps = {
 export default function PageHeader(PageHeaderProps: PageHeaderProps) {
   const { title, showButton, search, createClassroom } = PageHeaderProps
 
+  const tabName: { [key: string]: Tab } = {
+    posts: 'posts',
+    atividades: 'atividades',
+    pessoas: 'pessoas',
+    'criar-atividade': 'atividades',
+    'criar-atividade-ia': 'atividades',
+  }
+
   const actualTab = PageHeaderProps.tab ? PageHeaderProps.tab : new URLSearchParams(window.location.search).get('tab')
-  const [tab, setTab] = useState<Tab>(actualTab ? actualTab as Tab : 'posts')
+  const [tab, setTab] = useState<Tab>(actualTab ? tabName[actualTab] as Tab : 'posts')
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [subject, setSubject] = useState('')

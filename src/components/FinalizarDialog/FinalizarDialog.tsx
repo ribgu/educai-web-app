@@ -8,6 +8,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import 'dayjs/locale/pt-BR'
 
 type FinalizarDialogProps = {
   enabled: boolean
@@ -75,7 +76,7 @@ export default function FinalizarDialog(props: FinalizarDialogProps) {
           placeholder='Nome'
           onChange={(e) => setTitle(e.target.value)}
         />
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <LocalizationProvider adapterLocale="pt-BR" dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DatePicker']}>
             <DatePicker 
               sx={{ 
@@ -89,6 +90,7 @@ export default function FinalizarDialog(props: FinalizarDialogProps) {
               }}
               label="Selecione o prazo de entrega"
               value={endDate}
+              format="DD/MM/YYYY"
               onChange={(newValue) => setEndDate(newValue)}
             />
           </DemoContainer>

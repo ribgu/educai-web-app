@@ -26,7 +26,9 @@ export default function CriarAtividade(props: QuestionProps) {
   const datePosting = new Date().toISOString().split('T')[0]
   const [endDate, setEndDate] = useState<string | null>(null)
   const [description, setDescription] = useState('')
-  const classroomId = new URLSearchParams(window.location.search).get('classRoomId')?.split('?')[0]
+  const url = new URL(window.location.href)
+	const pathSegments = url.pathname.split('/')
+	const classroomId = pathSegments[pathSegments.length - 1]
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [finishButtonIsEnabled, setFinishButtonIsEnabled] = useState<boolean>(false)
   const [createInProgress, setCreateInProgress] = useState<boolean>(false)
@@ -58,7 +60,7 @@ export default function CriarAtividade(props: QuestionProps) {
 
   const handleCreateClassWork = async () => {
     setCreateInProgress(true)
-
+    console.log(endDate)
     if(endDate) {
       const classWork: classWork = {
         title,
@@ -139,13 +141,11 @@ export default function CriarAtividade(props: QuestionProps) {
     setQuestions(newQuestions)
   }
 
-  const classRoomId = new URLSearchParams(window.location.search).get('classRoomId')
-
   useEffect(() => {
-    if (classRoomId) {
-      client.getClassroomById(classRoomId).then((res) => setTurma(res))
+    if (classroomId) {
+      client.getClassroomById(classroomId).then((res) => setTurma(res))
     }
-  }, [classRoomId])
+  }, [classroomId])
 
   const handleAddQuestion = (question?: QuestionType) => {
     if(question) {

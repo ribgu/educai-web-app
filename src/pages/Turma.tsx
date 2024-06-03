@@ -2,7 +2,7 @@ import PageHeader from '../components/PageHeader/PageHeader'
 import Layout from './Layout'
 import Box from '@mui/material/Box/Box'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { TurmaType } from '../lib/types/Turma'
 import useClient from '../lib/client/useClient'
 import PostsPage from '../components/PostsPage/PostsPage'
@@ -12,6 +12,7 @@ import ListagemAtividade from '../components/ListagemAtividades/ListagemAtividad
 import { AtividadeType } from '../lib/types/Atividade'
 import CriarAtividade from './Atividades/CriarAtividade'
 import CriarAtividadeIA from './Atividades/CriarAtividadeIA'
+import { Question } from '../lib/types/Question'
 
 export default function Turma() {
   const client = useClient()
@@ -20,6 +21,8 @@ export default function Turma() {
   const [selectedAtividade, setSelectedAtividade] = useState<AtividadeType>()
 
   const tab = new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas' | 'criar-atividade' | 'criar-atividade-ia'
+  const location = useLocation()
+  const questions = location.state?.questions as Question[]
 
   const postProps = {
     dtPublicacao: new Date(),
@@ -58,7 +61,7 @@ export default function Turma() {
 
         {tab === 'criar-atividade' && (
           <>
-            <CriarAtividade />
+            <CriarAtividade questions={questions} />
           </>
         )}
 
@@ -86,9 +89,9 @@ export default function Turma() {
                   <ListagemAtividade atividades={[atividadeSelectedProps]} nomeAtividade={selectedAtividade.title} />
                 ) : (
                   <AtividadesPage
-                  atividades={[atividadeProps]}
-                  onSelectAtividade={setSelectedAtividade}
-                  classRoomId={id as string}
+                    atividades={[atividadeProps]}
+                    onSelectAtividade={setSelectedAtividade}
+                    classRoomId={id as string}
                   />
                 )
               )}

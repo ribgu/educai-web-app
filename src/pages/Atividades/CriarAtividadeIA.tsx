@@ -34,7 +34,9 @@ export default function CriarAtividadeIA() {
 
     const client = useClient()
 	const navigate = useNavigate()
-	const classroomId = new URLSearchParams(window.location.search).get('classRoomId')?.split('?')[0]
+	const url = new URL(window.location.href)
+	const pathSegments = url.pathname.split('/')
+	const classroomId = pathSegments[pathSegments.length - 1]
 
 	const [open, setOpen] = useState<boolean>(false)
 	const [resourceType, setResourceType] = useState<string>('')
@@ -259,7 +261,7 @@ export default function CriarAtividadeIA() {
 								</MenuItem>
 								{
 									[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
-										<MenuItem value={value}>{value}</MenuItem>
+										<MenuItem key={value} value={value}>{value}</MenuItem>
 									))
 								}
 							</Select>
