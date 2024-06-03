@@ -18,6 +18,7 @@ export default function Turma() {
   const { id } = useParams()
   const [turma, setTurma] = useState<TurmaType>()
   const [selectedAtividade, setSelectedAtividade] = useState<AtividadeType>()
+
   const tab = new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas' | 'criar-atividade' | 'criar-atividade-ia'
 
   const postProps = {
