@@ -27,7 +27,7 @@ export default function Option(props: OptionProps) {
 
     return (
         <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center' }} >
-            <Typography variant='body1'>{optionKey}</Typography>
+            <Typography variant='body1' width={10}>{optionKey}</Typography>
             <Radio checked={selected} onClick={handleSelectAlternative} />
             <TextField size='small' value={description} onChange={(e) => handleChangeName?.(e.target.value)} />
             <IconButton onClick={handleDeleteAlternative}>

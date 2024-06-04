@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography/Typography'
 import { ChangeEvent } from 'react'
 import FileInput from '../FileInput/FileInput'
 import { LuFile } from 'react-icons/lu'
+import { TbSchool } from 'react-icons/tb'
 
 type postsPageProps = {
     classroomId: string
@@ -91,7 +92,11 @@ export default function PostsPage(props: postsPageProps) {
         <>
             <Modal
                 variantButton='lg' titulo='Novo Post'
-                icone='\iconsPages\turma.svg'
+                iconeReact={
+                    <Box sx={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '8px' }}>
+                      <TbSchool color='#341069' size={30} />
+                    </Box>      
+                }
                 altIcone='Pessoas agrupadas'
                 textoBotaoAbrirModal='Novo Post'
                 showModal={modalIsOpen}
@@ -121,17 +126,22 @@ export default function PostsPage(props: postsPageProps) {
                     marginTop: '10px'
                 }}>
                     <Button sx={{
-                        color: 'black',
                         borderColor: '#5D1EF4',
                         '&:hover': {
                             backgroundColor: '#D8D8D8'
                         },
                         paddingY: '12px',
-                        width: '48%'
-                    }} variant='outlined' onClick={() => {
-                        setModalIsOpen(false)
-                        setFile(null)
-                    }}>Cancelar</Button>
+                        width: '48%',
+                        textTransform: 'none',
+                        borderRadius: '10px',
+                        fontWeight: 700,
+                        color: '#170050'
+                    }} variant='outlined' onClick={() => 
+                        {
+                            setModalIsOpen(false)
+                            setFile(null)
+                        }
+                    }>Cancelar</Button>
 
                     <LoadingButton sx={{
                         backgroundColor: '#6730EC',
@@ -140,7 +150,10 @@ export default function PostsPage(props: postsPageProps) {
                             backgroundColor: '#4D1EAD'
                         },
                         paddingY: '12px',
-                        width: '48%'
+                        width: '48%',
+                        textTransform: 'none',
+                        borderRadius: '10px',
+                        fontWeight: 700
                     }} variant='contained' onClick={createAPost} loading={modalIsLoading}>Criar Post</LoadingButton>
                 </Box>
             </Modal>
