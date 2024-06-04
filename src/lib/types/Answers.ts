@@ -1,10 +1,10 @@
-export type answers = {
+export type Answers = {
   user: user
   datePosting: string
   questionAnswers: questionAnswers[]
 }
 
-type user = {
+export type user = {
     id: string
     name: string
     email: string
@@ -19,3 +19,5 @@ type questionId = {
     timestamp: number
     date: string
 }
+
+export interface AnswersList extends Array<Answers>{}

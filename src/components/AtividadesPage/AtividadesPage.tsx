@@ -1,55 +1,57 @@
 import Box from '@mui/material/Box/Box'
 import Button from '@mui/material/Button/Button'
 import Atividade from '../Atividade/Atividade'
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography/Typography'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import BasicModal from '../Modal/Modal'
 import { useNavigate } from 'react-router-dom'
-import { classWork } from '../../lib/types/ClassWork'
+import { Classwork, Classworks } from '../../lib/types/ClassWork'
+import { Answers, AnswersList } from '../../lib/types/Answers'
+import useClient from '../../lib/client/useClient'
 
 type AtividadePageProps = {
-    atividades: {
-        id: string
-        title: string
-        datePosting: Date
-        endDate: Date
-        description: string
-        totalQuestions: number
-    }[]
-    onSelectAtividade: (atividade: any) => void
+    atividades: Classworks
+    onSelectAtividade: (atividade: Classwork, answers: Answers[]) => void
     classRoomId: string
-}
-
-const questionsByClasswork = () => {
-    //REQ
-    
-    return {
-        id: '664d2b87b52bfc62722df421',
-        title: 'ajsia',
-        datePosting: 'string',
-        endDate: 'string',
-        description: 'string',
-        questions: [{
-            id: '665d656f56565c56b58712',
-            description: 'DESCRIÇÃO ATIVIDADE',
-            options: {
-                id: '655dcd765544cfb44657b5746c',
-            }
-        }]}
 }
 
 export default function AtividadesPage(props: AtividadePageProps) {
     const { atividades, onSelectAtividade, classRoomId } = props
     const navigate = useNavigate()
+    const client = useClient()
+    const [atividadesComRespostas, setAtividadesComRespostas] = useState<Map<string, Answers[]>>(new Map())
 
-    const handleManualCreate = () => {
+    const handleManualCreate = useCallback(() => {
         setModalIsOpen(false)
-        navigate(`/turma/criar-atividade?classRoomId=${classRoomId}?tab=atividades`)
-    }
+        navigate(`/turma/criar-atividade?classRoomId=${classRoomId}&tab=atividades`)
+    }, [navigate, classRoomId])
+
+    const handleSelectAtividade = useCallback((atividade: Classwork) => {
+        const respostas = atividadesComRespostas.get(atividade.id) || []
+        console.log(respostas)
+        onSelectAtividade(atividade, respostas)
+    }, [atividadesComRespostas, onSelectAtividade])
+
+    useEffect(() => {
+        const fetchAnswers = async () => {
+            const newMap = new Map<string, AnswersList>()
+            for (const atividade of atividades) {
+                const respostas = await client.getAnswers(atividade.id)
+                newMap.set(atividade.id, respostas)
+            }
+            setAtividadesComRespostas(newMap)
+        }
+        if (atividades.length > 0 && atividadesComRespostas.size === 0) {
+            fetchAnswers()
+        }
+        
+    }, [])
+    
 
     const [modalIsOpen, setModalIsOpen] = useState(false)
+
     return (
         <>
             <BasicModal
@@ -112,7 +114,7 @@ export default function AtividadesPage(props: AtividadePageProps) {
 
             <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
                 {atividades.map((atividade, index) => (
-                    <Box key={index} onClick={() => onSelectAtividade(atividade)}>
+                    <Box key={index} onClick={() => handleSelectAtividade(atividade)}>
                         <Atividade
                             id={atividade.id}
                             title={atividade.title}
@@ -120,6 +122,7 @@ export default function AtividadesPage(props: AtividadePageProps) {
                             endDate={atividade.endDate}
                             description={atividade.description}
                             totalQuestions={atividade.totalQuestions}
+                            totalAnswers={atividade.totalAnswers}
                         />
                     </Box>
                 ))}

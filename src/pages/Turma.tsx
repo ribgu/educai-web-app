@@ -9,83 +9,97 @@ import PostsPage from '../components/PostsPage/PostsPage'
 import Leaderboard from '../components/Leaderboard/Leaderboard'
 import AtividadesPage from '../components/AtividadesPage/AtividadesPage'
 import ListagemAtividade from '../components/ListagemAtividades/ListagemAtividade'
-import { AtividadeType } from '../lib/types/Atividade'
+import { Classwork, Classworks } from '../lib/types/ClassWork'
+import { Participantes } from '../lib/types/Participante'
+import { AnswersList } from '../lib/types/Answers'
 
 export default function Turma() {
-  const client = useClient()
-  const { id } = useParams()
-  const [turma, setTurma] = useState<TurmaType>()
-  const [selectedAtividade, setSelectedAtividade] = useState<AtividadeType>()
-  const tab = new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas'
+    const client = useClient()
+    const { id } = useParams()
+    const [turma, setTurma] = useState<TurmaType>()
+    const [selectedAtividade, setSelectedAtividade] = useState<Classwork>()
+    const [participants, setParticipants] = useState<Participantes | undefined>()
+    const [atividadeAnswers, setAtividadeAnswers] = useState<AnswersList>([])
+    const tab = new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas'
 
-  const postProps = {
-    dtPublicacao: new Date(),
-    title: 'Título do post'
-  }
+    useEffect(() => {
+        if (id) {
+            client.getClassroomById(id).then((res) => {
+                setTurma(res)
+            })
+        }
+    }, [id])
 
-  const atividadeProps = {
-    id: 1,
-    title: 'Atividade gu broxa',
-    deadline: new Date(),
-    asignmentDate: new Date(),
-    description: 'Atividade referente a impotência do meu mano gug1, Atividade referente a impotência do meu mano gug1, Atividade referente a impotência do meu mano gug1, Atividade referente a impotência do meu mano gug1',
-    exercises: 10,
-    answered: 0
-  }
-
-  const atividadeSelectedProps = {
-    icon: 'hello',
-    name: 'Vitao',
-    status: 'Enviado',
-    grade: 10
-  }
-
-  useEffect(() => {
-    if (id) {
-      client.getClassroomById(id).then((res) => setTurma(res))
-    }
+    useEffect(() => {
+      const fetchParticipants = async () => {
+          if (id && !participants) {
+              const res = await client.getParticipants(id)
+              setParticipants(res)
+          }
+      }
+      fetchParticipants()
   }, [id])
 
-  return (
-    <Layout>
-      <Box sx={{ width: '100%' }} >
-        <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
-          <PageHeader title={turma?.title} />
-        </Box>
-        <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px' }}>
-          <Box sx={{
-            width: '65%',
-            height: '100%',
-            gap: '16px',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '10px'
-          }}>
-            {tab === 'posts' && (
-              <PostsPage posts={[postProps]} />
-            )}
-            {tab === 'atividades' && (
-              selectedAtividade ? (
-                <ListagemAtividade atividades={[atividadeSelectedProps]} nomeAtividade={selectedAtividade.title} />
-              ) : (
-                <AtividadesPage
-                atividades={[atividadeProps]}
-                onSelectAtividade={setSelectedAtividade}
-                classRoomId={id as string}
-                />
-              )
-            )}
-            {tab === 'pessoas' && (
-              <>
-              {/* Pessoas */}
-              </>
-            )}
-          </Box>
+  useEffect(() => {
+    const fetchClassworks = async () => {
+        if (id && !turma?.atividades) {
+            const res = await client.getClassworks(id)
+            setTurma(prevTurma => prevTurma ? { ...prevTurma, atividades: res } : undefined)
+        }
+    }
+    fetchClassworks()
+}, [id])
 
-          <Leaderboard/>
+    const handleSelectAtividade = (atividade: Classwork, answers: AnswersList) => {
+        setSelectedAtividade(atividade)
+        setAtividadeAnswers(answers)
+    }
 
-        </Box>
-      </Box>
-    </Layout>
-  )
+    return (
+        <Layout>
+            <Box sx={{ width: '100%' }} >
+                <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
+                    <PageHeader title={turma?.title} />
+                </Box>
+                <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px' }}>
+                    <Box sx={{
+                        width: '65%',
+                        height: '100%',
+                        gap: '16px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        padding: '10px'
+                    }}>
+                        {tab === 'posts' && (
+                            <PostsPage posts={[]} />
+                        )}
+                        {tab === 'atividades' && (
+                            selectedAtividade ? (
+                                <ListagemAtividade
+                                    nomeAtividade={selectedAtividade.title}
+                                    answers={atividadeAnswers}
+                                    participantes={participants || []}
+                                    onVoltar={() => setSelectedAtividade(undefined)}
+                                />
+                            ) : (
+                                <AtividadesPage
+                                    atividades={turma?.atividades || []}
+                                    onSelectAtividade={handleSelectAtividade}
+                                    classRoomId={id as string}
+                                />
+                            )
+                        )}
+                        {tab === 'pessoas' && (
+                            <>
+                                {/* Pessoas */}
+                            </>
+                        )}
+                    </Box>
+
+                    <Leaderboard />
+
+                </Box>
+            </Box>
+        </Layout>
+    )
 }
