@@ -3,13 +3,30 @@ import Typography from '@mui/material/Typography/Typography'
 import Radio from '@mui/material/Radio'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import { RadioGroup } from '@mui/material'
-import { Question } from '../../lib/types/Question'
+import { useState } from 'react'
 
 interface AnswerQuestionProps {
-  question: Question
+  description: string
+  options: {
+    key: string
+    description: string
+  }[]
+  id: string
+  handleSelectAlternative: (questionId: string, answerKey: string) => void
 }
 
-export default function AnswerQuestion({ question }: AnswerQuestionProps) {
+export default function AnswerQuestion(
+  props: AnswerQuestionProps
+) {
+  const { description, options, id, handleSelectAlternative } = props
+  const [selectedOption, setSelectedOption] = useState('')
+
+  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('selectedOption', event.target.value)
+    setSelectedOption(event.target.value)
+    handleSelectAlternative(id, event.target.value)
+  }
+
   return (
     <Box sx={{
       width: '100%',
@@ -22,10 +39,10 @@ export default function AnswerQuestion({ question }: AnswerQuestionProps) {
       marginBottom: '16px'
     }}>
       <Typography variant='h6' sx={{ marginBottom: '10px' }}>
-        {question.description}
+        {description}
       </Typography>
-      <RadioGroup>
-        {question.options.map(option => (
+      <RadioGroup value={selectedOption} onChange={handleOptionChange}>
+        {options.map(option => (
           <FormControlLabel
             key={option.key}
             value={option.key}
