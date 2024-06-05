@@ -4,9 +4,10 @@ import { EduResponse } from '../types/EduResponse'
 import { TurmaType } from '../types/Turma'
 import { LeaderboardType } from '../types/Leaderboard'
 import { PostType } from '../types/Post'
-import { classWork } from '../types/ClassWork'
+import { Classwork } from '../types/ClassWork'
 import { DictonaryResponse } from '../types/DictonaryResponse'
 import { AnswerType } from '../types/Answer'
+import { SendAnswerData } from '../types/SendAnswerData'
 
 type ClientProps = {
   clientType: 'ia-api' | 'api',
@@ -118,7 +119,7 @@ export default class Client {
     return (await this.axios.get(`/classroom/${classroomId}/posts`)).data
   }
 
-  async getClassworkById(classworkId: string): Promise<classWork> {
+  async getClassworkById(classworkId: string): Promise<Classwork> {
     return (await this.axios.get(`/classwork/${classworkId}`)).data
   }
 
@@ -164,7 +165,7 @@ export default class Client {
 
   // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade
   async createClassWork(
-    classWork: classWork,
+    classWork: Classwork,
     classroomId: string
   ): Promise<void> {
     const headers = {
@@ -186,6 +187,15 @@ export default class Client {
 
   async getWordDefinition(word: string): Promise<DictonaryResponse> {
     return (await this.axios.get(`/dictionary/${word}/definition`)).data
+  }
+
+  async addAnswers(
+    answers: SendAnswerData,
+    headers: {
+      classworkId: string,
+      userId: string
+    }): Promise<void> {
+    return await this.axios.post('/answers', answers, { headers })
   }
 
 }

@@ -5,19 +5,11 @@ import Button from '@mui/material/Button'
 import { Classwork } from '../../lib/types/ClassWork'
 import { useState, useEffect } from 'react'
 import useClient from '../../lib/client/useClient'
+import { QuestionAnswers } from '../../lib/types/SendAnswerData'
+import { SendAnswerData } from '../../lib/types/SendAnswerData'
 
 type AnswerQuestionPageProps = {
   classworkId: string
-}
-
-type SendAnswerData = {
-  datePosting: string
-  questionAnswers: QuestionAnswers[]
-}
-
-type QuestionAnswers = {
-  optionKey: string
-  questionId: string
 }
 
 export default function AnswerQuestionPage(props: AnswerQuestionPageProps) {
