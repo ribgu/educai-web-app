@@ -192,10 +192,10 @@ export default class Client {
   async addAnswers(
     answers: SendAnswerData,
     headers: {
-      classworkId: string,
       userId: string
+      classworkId: string
     }): Promise<void> {
-    return await this.axios.post('/answers', answers, { headers })
+    return await this.axios.post('/classwork/answer', answers, { headers })
   }
 
 }

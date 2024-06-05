@@ -3,10 +3,11 @@ import Typography from '@mui/material/Typography'
 import AnswerQuestion from '../AnswerQuestion/AnswerQuestion'
 import Button from '@mui/material/Button'
 import { Classwork } from '../../lib/types/ClassWork'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import useClient from '../../lib/client/useClient'
 import { QuestionAnswers } from '../../lib/types/SendAnswerData'
 import { SendAnswerData } from '../../lib/types/SendAnswerData'
+import { AuthContext } from '../../contexts/AuthContext'
 
 type AnswerQuestionPageProps = {
   classworkId: string
@@ -18,6 +19,7 @@ export default function AnswerQuestionPage(props: AnswerQuestionPageProps) {
   const [answers, setAnswers] = useState<QuestionAnswers[]>([])
   const [completedQuestion, setCompletedQuestion] = useState<SendAnswerData>()
   const client = useClient()
+  const { id } = useContext(AuthContext)
 
   const handleSelectAlternative = (questionId: string, answerKey: string) => {
     setAnswers(prevAnswers => {
@@ -39,6 +41,8 @@ export default function AnswerQuestionPage(props: AnswerQuestionPageProps) {
   useEffect(() => {
     if (completedQuestion) {
       console.log('completedQuestion:', completedQuestion)
+      const headers = { classworkId, userId: id }
+      client.addAnswers(completedQuestion, headers)
     }
   }, [completedQuestion])
 
