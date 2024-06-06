@@ -14,8 +14,9 @@ import {
 } from 'react-router-dom'
 import TalkWithEdu from './pages/TalkWithEdu.tsx'
 import AuthProvider from './providers/AuthProvider.tsx'
-import CriarAtividade from './pages/Atividades/CriarAtividade.tsx'
 import Material from './pages/Material.tsx'
+import AnswerQuestionPage from './components/AnswerQuestionPage/AnswerQuestionPage.tsx'
+import CriarAtividade from './pages/Atividades/CriarAtividade.tsx'
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: '/turma/criar-atividade',
     element: <CriarAtividade />
+  },
+  {
+    path: '/turma/responder-atividade',
+    element: <AnswerQuestionPage />
   },
   {
     path: '/material',

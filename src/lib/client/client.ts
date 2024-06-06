@@ -3,7 +3,13 @@ import { UserLogin } from '../types/Login'
 import { EduResponse } from '../types/EduResponse'
 import { TurmaType } from '../types/Turma'
 import { LeaderboardType } from '../types/Leaderboard'
-import { classWork } from '../types/ClassWork'
+import { PostType } from '../types/Post'
+import { Classwork } from '../types/ClassWork'
+import { Question } from '../types/Question'
+import { GenerateQuestionPayload } from '../types/GenerateQuestionPayload'
+import { DictonaryResponse } from '../types/DictonaryResponse'
+import { AnswerType } from '../types/Answer'
+import { SendAnswerData } from '../types/SendAnswerData'
 
 type ClientProps = {
   clientType: 'ia-api' | 'api',
@@ -22,7 +28,7 @@ export default class Client {
     })
 
     this.axios.interceptors.request.use((config) => {
-      if(!config.url?.includes('user/auth') && !config.url?.includes('user/refreshToken')) {
+      if (!config.url?.includes('user/auth') && !config.url?.includes('user/refreshToken')) {
         config.headers.Authorization = this.clientProps.clientToken
       }
       return config
@@ -36,7 +42,7 @@ export default class Client {
         const originalRequest = error.config
 
         console.log(error)
-        if(error.response.status === 500 && !originalRequest._retry && error.response.data.message.includes('Token has expired')) {
+        if (error.response.status === 500 && !originalRequest._retry && error.response.data.message.includes('Token has expired')) {
           originalRequest._retry = true
 
           return this.refreshToken().then(response => {
@@ -57,7 +63,7 @@ export default class Client {
 
   async login(
     body: UserLogin
-  ): Promise<{token: string}> {
+  ): Promise<{ token: string }> {
     return (await this.axios.post('user/auth', body)).data
   }
 
@@ -65,7 +71,7 @@ export default class Client {
     return (await this.axios.get('/user/classrooms')).data
   }
 
-  async createClassroom(body: {title: string, course: string}): Promise<void> {
+  async createClassroom(body: { title: string, course: string }): Promise<void> {
     return (await this.axios.post('/classroom', body))
   }
 
@@ -77,12 +83,55 @@ export default class Client {
     return (await this.axios.delete(`/classroom/${classroomId}`))
   }
 
-  async updateClassroom(classroomId: string, body: {title?: string, course?: string}): Promise<void> {
+  async updateClassroom(classroomId: string, body: { title?: string, course?: string }): Promise<void> {
     return (await this.axios.patch(`/classroom/${classroomId}`, body))
   }
 
   async getLeaderboard(classroomId: string): Promise<LeaderboardType> {
     return (await this.axios.get(`/classroom/${classroomId}/leaderboard`)).data
+  }
+
+  async createPost(body: { title: string, description: string, datePosting: string, classroomId: string }, file: File): Promise<{ post: PostType, url: string }> {
+    const formData = new FormData()
+    formData.append('title', body.title)
+    formData.append('description', body.description)
+    formData.append('datePosting', body.datePosting)
+    formData.append('classroomId', body.classroomId)
+    formData.append('file', file)
+
+    const response = await this.axios.post('/posts', formData)
+    const post: PostType = response.data
+    const url = await this.getUrlArquivoPost(post.id)
+    return { post, url }
+  }
+
+  async getUrlArquivoPost(postId: string): Promise<string> {
+    return (await this.axios.get(`/posts/${postId}/download`)).data
+  }
+
+  async deletePost(postId: string): Promise<void> {
+    return (await this.axios.delete(`/posts/${postId}`))
+  }
+
+  async updatePost(postId: string, body: { title?: string, description?: string }): Promise<void> {
+    return (await this.axios.patch(`/posts/${postId}`, body))
+  }
+
+  async getPostsByClassroom(classroomId: string): Promise<PostType[]> {
+    return (await this.axios.get(`/classroom/${classroomId}/posts`)).data
+  }
+
+  async getClassworkById(classworkId: string): Promise<Classwork> {
+    return (await this.axios.get(`/classwork/${classworkId}`)).data
+  }
+
+  async addAnswer(
+    body: AnswerType,
+    headers: {
+      classworkId: string,
+      userId: string
+    }): Promise<void> {
+    return await this.axios.post('/answer', body, { headers })
   }
 
   async refreshToken() {
@@ -101,14 +150,24 @@ export default class Client {
 
   async getResponse(
     question: string
-  ): Promise<EduResponse>{
-    const request = await this.axios.post('edu-response', { question } )
+  ): Promise<EduResponse> {
+    const request = await this.axios.post('edu-response', { question })
     console.log(request)
     return request.data
   }
 
+  async uploadFile(formData: FormData): Promise<{ url: string }> {
+    const response = await this.axios.post('/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
+  }
+
+  // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade
   async createClassWork(
-    classWork: classWork,
+    classWork: Classwork,
     classroomId: string
   ): Promise<void> {
     const headers = {
@@ -117,10 +176,11 @@ export default class Client {
     return (await this.axios.post('/classwork', classWork, { headers }))
 
   }
-  
-  async generateEducationalMaterial(payload: {youtubeLink?: string, audio?: File | null, document?: File | null}): Promise<AxiosResponse<ArrayBuffer>> {
+
+  async generateEducationalMaterial(payload: {instructions?: string;  youtubeLink?: string, audio?: File | null, document?: File | null }): Promise<AxiosResponse<ArrayBuffer>> {
     const formData = new FormData()
 
+    payload.instructions && formData.append('instructions', payload.instructions)
     payload.youtubeLink && formData.append('youtubeLink', payload.youtubeLink)
     payload.audio && formData.append('audio', payload.audio)
     payload.document &&  formData.append('document', payload.document)
@@ -128,6 +188,34 @@ export default class Client {
     return (await this.axios.post('/generate-educational-resource', formData, { responseType: 'arraybuffer' }))
   }
 
+  async generateQuestion(payload: GenerateQuestionPayload): Promise<Question[]> {
+    const formData = new FormData()
+
+    payload.instructions && formData.append('instructions', payload.instructions)
+    payload.youtubeLink && formData.append('youtubeLink', payload.youtubeLink)
+    payload.audio && formData.append('audio', payload.audio)
+    payload.document && formData.append('document', payload.document)
+
+    payload.difficulty && formData.append('level', payload.difficulty)
+    payload.theme && formData.append('theme', payload.theme)
+    payload.relatedTheme && formData.append('relatedTheme', payload.relatedTheme)
+    payload.numberOfQuestions && formData.append('numberOfQuestions', payload.numberOfQuestions.toString())
+
+    return (await this.axios.post('/generate-questions', formData)).data
+  }
+
   // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade
+  async getWordDefinition(word: string): Promise<DictonaryResponse> {
+    return (await this.axios.get(`/dictionary/${word}/definition`)).data
+  }
+
+  async addAnswers(
+    answers: SendAnswerData,
+    headers: {
+      userId: string
+      classworkId: string
+    }): Promise<void> {
+    return await this.axios.post('/classwork/answer', answers, { headers })
+  }
 
 }

@@ -1,6 +1,7 @@
 import { Question } from './Question'
 
-export type classWork = {
+export type Classwork = {
+  id?: string
   title: string
   datePosting: string
   endDate: string
