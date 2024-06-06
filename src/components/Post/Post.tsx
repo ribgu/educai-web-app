@@ -2,7 +2,7 @@ import Box from '@mui/material/Box/Box'
 import IconButton from '@mui/material/IconButton/IconButton'
 import Typography from '@mui/material/Typography/Typography'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Menu from '@mui/material/Menu/Menu'
 import MenuItem from '@mui/material/MenuItem/MenuItem'
 import { PostType } from '../../lib/types/Post'
@@ -11,6 +11,9 @@ import Modal from '../Modal/Modal'
 import TextField from '@mui/material/TextField'
 import { LoadingButton } from '@mui/lab'
 import Button from '@mui/material/Button/Button'
+import { AuthContext } from '../../contexts/AuthContext'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 interface PostProps extends PostType {
     updatePost: () => void
@@ -18,14 +21,27 @@ interface PostProps extends PostType {
 
 export default function Post(post: PostProps) {
     const client = useClient()
-    const { id, title, description, datePosting, file, originalFileName, updatePost } = post
+    const { role } = useContext(AuthContext)
+    const { id, title, description, datePosting, file, originalFileName, updatePost} = post
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
 
     const [name, setName] = useState(title)
     const [text, setText] = useState(description)
     const [fileUrl, setFile] = useState(file)
-    const [url, setUrl] = useState('')
+
+    const sucessToast = (message : string) => {
+        toast.success(message, {
+          position: 'bottom-right',
+          autoClose: 2600,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          })
+      }
     
     const [modal, setModal] = useState<{ isLoading: boolean, isOpen: boolean, type: 'EDIT' | 'DELETE' | null }>({
         isLoading: false,
@@ -74,14 +90,9 @@ export default function Post(post: PostProps) {
                 isOpen: false
             })
             updatePost()
+            sucessToast('Post deletado com sucesso!')
         })
     }
-
-    useEffect(() => {
-        if (file) {
-            client.getUrlArquivoPost(id).then((data) => setUrl(data))
-        }
-    }, [id, file])
 
     const updatePostData = () => {
         setModal({ ...modal, isLoading: true })
@@ -101,12 +112,19 @@ export default function Post(post: PostProps) {
                 isOpen: false
             })
             updatePost()
+            sucessToast('Post atualizado com sucesso!')
         })
     }
 
     const formatDate = (dateString: string): string => {
         const date = new Date(dateString)
         return date.toLocaleDateString('pt-BR')
+    }
+
+    const handleUrl = () => {
+        client.getUrlArquivoPost(id).then((data: string) => {
+            window.location.href= data.trim()
+        })
     }
 
     return (
@@ -125,10 +143,14 @@ export default function Post(post: PostProps) {
                     <img src='/logos/bookTwo.svg' alt='Ícone de livro' style={{ width: '26px', marginBottom: '5px' }} />
                     <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap', fontWeight: 'bold' }}>{title}</Typography>
                 </Box>
+
+                { role=='TEACHER' && 
                 <IconButton size='small' onClick={handleClick}>
                     <MoreVertIcon />
                 </IconButton>
-                <Menu
+                }
+
+                  <Menu
                     id="long-menu"
                     anchorEl={anchorEl}
                     keepMounted
@@ -146,12 +168,12 @@ export default function Post(post: PostProps) {
             <Box sx={{ width: '100%', height: '65%', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px' }}>
                 <Typography sx={{ fontSize: '12px' }}>Data de publicação: <b>{formatDate(datePosting)}</b></Typography>
                 {description && <Typography sx={{ fontSize: '14px' }}>{description}</Typography>}
-                {url && <a href={url} target='_blank' rel='noopener noreferrer'><Typography sx={{
+                {originalFileName && <Typography onClick={handleUrl} sx={{
                     fontSize: '14px',
                     color: 'blue',
                     textDecoration: 'underline'
 
-                }}>{originalFileName}</Typography></a>}
+                }}>{originalFileName}</Typography>}
             </Box>
 
             <Box>
