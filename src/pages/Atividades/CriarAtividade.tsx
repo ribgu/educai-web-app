@@ -76,7 +76,7 @@ export default function CriarAtividade(props: QuestionProps) {
     if (classRoomId) {
       client.getClassroomById(classRoomId).then((res) => setTurma(res))
     }
-  }, [classRoomId])
+  }, [classRoomId, client])
 
   const handleAddQuestion = () => {
     const newQuestion: QuestionType = {
@@ -139,7 +139,7 @@ export default function CriarAtividade(props: QuestionProps) {
         </Box>
       </Box>
 
-      <Modal open={openModal} onClose={() => setOpenModal(false)} 
+      <Modal open={openModal} onClose={() => setOpenModal(false)}
       sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Box sx={{
           gap: '10px',

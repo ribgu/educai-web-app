@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Box from '@mui/material/Box/Box'
 import IconButton from '@mui/material/IconButton/IconButton'
@@ -76,8 +77,8 @@ export default function Turma(props: TurmaProps) {
 
     const updateClassroomData = () => {
         setModal({...modal, isLoading: true})
-        
-        let body = {} as {title?: string, course?: string}
+
+        const body = {} as {title?: string, course?: string}
 
         if(name.trim())
             body.title = name
@@ -97,12 +98,12 @@ export default function Turma(props: TurmaProps) {
 
     return (
         <Box>
-            <Box sx={{ 
-                cursor: 'pointer', 
-                width: '16vw', 
-                height: '14vh', 
-                border: '1px solid #BEBEBE', 
-                borderRadius: '10px', 
+            <Box sx={{
+                cursor: 'pointer',
+                width: '16vw',
+                height: '14vh',
+                border: '1px solid #BEBEBE',
+                borderRadius: '10px',
                 boxShadow: '0px 2px 3px 1px #00000012',
                 userSelect: 'none'
             }} onClick={onClick}>
@@ -117,10 +118,10 @@ export default function Turma(props: TurmaProps) {
                     borderBottom: '1px solid #BEBEBE',
                     borderColor: '#BEBEBE'
                 }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', 
+                    <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%',
                     width: '100%', alignItems: 'center', gap: '10px' }}>
                         <img src='/logos/bookTwo.svg' alt='Ícone de livro' style={{ width: '26px', marginBottom: '3px' }} />
-                        <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap', 
+                        <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap',
                         fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</Typography>
                     </Box>
                     <IconButton sx={{ justifyContent: 'end' }} size='small' onClick={handleClick}>
@@ -140,7 +141,7 @@ export default function Turma(props: TurmaProps) {
                         </MenuItem>
                     </Menu>
                 </Box>
-                
+
                 <Box sx={{ width: '100%', height: '65%', padding: '8px 16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
                     <Box sx={{ display: 'flex', gap: '4px' }}>
                         <Typography sx={{ display: 'flex', fontSize: 14, color: '#5E5E5E' }}>Disciplina: </Typography>
@@ -171,7 +172,7 @@ export default function Turma(props: TurmaProps) {
                 >
                     <Typography sx={{ fontSize: 16, color: '#5E5E5E' }}>
                         {
-                            modal.type === 'DELETE' 
+                            modal.type === 'DELETE'
                             ? <>Tem certeza que deseja deletar a turma <strong>{title}?</strong></>
                             : 'Preenche os campos abaixo com as informações atualizadas'
                         }
@@ -223,7 +224,7 @@ export default function Turma(props: TurmaProps) {
                             },
                             paddingY: '12px',
                             width: '48%'
-                        }} variant='contained' onClick={modal.type === 'DELETE' ? deleteClassroom : updateClassroomData} 
+                        }} variant='contained' onClick={modal.type === 'DELETE' ? deleteClassroom : updateClassroomData}
                         loading={modal.isLoading}>{modal.type === 'DELETE' ? 'Sim' : 'Atualizar'}</LoadingButton>
                     </Box>
                 </Modal>
