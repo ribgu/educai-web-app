@@ -6,16 +6,13 @@ import { useParams } from 'react-router-dom'
 import { TurmaType } from '../lib/types/Turma'
 import useClient from '../lib/client/useClient'
 import PostsPage from '../components/PostsPage/PostsPage'
-import AnswerQuestionPage from '../components/AnswerQuestionPage/AnswerQuestionPage'
 import Leaderboard from '../components/Leaderboard/Leaderboard'
 import AtividadesPage from '../components/AtividadesPage/AtividadesPage'
-import { AtividadeType } from '../lib/types/Atividade'
 
 export default function Turma() {
   const client = useClient()
   const { id } = useParams()
   const [turma, setTurma] = useState<TurmaType>()
-  const [selectedAtividade, setSelectedAtividade] = useState<AtividadeType>()
   const tab = (new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas') || 'posts'
 
   const atividadeProps = {
@@ -53,15 +50,10 @@ export default function Turma() {
               <PostsPage classroomId={id} />
             )}
             {tab === 'atividades' && (
-              selectedAtividade ? (
-                <AnswerQuestionPage classworkId='665b6e9dbbbc1a7918322558' />
-              ) : (
                 <AtividadesPage
                 atividades={[atividadeProps]}
-                onSelectAtividade={setSelectedAtividade}
                 classRoomId={id as string}
                 />
-              )
             )}
             {tab === 'pessoas' && (
               <>
@@ -69,9 +61,7 @@ export default function Turma() {
               </>
             )}
           </Box>
-
           <Leaderboard/>
-
         </Box>
       </Box>
     </Layout>
