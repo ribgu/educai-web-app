@@ -6,7 +6,6 @@ import theme from './lib/theme.ts'
 import Home from './pages/Home.tsx'
 import LandingPage from './pages/LandingPage'
 import Login from './pages/Login'
-import Teste from './pages/Teste'
 import Turma from './pages/Turma'
 
 import {
@@ -33,10 +32,6 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
-  },
-  {
-    path: '/teste',
-    element: <Teste />
   },
   {
     path: '/edu',

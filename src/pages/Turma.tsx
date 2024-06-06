@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PageHeader from '../components/PageHeader/PageHeader'
 import Layout from './Layout'
 import Box from '@mui/material/Box/Box'
@@ -82,7 +83,7 @@ export default function Turma() {
               padding: '10px'
             }}>
               {tab === 'posts' && (
-                <PostsPage posts={[postProps]} />
+                <PostsPage classroomId='1' posts={[postProps]} />
               )}
               {tab === 'atividades' && (
                 selectedAtividade ? (
