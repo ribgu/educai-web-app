@@ -10,7 +10,6 @@
   import { useLocation } from 'react-router-dom'
   import PageHeader from '../PageHeader/PageHeader'
   import Layout from '../../pages/Layout'
-  import Leaderboard from '../Leaderboard/Leaderboard'
 
   export default function AnswerQuestionPage() {
     const [classwork, setClasswork] = useState<Classwork>()
@@ -85,7 +84,6 @@
                 onClick={handleSendAnswers}
               >Finalizar</Button>
             </Box>
-            <Leaderboard/>
           </Box>
         </Box>
       </Layout>
