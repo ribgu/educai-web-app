@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 
 type AtividadePageProps = {
     atividades: {
-        id: number
+        id: string
         title: string
         deadline: Date
         asignmentDate: Date
@@ -18,17 +18,20 @@ type AtividadePageProps = {
         exercises: number
         answered: number
     }[]
-    onSelectAtividade: (atividade: any) => void
     classRoomId: string
 }
 
 export default function AtividadesPage(props: AtividadePageProps) {
-    const { atividades, onSelectAtividade, classRoomId } = props
+    const { atividades, classRoomId } = props
     const navigate = useNavigate()
 
     const handleManualCreate = () => {
         setModalIsOpen(false)
         navigate(`/turma/criar-atividade?classRoomId=${classRoomId}?tab=atividades`)
+    }
+
+    const onSelectAtividade = (atividade: any) => {
+        navigate(`/turma/responder-atividade/?classRoomId=${classRoomId}&classWorkId=${atividade.id}`)
     }
 
     const [modalIsOpen, setModalIsOpen] = useState(false)

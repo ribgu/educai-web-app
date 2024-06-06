@@ -16,7 +16,7 @@ export default function Turma() {
   const tab = (new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas') || 'posts'
 
   const atividadeProps = {
-    id: 1,
+    id: '665b6e9dbbbc1a7918322558',
     title: 'Atividade gu broxa',
     deadline: new Date(),
     asignmentDate: new Date(),
