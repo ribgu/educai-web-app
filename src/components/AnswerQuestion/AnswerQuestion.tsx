@@ -2,7 +2,7 @@ import Box from '@mui/material/Box/Box'
 import Typography from '@mui/material/Typography/Typography'
 import Radio from '@mui/material/Radio'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import { RadioGroup } from '@mui/material'
+import RadioGroup from '@mui/material/RadioGroup'
 import { useState } from 'react'
 
 interface AnswerQuestionProps {
