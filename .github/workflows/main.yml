@@ -1,6 +1,8 @@
 name: React Web-App CI/CD
 
-on: [push]
+on:
+  push:
+    branches: [ main ]
 
 jobs:
   CI:
@@ -13,7 +15,8 @@ jobs:
       VITE_API_URL_IA: ${{ secrets.VITE_API_URL_IA }}
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
     - name: Bump version and push tag
       id: tag_version
@@ -29,8 +32,8 @@ jobs:
       with:
         node-version: 18.x
 
-    - name: Install dependencies
-      run: npm install
+    - name: Run CI (Install dependencies without changing package-lock)
+      run: npm ci
 
     - name: Lint code
       run: npm run lint
