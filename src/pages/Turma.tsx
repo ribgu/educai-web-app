@@ -17,7 +17,6 @@ export default function Turma() {
   const client = useClient()
   const { id } = useParams()
   const [turma, setTurma] = useState<TurmaType>()
-  const [selectedAtividade, setSelectedAtividade] = useState<AtividadeType>()
 
   const tab = new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas' | 'criar-atividade' | 'criar-atividade-ia'
   const location = useLocation()
@@ -77,15 +76,10 @@ export default function Turma() {
                 <PostsPage classroomId='1' posts={[postProps]} />
               )}
               {tab === 'atividades' && (
-                selectedAtividade ? (
-                  <ListagemAtividade atividades={[atividadeSelectedProps]} nomeAtividade={selectedAtividade.title} />
-                ) : (
                   <AtividadesPage
                     atividades={[atividadeProps]}
-                    onSelectAtividade={setSelectedAtividade}
                     classRoomId={id as string}
                   />
-                )
               )}
               {tab === 'pessoas' && (
                 <>
