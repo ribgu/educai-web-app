@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  PullRequestCI:
+  CI:
     permissions:
       contents: write
     runs-on: ubuntu-latest

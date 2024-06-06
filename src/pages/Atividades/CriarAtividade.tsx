@@ -147,7 +147,7 @@ export default function CriarAtividade(props: QuestionProps) {
     if (classroomId) {
       client.getClassroomById(classroomId).then((res) => setTurma(res))
     }
-  }, [classroomId])
+  }, [classroomId, client])
 
   const handleAddQuestion = (question?: QuestionType) => {
     if(question) {
@@ -246,22 +246,17 @@ export default function CriarAtividade(props: QuestionProps) {
         </Box>
       </Box>
 
-      <Modal
-        width='50%'
-        titulo='Gerar questão com IA'
-        textoBotaoAbrirModal='Gerar questão IA'
-        altIcone=''
-        variantButton='none'
-        iconeReact={
-          <Box sx={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '12px' }}>
-            <BsStars color='#341069' size={24} />
-          </Box>
-        }
-        showModal={openModal}
-        onClose={() => setOpenModal(false)}
-        onOpen={() => setOpenModal(true)}
-      >
-        <GerarQuestaoModal handleAddQuestion={handleAddQuestion} handleCancel={() => setOpenModal(false)}/>
+      <Modal open={openModal} onClose={() => setOpenModal(false)}
+      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Box sx={{
+          gap: '10px',
+          backgroundColor: '#FFF',
+          padding: '24px',
+          borderRadius: '10px',
+          width: '50%',
+        }}>
+          <GerarQuestaoModal />
+        </Box>
       </Modal>
     </>
   )
