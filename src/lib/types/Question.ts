@@ -1,10 +1,10 @@
 export type Question = {
-  id: string
+  id?: string
   description: string
+  correctAnswerKey: string
   options: {
-    id:string
+    id?:string
     key: string
     description: string
   }[]
-  correctAnswerKey: string
 }

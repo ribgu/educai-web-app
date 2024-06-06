@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react'
 import { Question as QuestionType } from '../../lib/types/Question'
 import FinalizarDialog from '../../components/FinalizarDialog/FinalizarDialog'
-import { classWork } from '../../lib/types/ClassWork'
+import { Classwork } from '../../lib/types/ClassWork'
 import useClient from '../../lib/client/useClient'
 import { TurmaType } from '../../lib/types/Turma'
 import GerarQuestaoModal from '../../components/GerarQuestaoModal/GerarQuestaoModal'
@@ -64,7 +64,7 @@ export default function CriarAtividade(props: QuestionProps) {
     setCreateInProgress(true)
     console.log(endDate)
     if(endDate) {
-      const classWork: classWork = {
+      const classWork: Classwork = {
         title,
         datePosting,
         endDate,
