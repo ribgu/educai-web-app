@@ -12,7 +12,8 @@ type atividadeProps = {
     grade: number
 }[]
 
-export default function ListagemAtividade(props: listagemAtividadeProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function ListagemAtividade(_props: listagemAtividadeProps) {
     return (
         <Box sx={{ width: '100%', height: '30vh', border: '2px solid #BEBEBE', borderRadius: '10px', backgroundColor: 'grey' }}>
             <h4></h4>
