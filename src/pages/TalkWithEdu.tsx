@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Box from '@mui/material/Box/Box'
 import Layout from './Layout'
 import PageHeader from '../components/PageHeader/PageHeader'
@@ -6,7 +7,7 @@ import { useAudioRecorder } from '../lib/useAudioRecorder'
 import useAiClient from '../lib/client/useAIClient'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { Typography } from '@mui/material'
+import Typography from '@mui/material/Typography'
 
 type Messages = {
   message: string
@@ -17,7 +18,7 @@ export default function TalkWithEdu() {
   const { recording, audioBlobUrl, startRecording, stopRecording } = useAudioRecorder()
   const [transcription, setTranscription] = useState<string>('')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [_isLoading, setIsLoading] = useState<boolean>(false)
   const [response, setResponse] = useState<string>()
   const client = useAiClient()
   const [messages, setMessages] = useState<Messages[]>([])
@@ -41,7 +42,6 @@ export default function TalkWithEdu() {
     if (audioBlobUrl) {
       handleSendAudioToEdu()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioBlobUrl])
 
   useEffect(() => {

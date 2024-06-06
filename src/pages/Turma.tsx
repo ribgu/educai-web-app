@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PageHeader from '../components/PageHeader/PageHeader'
 import Layout from './Layout'
 import Box from '@mui/material/Box/Box'
