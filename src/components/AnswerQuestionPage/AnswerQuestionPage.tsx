@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
   import Box from '@mui/material/Box'
   import AnswerQuestion from '../AnswerQuestion/AnswerQuestion'
   import Button from '@mui/material/Button'
@@ -17,7 +18,7 @@
     const [completedQuestion, setCompletedQuestion] = useState<SendAnswerData>()
     const client = useClient()
     const { id } = useContext(AuthContext)
-    
+
     const classworkId = new URLSearchParams(useLocation().search).get('classWorkId') ?? ''
     console.log('classworkId:', classworkId)
 
@@ -53,7 +54,6 @@
 
     useEffect(() => {
       client.getClassworkById(classworkId).then((res) => setClasswork(res))
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [classworkId])
 
     return (
@@ -75,7 +75,7 @@
                 <AnswerQuestion key={index}
                   description={question.description}
                   options={question.options}
-                  id={question.id}
+                  id={question.id as string}
                   handleSelectAlternative={handleSelectAlternative}
                 />
               ))}
