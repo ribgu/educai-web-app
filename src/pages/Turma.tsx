@@ -22,11 +22,6 @@ export default function Turma() {
   const location = useLocation()
   const questions = location.state?.questions as Question[]
 
-  const postProps = {
-    dtPublicacao: new Date(),
-    title: 'Título do post'
-  }
-
   const atividadeProps = {
     id: '665b6e9dbbbc1a7918322558',
     title: 'Atividade gu broxa',
@@ -72,8 +67,8 @@ export default function Turma() {
               flexDirection: 'column',
               padding: '10px'
             }}>
-              {tab === 'posts' && (
-                <PostsPage classroomId='1' posts={[postProps]} />
+              {tab === 'posts' && id &&  (
+                <PostsPage classroomId={id} />
               )}
               {tab === 'atividades' && (
                   <AtividadesPage

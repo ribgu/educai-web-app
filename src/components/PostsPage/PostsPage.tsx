@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 import TextField from '@mui/material/TextField/TextField'
 import Modal from '../Modal/Modal'
 import Box from '@mui/material/Box/Box'
@@ -18,9 +16,8 @@ import { AuthContext } from '../../contexts/AuthContext'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-type postsPageProps = {
+type  postsPageProps  = {
     classroomId: string
-    posts?: any
 }
 
 export default function PostsPage(props: postsPageProps) {
