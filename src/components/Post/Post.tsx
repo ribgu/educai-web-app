@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Box from '@mui/material/Box/Box'
 import IconButton from '@mui/material/IconButton/IconButton'
 import Typography from '@mui/material/Typography/Typography'
