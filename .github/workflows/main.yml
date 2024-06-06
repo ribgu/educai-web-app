@@ -1,8 +1,6 @@
 name: React Web-App CI/CD
 
-on:
-  push:
-    branches: [ main ]
+on: [push]
 
 jobs:
   CI:
@@ -11,12 +9,12 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      VITE_API_URL: "http://20.51.193.153:8080"
-      VITE_API_URL_IA: "http://20.51.193.153:3000"
+      VITE_API_URL: ${{ secrets.VITE_API_URL }}
+      VITE_API_URL_IA: ${{ secrets.VITE_API_URL_IA }}
 
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Bump version and push tag
       id: tag_version
       uses: mathieudutour/github-tag-action@v5.6
@@ -25,7 +23,7 @@ jobs:
         default_bump: patch
         initial_version: '1.0.0' # Sets the initial version if no tags exist
         release_branches: main  # Ensures tags are only pushed on the main branch
-        
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
@@ -45,7 +43,7 @@ jobs:
       with:
         name: web-app
         path: dist/
-        
+
   CD:
     needs: [CI]
     permissions:
@@ -58,7 +56,7 @@ jobs:
       with:
           name: web-app
           path: dist/
-          
+
     - name: Deploy to Azure VM
       uses: appleboy/scp-action@v0.1.7
       with:
