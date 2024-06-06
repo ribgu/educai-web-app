@@ -6,7 +6,6 @@ import theme from './lib/theme.ts'
 import Home from './pages/Home.tsx'
 import LandingPage from './pages/LandingPage'
 import Login from './pages/Login'
-import Teste from './pages/Teste'
 import Turma from './pages/Turma'
 
 import {
@@ -15,9 +14,9 @@ import {
 } from 'react-router-dom'
 import TalkWithEdu from './pages/TalkWithEdu.tsx'
 import AuthProvider from './providers/AuthProvider.tsx'
-import CriarAtividade from './pages/Atividades/CriarAtividade.tsx'
 import Material from './pages/Material.tsx'
 import AnswerQuestionPage from './components/AnswerQuestionPage/AnswerQuestionPage.tsx'
+import CriarAtividade from './pages/Atividades/CriarAtividade.tsx'
 
 const router = createBrowserRouter([
   {
@@ -35,10 +34,6 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
-  },
-  {
-    path: '/teste',
-    element: <Teste />
   },
   {
     path: '/edu',

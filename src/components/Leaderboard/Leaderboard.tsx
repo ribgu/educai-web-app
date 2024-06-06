@@ -15,7 +15,7 @@ export default function Leaderboard() {
     if (id) {
       client.getLeaderboard(id).then(setLeaderboard)
     }
-  }, [id])
+  }, [id, client])
 
   return (
     <Box sx={{
@@ -58,10 +58,10 @@ export default function Leaderboard() {
         overflowY: 'auto',
         gap: '10px',
       }}>
-        
+
         {leaderboard && leaderboard.map((leaderboard, index) => (
           <CardLeaderboard key={leaderboard.id} nome={leaderboard.name} foto={leaderboard.profilePicture || './IconsPages/avatar.svg'} posicao={index + 1} acertos={leaderboard.score} />
-        ))} 
+        ))}
 
       </Box>
     </Box>

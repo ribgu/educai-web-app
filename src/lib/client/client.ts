@@ -5,6 +5,8 @@ import { TurmaType } from '../types/Turma'
 import { LeaderboardType } from '../types/Leaderboard'
 import { PostType } from '../types/Post'
 import { Classwork } from '../types/ClassWork'
+import { Question } from '../types/Question'
+import { GenerateQuestionPayload } from '../types/GenerateQuestionPayload'
 import { DictonaryResponse } from '../types/DictonaryResponse'
 import { AnswerType } from '../types/Answer'
 import { SendAnswerData } from '../types/SendAnswerData'
@@ -175,16 +177,34 @@ export default class Client {
 
   }
 
-  async generateEducationalMaterial(payload: { youtubeLink?: string, audio?: File | null, document?: File | null }): Promise<AxiosResponse<ArrayBuffer>> {
+  async generateEducationalMaterial(payload: {instructions?: string;  youtubeLink?: string, audio?: File | null, document?: File | null }): Promise<AxiosResponse<ArrayBuffer>> {
     const formData = new FormData()
 
+    payload.instructions && formData.append('instructions', payload.instructions)
+    payload.youtubeLink && formData.append('youtubeLink', payload.youtubeLink)
+    payload.audio && formData.append('audio', payload.audio)
+    payload.document &&  formData.append('document', payload.document)
+  
+    return (await this.axios.post('/generate-educational-resource', formData, { responseType: 'arraybuffer' }))
+  }
+
+  async generateQuestion(payload: GenerateQuestionPayload): Promise<Question[]> {
+    const formData = new FormData()
+
+    payload.instructions && formData.append('instructions', payload.instructions)
     payload.youtubeLink && formData.append('youtubeLink', payload.youtubeLink)
     payload.audio && formData.append('audio', payload.audio)
     payload.document && formData.append('document', payload.document)
 
-    return (await this.axios.post('/generate-educational-resource', formData, { responseType: 'arraybuffer' }))
+    payload.difficulty && formData.append('level', payload.difficulty)
+    payload.theme && formData.append('theme', payload.theme)
+    payload.relatedTheme && formData.append('relatedTheme', payload.relatedTheme)
+    payload.numberOfQuestions && formData.append('numberOfQuestions', payload.numberOfQuestions.toString())
+
+    return (await this.axios.post('/generate-questions', formData)).data
   }
 
+  // outros métodos vcs devem criar um tipo na pasta types, copiem o UserLogin e alterem conforme a necessidade
   async getWordDefinition(word: string): Promise<DictonaryResponse> {
     return (await this.axios.get(`/dictionary/${word}/definition`)).data
   }
