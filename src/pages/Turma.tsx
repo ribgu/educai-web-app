@@ -9,7 +9,6 @@ import PostsPage from '../components/PostsPage/PostsPage'
 import AnswerQuestionPage from '../components/AnswerQuestionPage/AnswerQuestionPage'
 import Leaderboard from '../components/Leaderboard/Leaderboard'
 import AtividadesPage from '../components/AtividadesPage/AtividadesPage'
-import ListagemAtividade from '../components/ListagemAtividades/ListagemAtividade'
 import { AtividadeType } from '../lib/types/Atividade'
 
 export default function Turma() {
@@ -27,13 +26,6 @@ export default function Turma() {
     description: 'Atividade referente a impotência do meu mano gug1, Atividade referente a impotência do meu mano gug1, Atividade referente a impotência do meu mano gug1, Atividade referente a impotência do meu mano gug1',
     exercises: 10,
     answered: 0
-  }
-
-  const atividadeSelectedProps = {
-    icon: 'hello',
-    name: 'Vitao',
-    status: 'Enviado',
-    grade: 10
   }
 
   useEffect(() => {
@@ -62,7 +54,6 @@ export default function Turma() {
             )}
             {tab === 'atividades' && (
               selectedAtividade ? (
-                //<ListagemAtividade atividades={[atividadeSelectedProps]} nomeAtividade={selectedAtividade.title} />
                 <AnswerQuestionPage classworkId='665b6e9dbbbc1a7918322558' />
               ) : (
                 <AtividadesPage
