@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react'
 import { Question as QuestionType } from '../../lib/types/Question'
 import FinalizarDialog from '../../components/FinalizarDialog/FinalizarDialog'
-import { classWork } from '../../lib/types/ClassWork'
+import { Classwork } from '../../lib/types/ClassWork'
 import useClient from '../../lib/client/useClient'
 import { TurmaType } from '../../lib/types/Turma'
 import GerarQuestaoModal from '../../components/GerarQuestaoModal/GerarQuestaoModal'
@@ -64,7 +64,7 @@ export default function CriarAtividade(props: QuestionProps) {
     setCreateInProgress(true)
     console.log(endDate)
     if(endDate) {
-      const classWork: classWork = {
+      const classWork: Classwork = {
         title,
         datePosting,
         endDate,
@@ -246,17 +246,22 @@ export default function CriarAtividade(props: QuestionProps) {
         </Box>
       </Box>
 
-      <Modal open={openModal} onClose={() => setOpenModal(false)}
-      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box sx={{
-          gap: '10px',
-          backgroundColor: '#FFF',
-          padding: '24px',
-          borderRadius: '10px',
-          width: '50%',
-        }}>
-          <GerarQuestaoModal />
-        </Box>
+      <Modal
+        width='50%'
+        titulo='Gerar questão com IA'
+        textoBotaoAbrirModal='Gerar questão IA'
+        altIcone=''
+        variantButton='none'
+        iconeReact={
+          <Box sx={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '12px' }}>
+            <BsStars color='#341069' size={24} />
+          </Box>
+        }
+        showModal={openModal}
+        onClose={() => setOpenModal(false)}
+        onOpen={() => setOpenModal(true)}
+      >
+        <GerarQuestaoModal handleAddQuestion={handleAddQuestion} handleCancel={() => setOpenModal(false)}/>
       </Modal>
     </>
   )

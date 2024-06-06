@@ -236,7 +236,10 @@ export default function Turma(props: TurmaProps) {
                                 backgroundColor: '#4D1EAD'
                             },
                             paddingY: '12px',
-                            width: '48%'
+                            width: '48%',
+                            textTransform: 'none',
+                            borderRadius: '10px',
+                            fontWeight: 700
                         }} variant='contained' onClick={modal.type === 'DELETE' ? deleteClassroom : updateClassroomData}
                         loading={modal.isLoading}>{modal.type === 'DELETE' ? 'Sim' : 'Atualizar'}</LoadingButton>
                     </Box>

@@ -12,7 +12,7 @@ import { FaBook } from 'react-icons/fa'
 
 type AtividadePageProps = {
     atividades: {
-        id: number
+        id: string
         title: string
         deadline: Date
         asignmentDate: Date
@@ -20,18 +20,21 @@ type AtividadePageProps = {
         exercises: number
         answered: number
     }[]
-    onSelectAtividade: (atividade: any) => void
     classRoomId: string
 }
 
 export default function AtividadesPage(props: AtividadePageProps) {
-    const { atividades, onSelectAtividade, classRoomId } = props
+    const { atividades, classRoomId } = props
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const navigate = useNavigate()
 
     const handleManualCreate = () => {
         setModalIsOpen(false)
         navigate(`/turma/${classRoomId}?tab=criar-atividade`)
+    }
+
+    const onSelectAtividade = (atividade: any) => {
+        navigate(`/turma/responder-atividade/?classRoomId=${classRoomId}&classWorkId=${atividade.id}`)
     }
 
     const handleIACreate = () => {
