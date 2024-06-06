@@ -22,7 +22,6 @@ export default function AnswerQuestion(
   const [selectedOption, setSelectedOption] = useState('')
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('selectedOption', event.target.value)
     setSelectedOption(event.target.value)
     handleSelectAlternative(id, event.target.value)
   }
