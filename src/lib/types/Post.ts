@@ -2,7 +2,7 @@ export type PostType = {
     id: string
     title: string
     description: string
-    file: string
+    file?: string
     datePosting: string
     originalFileName: string
   }
