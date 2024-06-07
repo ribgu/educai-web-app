@@ -101,7 +101,7 @@ export default class Client {
 
     const response = await this.axios.post('/posts', formData)
     const post: PostType = response.data
-    return  post 
+    return  post
 }
 
   async getUrlArquivoPost(postId: string): Promise<string> {
@@ -173,7 +173,10 @@ export default class Client {
       'classroomId': classroomId
     }
     return (await this.axios.post('/classwork', classWork, { headers }))
+  }
 
+  async getClassWorksByClassroom(classroomId: string): Promise<Classwork[]> {
+    return (await this.axios.get(`/classroom/${classroomId}/classworks`)).data
   }
 
   async generateEducationalMaterial(payload: {instructions?: string;  youtubeLink?: string, audio?: File | null, document?: File | null }): Promise<AxiosResponse<ArrayBuffer>> {
@@ -183,7 +186,7 @@ export default class Client {
     payload.youtubeLink && formData.append('youtubeLink', payload.youtubeLink)
     payload.audio && formData.append('audio', payload.audio)
     payload.document &&  formData.append('document', payload.document)
-  
+
     return (await this.axios.post('/generate-educational-resource', formData, { responseType: 'arraybuffer' }))
   }
 
