@@ -1,9 +1,10 @@
 import Box from '@mui/material/Box/Box'
-import Typography from '../Typography/Typography'
+import Typography from '@mui/material/Typography'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import BasicModal from '../Modal/Modal'
 import { useEffect, useState } from 'react'
-import { useClient } from '../../lib/client/useClient'
+import useClient from '../../lib/client/useClient'
+import { Participant } from '../../lib/types/Participant'
 
 type ParticipantsPageProps = {
     classroomId: string
@@ -12,13 +13,15 @@ type ParticipantsPageProps = {
 export default function ParticipantsPage(props: ParticipantsPageProps) {
     const { classroomId } = props
     const [modalIsOpen, setModalIsOpen] = useState(false)
-    const [participants, setParticipants] = useState([])
+    const [participants, setParticipants] = useState<Participant[]>([])
+
     const client = useClient()
 
     useEffect(() => {
-        if (classroomId) {
-            const participants = client.getParticipantsById(classroomId).
-        }
+        client.getParticipantsById(classroomId).then((res: any) => {
+            setParticipants(res)
+            console.log(res)
+        })
     }, [classroomId])
 
     return (
@@ -38,12 +41,34 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
             </BasicModal>
             <Box sx={{ width: '100%', flexDirection: 'collumn', alignItems: 'center', justifyContent: 'space-evenly' }}>
                 <Box sx={{ width: '100%', padding: '10px' }}>
-                    <Typography variant='h3'>Professores</Typography>
+                    <Typography variant='h4' sx={{ fontWeight: '500'}} >Professores</Typography>
                     <div className='content-none w-[100%] h-[1px] bg-gradient-to-r from-gradientPurple' />
+                    <Box>
+                        {participants.map((participant) => {
+                            if (participant.role === 'TEACHER') {
+                                return (
+                                    <Box>
+                                        <Typography>{participant.name}</Typography>
+                                    </Box>
+                                )
+                            }
+                        })}
+                    </Box>
                 </Box>
                 <Box sx={{ width: '100%', padding: '10px' }}>
-                    <Typography variant='h3'> Alunos</Typography>
+                    <Typography variant='h4' sx={{ fontWeight: '500'}}> Alunos</Typography>
                     <div className='content-none w-[100%] h-[1px] bg-gradient-to-r from-gradientPurple' />
+                    <Box>
+                        {participants.map((participant) => {
+                            if (participant.role === 'STUDENT') {
+                                return (
+                                    <Box>
+                                        <Typography>{participant.name}</Typography>
+                                    </Box>
+                                )
+                            }
+                        })}
+                    </Box>
                 </Box>
             </Box>
         </>
