@@ -8,7 +8,7 @@ import { TurmaType } from '../lib/types/Turma'
 import useClient from '../lib/client/useClient'
 import PostsPage from '../components/PostsPage/PostsPage'
 import Leaderboard from '../components/Leaderboard/Leaderboard'
-import AtividadesPage from '../components/AtividadesPage/AtividadesPage'
+import AtividadesPage from '../components/ClassWorksPage/ClassWorksPage'
 import CriarAtividade from './Atividades/CriarAtividade'
 import CriarAtividadeIA from './Atividades/CriarAtividadeIA'
 import { Question } from '../lib/types/Question'
@@ -21,16 +21,6 @@ export default function Turma() {
   const tab = new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas' | 'criar-atividade' | 'criar-atividade-ia'
   const location = useLocation()
   const questions = location.state?.questions as Question[]
-
-  const atividadeProps = {
-    id: '665b6e9dbbbc1a7918322558',
-    title: 'Atividade gu broxa',
-    deadline: new Date(),
-    asignmentDate: new Date(),
-    description: 'Atividade referente a impotência do meu mano gug1, Atividade referente a impotência do meu mano gug1, Atividade referente a impotência do meu mano gug1, Atividade referente a impotência do meu mano gug1',
-    exercises: 10,
-    answered: 0
-  }
 
   useEffect(() => {
     if (id) {
@@ -72,7 +62,6 @@ export default function Turma() {
               )}
               {tab === 'atividades' && (
                   <AtividadesPage
-                    atividades={[atividadeProps]}
                     classRoomId={id as string}
                   />
               )}
