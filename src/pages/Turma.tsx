@@ -12,7 +12,6 @@ import AtividadesPage from '../components/ClassWorksPage/ClassWorksPage'
 import CriarAtividade from './Atividades/CriarAtividade'
 import CriarAtividadeIA from './Atividades/CriarAtividadeIA'
 import { Question } from '../lib/types/Question'
-import PessoasPage from '../components/PessoasPage/PessoasPage'
 
 export default function Turma() {
   const client = useClient()

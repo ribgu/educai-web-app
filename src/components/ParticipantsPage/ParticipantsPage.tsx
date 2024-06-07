@@ -4,11 +4,12 @@ import AssignmentIcon from '@mui/icons-material/Assignment'
 import BasicModal from '../Modal/Modal'
 import { useState } from 'react'
 
-type pessoasPageProps = {
+type ParticipantsPageProps = {
     classroomId: string
 }
 
-export default function PessoasPage(props: pessoasPageProps) {
+export default function PessoasPage(props: ParticipantsPageProps) {
+    const { classroomId } = props
     const [modalIsOpen, setModalIsOpen] = useState(false)
 
     return (
@@ -29,11 +30,11 @@ export default function PessoasPage(props: pessoasPageProps) {
             <Box sx={{width: '100%', flexDirection: 'collumn', alignItems: 'center', justifyContent: 'space-evenly' }}>
                 <Box sx={{width: '100%', padding: '10px'}}>
                     <Typography variant='h3'>Professores</Typography>
-                    <div className='content-none w-[100%] h-[1px] bg-gradient-to-r from-gradientPurple'></div>
+                    <div className='content-none w-[100%] h-[1px] bg-gradient-to-r from-gradientPurple' />
                 </Box>
                 <Box sx={{width: '100%', padding: '10px'}}>
                     <Typography variant='h3'> Alunos</Typography>
-                    <div className='content-none w-[100%] h-[1px] bg-gradient-to-r from-gradientPurple'></div>
+                    <div className='content-none w-[100%] h-[1px] bg-gradient-to-r from-gradientPurple' />
                 </Box>
             </Box>
         </>
