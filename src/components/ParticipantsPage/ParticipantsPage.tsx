@@ -4,7 +4,8 @@ import AssignmentIcon from '@mui/icons-material/Assignment'
 import BasicModal from '../Modal/Modal'
 import { useEffect, useState } from 'react'
 import useClient from '../../lib/client/useClient'
-import { Participant } from '../../lib/types/Participant'
+import Participant from '../Participant/Participant'
+import { Participant as ParticipantType } from '../../lib/types/Participant'
 
 type ParticipantsPageProps = {
     classroomId: string
@@ -13,7 +14,7 @@ type ParticipantsPageProps = {
 export default function ParticipantsPage(props: ParticipantsPageProps) {
     const { classroomId } = props
     const [modalIsOpen, setModalIsOpen] = useState(false)
-    const [participants, setParticipants] = useState<Participant[]>([])
+    const [participants, setParticipants] = useState<ParticipantType[]>([])
 
     const client = useClient()
 
@@ -39,7 +40,7 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
             >
                 <h1>texto</h1>
             </BasicModal>
-            <Box sx={{ width: '100%', flexDirection: 'collumn', alignItems: 'center', justifyContent: 'space-evenly' }}>
+            <Box sx={{ width: '100%', flexDirection: 'collumn', alignItems: 'center', justifyContent: 'space-evenly', border: '2px solid black' }}>
                 <Box sx={{ width: '100%', padding: '10px' }}>
                     <Typography variant='h4' sx={{ fontWeight: '500'}} >Professores</Typography>
                     <div className='content-none w-[100%] h-[1px] bg-gradient-to-r from-gradientPurple' />
@@ -47,9 +48,7 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
                         {participants.map((participant) => {
                             if (participant.role === 'TEACHER') {
                                 return (
-                                    <Box>
-                                        <Typography>{participant.name}</Typography>
-                                    </Box>
+                                    <Participant name={participant.name} url={participant.photoUrl} />
                                 )
                             }
                         })}
