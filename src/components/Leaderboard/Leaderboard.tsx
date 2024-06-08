@@ -60,7 +60,7 @@ export default function Leaderboard() {
       }}>
 
         {leaderboard && leaderboard.map((leaderboard, index) => (
-          <CardLeaderboard key={leaderboard.id} nome={leaderboard.name} foto={leaderboard.profilePicture || './IconsPages/avatar.svg'} posicao={index + 1} acertos={leaderboard.score} />
+          <CardLeaderboard key={leaderboard.id} nome={leaderboard.name} foto={leaderboard.profilePicture || '/iconsPages/avatar.png'} posicao={index + 1} acertos={leaderboard.score} />
         ))}
 
       </Box>
