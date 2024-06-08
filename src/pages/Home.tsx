@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Box from '@mui/material/Box/Box'
 import { useNavigate } from 'react-router-dom'
 import PageHeader from '../components/PageHeader/PageHeader'
@@ -81,8 +82,7 @@ export default function Home() {
   }
 
   function merge(left: TurmasType, right: TurmasType): TurmasType {
-    // eslint-disable-next-line prefer-const
-    let resultArray = []
+    const resultArray = []
     let leftIndex = 0, rightIndex = 0
 
     while (leftIndex < left.length && rightIndex < right.length) {
@@ -105,7 +105,7 @@ export default function Home() {
       errorToast('Não foi possivel criar a turma, atente-se aos caracteres especiais.')
       return
     }
-    
+
     return await client.createClassroom({ title, course }).then(() => updateClassrooms())
   }
 

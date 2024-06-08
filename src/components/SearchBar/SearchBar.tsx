@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react'
 import { RiSearchLine } from 'react-icons/ri'
 
@@ -25,7 +26,7 @@ export default function SearchBar(props: SearchBarProps) {
 
     return (
         <div className='relative w-full h-full'>
-            <input 
+            <input
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 onKeyDown={handleKeyDown}

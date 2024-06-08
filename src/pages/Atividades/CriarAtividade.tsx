@@ -1,10 +1,11 @@
 import Box from '@mui/material/Box/Box'
 import Question from '../../components/Question/Question'
-import { Button, Typography } from '@mui/material'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react'
 import { Question as QuestionType } from '../../lib/types/Question'
 import FinalizarDialog from '../../components/FinalizarDialog/FinalizarDialog'
-import { classWork } from '../../lib/types/ClassWork'
+import { Classwork } from '../../lib/types/ClassWork'
 import useClient from '../../lib/client/useClient'
 import { TurmaType } from '../../lib/types/Turma'
 import GerarQuestaoModal from '../../components/GerarQuestaoModal/GerarQuestaoModal'
@@ -22,7 +23,7 @@ export default function CriarAtividade(props: QuestionProps) {
   const client = useClient()
   const [title, setTitle] = useState('')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [turma, setTurma] = useState<TurmaType>()
+  const [_turma, setTurma] = useState<TurmaType>()
   const datePosting = new Date().toISOString().split('T')[0]
   const [endDate, setEndDate] = useState<string | null>(null)
   const [description, setDescription] = useState('')
@@ -62,7 +63,7 @@ export default function CriarAtividade(props: QuestionProps) {
     setCreateInProgress(true)
     console.log(endDate)
     if(endDate) {
-      const classWork: classWork = {
+      const classWork: Classwork = {
         title,
         datePosting,
         endDate,
@@ -70,7 +71,7 @@ export default function CriarAtividade(props: QuestionProps) {
         questions
       }
 
-      if (classroomId) 
+      if (classroomId)
         await client.createClassWork(classWork, classroomId)
     }
 
@@ -109,13 +110,13 @@ export default function CriarAtividade(props: QuestionProps) {
             const newKey = String.fromCharCode(65 + index).toLowerCase()
             return { ...o, key: newKey }
           })
-  
+
         return { ...q, options: newOptions }
       }
-  
+
       return q
     })
-  
+
     setQuestions(newQuestions)
   }
 
@@ -145,7 +146,7 @@ export default function CriarAtividade(props: QuestionProps) {
     if (classroomId) {
       client.getClassroomById(classroomId).then((res) => setTurma(res))
     }
-  }, [classroomId])
+  }, [classroomId, client])
 
   const handleAddQuestion = (question?: QuestionType) => {
     if(question) {
@@ -191,20 +192,20 @@ export default function CriarAtividade(props: QuestionProps) {
                   gap: '8px',
                   backgroundColor: '#FFF',
                   color: '#170050',
-                  border: '1px solid #6730EC', 
-                  borderRadius: '10px', 
+                  border: '1px solid #6730EC',
+                  borderRadius: '10px',
                   fontSize: '14px',
                   fontWeight: 'bold',
                   textTransform: 'none',
-                  transition: 'background-color 0.3s, box-shadow 0.3s', 
+                  transition: 'background-color 0.3s, box-shadow 0.3s',
                   '&:hover': {
-                    backgroundColor: '#E6CCFF', 
+                    backgroundColor: '#E6CCFF',
                   }
                 }}
               >
                 Gerar Questões
               </Button>
-              
+
               <FinalizarDialog
                 createInProgress={createInProgress}
                 title={title}
@@ -220,9 +221,9 @@ export default function CriarAtividade(props: QuestionProps) {
             </Box>
           </Box>
 
-          <Button 
+          <Button
             sx={{ textTransform: 'none', backgroundColor: '#7750DE', borderRadius: '10px', padding: '8px', fontWeight: 600, marginBottom: '12px' }}
-            variant='contained' 
+            variant='contained'
             onClick={() => handleAddQuestion()}>
               Adicionar nova questão
           </Button>
@@ -253,7 +254,7 @@ export default function CriarAtividade(props: QuestionProps) {
         iconeReact={
           <Box sx={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '12px' }}>
             <BsStars color='#341069' size={24} />
-          </Box>      
+          </Box>
         }
         showModal={openModal}
         onClose={() => setOpenModal(false)}
