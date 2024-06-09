@@ -6,5 +6,7 @@ export type Classwork = {
   datePosting: string
   endDate: string
   description: string
+  totalAnswers?: number
+  totalQuestions?: number
   questions: Question[]
 }

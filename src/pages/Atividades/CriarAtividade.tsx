@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import Box from '@mui/material/Box/Box'
 import Question from '../../components/Question/Question'
 import Typography from '@mui/material/Typography'
@@ -147,7 +146,7 @@ export default function CriarAtividade(props: QuestionProps) {
     if (classroomId) {
       client.getClassroomById(classroomId).then((res) => setTurma(res))
     }
-  }, [classroomId])
+  }, [classroomId, client])
 
   const handleAddQuestion = (question?: QuestionType) => {
     if(question) {

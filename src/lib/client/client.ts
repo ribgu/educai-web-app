@@ -10,6 +10,7 @@ import { GenerateQuestionPayload } from '../types/GenerateQuestionPayload'
 import { DictonaryResponse } from '../types/DictonaryResponse'
 import { AnswerType } from '../types/Answer'
 import { SendAnswerData } from '../types/SendAnswerData'
+import { Participant } from '../types/Participant'
 
 type ClientProps = {
   clientType: 'ia-api' | 'api',
@@ -91,7 +92,7 @@ export default class Client {
     return (await this.axios.get(`/classroom/${classroomId}/leaderboard`)).data
   }
 
-  async createPost(body: { title: string, description: string, datePosting: string, classroomId: string }, file: File): Promise<{ post: PostType, url: string }> {
+  async createPost(body: { title: string, description: string, datePosting: string, classroomId: string }, file: File): Promise<PostType> {
     const formData = new FormData()
     formData.append('title', body.title)
     formData.append('description', body.description)
@@ -101,9 +102,8 @@ export default class Client {
 
     const response = await this.axios.post('/posts', formData)
     const post: PostType = response.data
-    const url = await this.getUrlArquivoPost(post.id)
-    return { post, url }
-  }
+    return  post
+}
 
   async getUrlArquivoPost(postId: string): Promise<string> {
     return (await this.axios.get(`/posts/${postId}/download`)).data
@@ -174,7 +174,10 @@ export default class Client {
       'classroomId': classroomId
     }
     return (await this.axios.post('/classwork', classWork, { headers }))
+  }
 
+  async getClassWorksByClassroom(classroomId: string): Promise<Classwork[]> {
+    return (await this.axios.get(`/classroom/${classroomId}/classworks`)).data
   }
 
   async generateEducationalMaterial(payload: {instructions?: string;  youtubeLink?: string, audio?: File | null, document?: File | null }): Promise<AxiosResponse<ArrayBuffer>> {
@@ -184,7 +187,7 @@ export default class Client {
     payload.youtubeLink && formData.append('youtubeLink', payload.youtubeLink)
     payload.audio && formData.append('audio', payload.audio)
     payload.document &&  formData.append('document', payload.document)
-  
+
     return (await this.axios.post('/generate-educational-resource', formData, { responseType: 'arraybuffer' }))
   }
 
@@ -216,6 +219,13 @@ export default class Client {
       classworkId: string
     }): Promise<void> {
     return await this.axios.post('/classwork/answer', answers, { headers })
+  }
+
+  async getParticipantsById(
+    classroomId: string
+  ): Promise<Participant[]> {
+    const classroom = (await this.axios.get(`/classroom/${classroomId}`)).data
+    return classroom.participants
   }
 
 }
