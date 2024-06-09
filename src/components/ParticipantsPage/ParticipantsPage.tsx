@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import useClient from '../../lib/client/useClient'
 import Participant from '../Participant/Participant'
 import { Participant as ParticipantType } from '../../lib/types/Participant'
+import { Button, MenuItem, TextField } from '@mui/material'
 
 type ParticipantsPageProps = {
     classroomId: string
@@ -15,6 +16,9 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
     const { classroomId } = props
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [participants, setParticipants] = useState<ParticipantType[]>([])
+    const [newParticipantName, setNewParticipantName] = useState('')
+    const [newParticipantEmail, setNewParticipantEmail] = useState('')
+    const [newParticipantRole, setNewParticipantRole] = useState('STUDENT')
 
     const client = useClient()
 
@@ -24,6 +28,17 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
             console.log(res)
         })
     }, [classroomId])
+
+    const handleCleanFields = () => {
+        setNewParticipantName('')
+        setNewParticipantEmail('')
+        setNewParticipantRole('STUDENT')
+    }
+
+    const handleAddParticipant = () => {
+        // client.addParticipant
+        handleCleanFields()
+    }
 
     return (
         <>
@@ -38,7 +53,34 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
                 onClose={() => setModalIsOpen(false)}
                 onOpen={() => setModalIsOpen(true)}
             >
-                <h1>texto</h1>
+                <TextField
+                    label='Nome'
+                    variant='outlined'
+                    fullWidth
+                    value={newParticipantName}
+                    onChange={(e) => setNewParticipantName(e.target.value)}
+                />
+                <TextField
+                    label='Email'
+                    variant='outlined'
+                    fullWidth
+                    value={newParticipantEmail}
+                    onChange={(e) => setNewParticipantEmail(e.target.value)}
+                    />
+                <TextField
+                    select
+                    label='Tipo'
+                    variant='outlined'
+                    value={newParticipantRole}
+                    onChange={(e) => setNewParticipantRole(e.target.value)}
+                    fullWidth
+                >
+                    <MenuItem value='STUDENT'>Aluno</MenuItem>
+                    <MenuItem value='TEACHER'>Professor</MenuItem>
+                </TextField>
+                <Button variant='contained' sx={{ width: '100%', marginTop: '10px' }}>
+                    Adicionar
+                </Button>
             </BasicModal>
             <Box sx={{ width: '100%', flexDirection: 'collumn', alignItems: 'center', justifyContent: 'space-evenly', border: '2px solid #BEBEBE', borderRadius: '10px', padding: '8px', height: '90%' }}>
                 <Box sx={{ width: '100%', padding: '10px' }}>
