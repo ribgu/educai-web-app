@@ -53,7 +53,7 @@ export default function ClassWork(props: ClassWorkProps) {
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px', justifyContent: 'flex-end' }}>
                     Prazo: <b>{ClassWork.endDate}</b>
                 </Box>
-                <IconButton size='small' onClick={handleClick}>
+                <IconButton size='small' onClick={handleClick} sx={{opacity: 0}}>
                     <MoreVertIcon />
                 </IconButton>
                 <Menu

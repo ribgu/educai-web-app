@@ -3,6 +3,7 @@ import { Role } from "./Role"
 export type UserType = {
     user: User
     hasAnswered: boolean
+    correctPercentage: number
 }
 
 export type User = {

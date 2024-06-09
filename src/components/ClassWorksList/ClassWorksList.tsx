@@ -47,7 +47,7 @@ export default function ClassworkList() {
                                 <Typography >{answer.user.name}</Typography> 
                             </Box>
                             <Typography sx={{ width: '30%' }}>{answer.hasAnswered}</Typography>
-                            <Typography sx={{ width: '15%' }}><b>{"A avaliar"}</b></Typography>
+                            <Typography sx={{ width: '15%' }}><b>{answer.correctPercentage}</b></Typography>
                         </Box>
                     ))}
                 </Box>
