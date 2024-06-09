@@ -58,18 +58,17 @@
 
     return (
       <Layout>
-        <Box sx={{ width: '100%' }} >
+        <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
           <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
             <PageHeader title={classwork?.title} tab='atividades'/>
           </Box>
-          <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px' }}>
+          <Box sx={{ width: '100%', height: '80%', display: 'flex', padding: '24px', overflowY: 'auto' }}>
             <Box sx={{
               width: '100%',
               height: '80vh',
               display: 'flex',
               flexDirection: 'column',
-              gap: '16px',
-              overflowY: 'auto',
+              gap: '16px'
             }}>
               {classwork?.questions.map((question, index) => (
                 <AnswerQuestion key={index}
@@ -79,12 +78,16 @@
                   handleSelectAlternative={handleSelectAlternative}
                 />
               ))}
-              <Button
-                variant='contained'
-                onClick={handleSendAnswers}
-              >Finalizar</Button>
             </Box>
           </Box>
+          <Button
+                variant='contained'
+                onClick={handleSendAnswers}
+                sx={{
+                  marginTop: '8px',
+                  width: '96%',
+                }}
+              >Finalizar</Button>
         </Box>
       </Layout>
     )
