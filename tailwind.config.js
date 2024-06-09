@@ -13,7 +13,8 @@ export default {
         manrope: ['Manrope', 'sans-serif']
       },
       colors: {
-        dark: '#0A0A0A'
+        dark: '#0A0A0A',
+        gradientPurple: '#A578F9'
       },
       
     },

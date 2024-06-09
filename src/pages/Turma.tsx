@@ -12,6 +12,7 @@ import ClassWorksPage from '../components/ClassWorksPage/ClassWorksPage'
 import CriarAtividade from './Atividades/CriarAtividade'
 import CriarAtividadeIA from './Atividades/CriarAtividadeIA'
 import { Question } from '../lib/types/Question'
+import ParticipantsPage from '../components/ParticipantsPage/ParticipantsPage'
 
 export default function Turma() {
   const client = useClient()
@@ -66,9 +67,7 @@ export default function Turma() {
                   />
               )}
               {tab === 'pessoas' && (
-                <>
-                {/* Pessoas */}
-                </>
+                <ParticipantsPage classroomId={id as string} />
               )}
             </Box>
 

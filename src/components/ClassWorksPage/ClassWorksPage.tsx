@@ -48,7 +48,7 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
             setClassWorks(res)
             console.log(res)
         })
-    }, [classRoomId, client])
+    }, [])
 
     return (
         <>
