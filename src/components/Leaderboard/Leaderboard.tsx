@@ -35,7 +35,7 @@ export default function Leaderboard() {
         gap: '10px',
         alignItems: 'center',
       }}>
-        <img src='\iconsPages\iconLeaderboard.svg' alt='Pódio com uma estrela no topo'/>
+        <img src='\iconsPages\iconLeaderboard.svg' alt='Pódio com uma estrela no topo' />
         <Typography variant='h6'>Leaderboard</Typography>
       </Box>
       <Typography variant='subtitle2'>Alunos que mais acertaram questões</Typography>
@@ -59,9 +59,19 @@ export default function Leaderboard() {
         gap: '10px',
       }}>
 
-        {leaderboard && leaderboard.map((leaderboard, index) => (
-          <CardLeaderboard key={leaderboard.id} nome={leaderboard.name} foto={leaderboard.profilePicture ?? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'} posicao={index + 1} acertos={leaderboard.score} />
-        ))}
+        {leaderboard && leaderboard.length > 0 ? (
+          leaderboard.map((leaderboard, index) => (
+            <CardLeaderboard
+              key={leaderboard.id}
+              nome={leaderboard.name}
+              foto={leaderboard.profilePicture || '/iconsPages/iconUser.png'}
+              posicao={index + 1}
+              acertos={leaderboard.score}
+            />
+          ))
+        ) : (
+          <Typography variant='body2'>Nenhum aluno respondeu ainda...</Typography>
+        )}
 
       </Box>
     </Box>
