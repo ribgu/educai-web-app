@@ -220,7 +220,6 @@ export default class Client {
     return await this.axios.post('/classwork/answer', answers, { headers })
   }
 
-
   async logout() {
     return (await this.axios.post('/user/logoff'))
   }

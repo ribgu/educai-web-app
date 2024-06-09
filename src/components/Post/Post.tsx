@@ -145,7 +145,6 @@ export default function Post(post: PostProps) {
                     <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap', fontWeight: 'bold' }}>{title}</Typography>
                 </Box>
 
-
                 { role=='TEACHER' &&
                   <IconButton size='small' onClick={handleClick}>
                       <MoreVertIcon />
