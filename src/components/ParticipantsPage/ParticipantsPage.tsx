@@ -42,9 +42,12 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
             </BasicModal>
             <Box sx={{ width: '100%', flexDirection: 'collumn', alignItems: 'center', justifyContent: 'space-evenly', border: '2px solid #BEBEBE', borderRadius: '10px', padding: '8px', height: '90%' }}>
                 <Box sx={{ width: '100%', padding: '10px' }}>
-                    <Typography variant='h4' sx={{ fontWeight: '500'}} >Professores</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <img src='/iconsPages/teacher.svg' style={{ width: '50px', marginBottom: '5px' }} />
+                        <Typography variant='h4' sx={{ fontWeight: '500' }} >Professores</Typography>
+                    </Box>
                     <div className='content-none w-[100%] h-[1px] bg-gradient-to-r from-gradientPurple' />
-                    <Box>
+                    <Box sx={{ marginTop: '10px' }}>
                         {participants.map((participant) => {
                             if (participant.role === 'TEACHER') {
                                 return (
@@ -55,7 +58,10 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
                     </Box>
                 </Box>
                 <Box sx={{ width: '100%', padding: '10px' }}>
-                    <Typography variant='h4' sx={{ fontWeight: '500'}}> Alunos</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <img src='/iconsPages/student.svg' style={{ width: '50px', marginBottom: '5px' }} />
+                        <Typography variant='h4' sx={{ fontWeight: '500' }} >Alunos</Typography>
+                    </Box>
                     <div className='content-none w-[100%] h-[1px] bg-gradient-to-r from-gradientPurple' />
                     <Box sx={{ marginTop: '10px' }}>
                         {participants.map((participant) => {
