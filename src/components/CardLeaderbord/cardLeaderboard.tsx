@@ -10,6 +10,7 @@ type CardLeaderboardProps = {
 
 export default function CardLeaderboard(props: CardLeaderboardProps) {
     const { nome, foto, posicao, acertos } = props
+    const picture = foto ? foto : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
     return (
         <Box sx={{
             width: '95%',
@@ -22,7 +23,7 @@ export default function CardLeaderboard(props: CardLeaderboardProps) {
             paddingX: '16px',
         }}>
             <Typography variant='h6'>{posicao}</Typography>
-            <img src={foto} style={{
+            <img src={picture} style={{
                 width: '40px',
                 height: '40px',
                 borderRadius: '50%'
