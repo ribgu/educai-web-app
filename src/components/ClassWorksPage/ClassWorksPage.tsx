@@ -116,7 +116,7 @@ export default function ClassWorks(props: ClassWorsPageProps) {
                 </Box>
             </Modal>
 
-            <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
+            <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column', overflow: 'auto' }}>
                 {classWorks.length === 0 && (
                     <Typography variant="h6" align="center" sx={{
                         fontSize: '16px',
