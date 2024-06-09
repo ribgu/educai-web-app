@@ -5,6 +5,7 @@ export const AuthContext = createContext<Auth>({
 	id: '',
 	role: 'STUDENT',
 	username: '',
+	profilePicture: '',
 	token: '',
 	updateAuthData: function (): void {
 		throw new Error('Function not implemented.')

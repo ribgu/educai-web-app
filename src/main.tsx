@@ -10,6 +10,7 @@ import Turma from './pages/Turma'
 
 import {
   createBrowserRouter,
+  Outlet,
   RouterProvider,
 } from 'react-router-dom'
 import TalkWithEdu from './pages/TalkWithEdu.tsx'
@@ -24,41 +25,52 @@ const router = createBrowserRouter([
     element: <LandingPage />,
   },
   {
-    path: '/home',
-    element: <Home />,
-  },
-  {
-    path: '/turma/:id',
-    element: <Turma />,
-  },
-  {
     path: '/login',
     element: <Login />,
   },
   {
+    path: '/home',
+    element: <AuthProvider>
+      <Home />
+    </AuthProvider>,
+  },
+  {
+    path: '/turma/:id',
+    element: <AuthProvider>
+      <Turma />
+    </AuthProvider>,
+  },
+  {
     path: '/edu',
-    element: <TalkWithEdu />
+    element: <AuthProvider>
+      <TalkWithEdu />
+    </AuthProvider>,
   },
   {
     path: '/turma/criar-atividade',
-    element: <CriarAtividade />
+    element: <AuthProvider>
+      <CriarAtividade />
+    </AuthProvider>,
   },
   {
     path: '/turma/responder-atividade',
-    element: <AnswerQuestionPage />
+    element: <AuthProvider>
+      <AnswerQuestionPage />
+    </AuthProvider>,
   },
   {
     path: '/material',
-    element: <Material />
-  }
+    element: <AuthProvider>
+      <Material />
+    </AuthProvider>,
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
+      <Outlet />
+      <RouterProvider router={router} />
     </ThemeProvider>
   </React.StrictMode>,
 )

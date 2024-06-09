@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
 
 export default function TopBar() {
-  const { username } = useContext(AuthContext)
+  const { username, profilePicture } = useContext(AuthContext)
 
   return (
     <Stack width='100%' height='80px' sx={{
@@ -20,7 +20,7 @@ export default function TopBar() {
       padding: '20px 48px'
     }}>
       <img src='/logos/padraoWhite.svg' alt='Logo' style={{width: '140px'}}/>
-      <ProfileHeader name={username} imageUrl='https://avatars.githubusercontent.com/u/6713782?v=4' />
+      <ProfileHeader name={username} imageUrl={profilePicture || '/iconsPages/iconUser.png'} />
     </Stack>
   )
 }
