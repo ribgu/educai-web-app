@@ -4,5 +4,5 @@ export type Participant = {
     email: string
     password: string
     role: string
-    photoUrl: string
+    profilePicture: string
 }

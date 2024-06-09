@@ -40,7 +40,7 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
             >
                 <h1>texto</h1>
             </BasicModal>
-            <Box sx={{ width: '100%', flexDirection: 'collumn', alignItems: 'center', justifyContent: 'space-evenly', border: '2px solid black' }}>
+            <Box sx={{ width: '100%', flexDirection: 'collumn', alignItems: 'center', justifyContent: 'space-evenly', border: '2px solid #BEBEBE', borderRadius: '10px', padding: '8px', height: '90%' }}>
                 <Box sx={{ width: '100%', padding: '10px' }}>
                     <Typography variant='h4' sx={{ fontWeight: '500'}} >Professores</Typography>
                     <div className='content-none w-[100%] h-[1px] bg-gradient-to-r from-gradientPurple' />
@@ -48,7 +48,7 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
                         {participants.map((participant) => {
                             if (participant.role === 'TEACHER') {
                                 return (
-                                    <Participant name={participant.name} url={participant.photoUrl} />
+                                    <Participant name={participant.name} url={participant.profilePicture} />
                                 )
                             }
                         })}
@@ -57,13 +57,11 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
                 <Box sx={{ width: '100%', padding: '10px' }}>
                     <Typography variant='h4' sx={{ fontWeight: '500'}}> Alunos</Typography>
                     <div className='content-none w-[100%] h-[1px] bg-gradient-to-r from-gradientPurple' />
-                    <Box>
+                    <Box sx={{ marginTop: '10px' }}>
                         {participants.map((participant) => {
                             if (participant.role === 'STUDENT') {
                                 return (
-                                    <Box>
-                                        <Typography>{participant.name}</Typography>
-                                    </Box>
+                                    <Participant name={participant.name} url={participant.profilePicture} />
                                 )
                             }
                         })}
