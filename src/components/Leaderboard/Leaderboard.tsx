@@ -64,7 +64,7 @@ export default function Leaderboard() {
             <CardLeaderboard
               key={leaderboard.id}
               nome={leaderboard.name}
-              foto={leaderboard.profilePicture || './IconsPages/iconUser.png'}
+              foto={leaderboard.profilePicture || '/iconsPages/iconUser.png'}
               posicao={index + 1}
               acertos={leaderboard.score}
             />
