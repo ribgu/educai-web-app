@@ -129,15 +129,15 @@ export default function Post(post: PostProps) {
     }
 
     return (
-        <Box sx={{ width: '100%', height: '18vh', border: '2px solid #BEBEBE', borderRadius: '10px' }}>
+        <Box sx={{ width: '100%', height: '18vh', border: '1px solid #BEBEBE', borderRadius: '10px' }}>
             <Box sx={{
                 width: '100%',
                 height: '35%',
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                padding: '8px',
-                borderBottom: '2px solid #BEBEBE',
+                padding: '16px',
+                borderBottom: '1px solid #BEBEBE',
                 borderColor: '#BEBEBE'
             }}>
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px' }}>
@@ -146,9 +146,9 @@ export default function Post(post: PostProps) {
                 </Box>
 
                 { role=='TEACHER' &&
-                <IconButton size='small' onClick={handleClick}>
-                    <MoreVertIcon />
-                </IconButton>
+                  <IconButton size='small' onClick={handleClick}>
+                      <MoreVertIcon />
+                  </IconButton>
                 }
 
                   <Menu
@@ -165,14 +165,15 @@ export default function Post(post: PostProps) {
                     </MenuItem>
                 </Menu>
             </Box>
-            <Box sx={{ width: '100%', height: '65%', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px' }}>
-                <Typography sx={{ fontSize: '12px' }}>Data de publicação: <b>{formatDate(datePosting)}</b></Typography>
+            <Box sx={{ width: '100%', height: '65%', padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px', color: '#5E5E5E' }}>
+                <Typography sx={{ fontSize: '14px' }}>Data de publicação: <b>{formatDate(datePosting)}</b></Typography>
                 {description && <Typography sx={{ fontSize: '14px' }}>{description}</Typography>}
                 {originalFileName && <Typography onClick={handleUrl} sx={{
                     fontSize: '14px',
-                    color: 'blue',
-                    textDecoration: 'underline'
-
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
+                    fontWeight: 'bold',
+                    color: '#6730EC'
                 }}>{originalFileName}</Typography>}
             </Box>
 

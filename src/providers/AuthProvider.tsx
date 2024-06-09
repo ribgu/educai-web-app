@@ -1,8 +1,11 @@
 import { jwtDecode } from 'jwt-decode'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
 import { JwtDecoded } from '../lib/types/JwtDecoded'
 import { Role } from '../lib/types/Role'
+import { useNavigate } from 'react-router-dom'
+import { Box, CircularProgress } from '@mui/material'
+import useClient from '../lib/client/useClient'
 
 interface Props {
 	children: ReactNode
@@ -18,6 +21,8 @@ const AuthProvider = ({ children }: Props) => {
 	const [id, setId] = useState(tokenDecoded?.id ?? '')
 	const [username, setUsername] = useState(tokenDecoded?.username ?? '')
 	const [role, setRole] = useState<Role>(tokenDecoded?.role ?? '')
+	const navigate = useNavigate()
+	const client = useClient()
 
 	const updateAuthData = (newToken: string) => {
 		const tokenDecoded = getTokenDecoded(newToken)
@@ -29,9 +34,27 @@ const AuthProvider = ({ children }: Props) => {
 		sessionStorage.setItem('token', newToken)
 	}
 
+	useEffect(() => {
+		if (!token) {
+			client.refreshToken().then(response => {
+				updateAuthData(response.data.token)
+			}).catch(() => {
+				navigate('/login')
+			})
+		} else {
+			updateAuthData(token)
+		}
+	}, [token])
+
 	return (
 		<AuthContext.Provider value={{ id, role, username, token, updateAuthData }}>
-			{children}
+			{token !== '' ? 
+				children 
+				: 
+				<Box sx={{ width: '100%', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+					<CircularProgress color='primary' size={70} thickness={5}/>
+				</Box>
+			}
 		</AuthContext.Provider>
 	)
 }
