@@ -9,6 +9,8 @@ import Modal from '../Modal/Modal'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import LoadingButton from '@mui/lab/LoadingButton'
+import { toast } from 'react-toastify'
+import useClient from '../../lib/client/useClient'
 
 type ParticipantProps = {
     name: string
@@ -20,12 +22,26 @@ export default function Participant(props: ParticipantProps) {
     const picture = url === null ? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png' : url
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
+    const client = useClient()
     const [participantName, setParticipantName] = useState(name)
     const [modal, setModal] = useState<{ isLoading: boolean, isOpen: boolean, type: 'EDIT' | 'DELETE' | null }>({
         isLoading: false,
         isOpen: false,
         type: null
     })
+
+    const sucessToast = (message : string) => {
+        toast.success(message, {
+          position: 'bottom-right',
+          autoClose: 2600,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          })
+      }
 
     const handleClose = (event: React.MouseEvent<HTMLLIElement, MouseEvent>, editOrDelete: string) => {
         event.stopPropagation()
@@ -46,16 +62,26 @@ export default function Participant(props: ParticipantProps) {
         }
     }
 
+    const handleEdit = () => {
+        setModal({ ...modal, isLoading: true })
+        console.log('Editando participante', participantName)
+        sucessToast('Participante editado com sucesso!')
+    }
+
+    const handleDelete = () => {
+        setModal({ ...modal, isLoading: true })
+        console.log('Deletando participante', participantName)
+        sucessToast('Participante deletado com sucesso!')
+    }
+
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '95%' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', padding: '8px', gap: '5px' }}>
                 <img src={picture} style={{ width: '30px', height: '30px', borderRadius: '50%' }} />
-                <Typography sx={{ fontSize: '20px' }}>{participantName}</Typography>
+                <Typography sx={{ fontSize: '20px' }}>{name}</Typography>
             </Box>
             <IconButton
                 size="small"
-                aria-label="more"
-                id="participant-menu"
                 onClick={(event) => setAnchorEl(event.currentTarget)}
             >
                 <MoreVertIcon />
@@ -121,7 +147,7 @@ export default function Participant(props: ParticipantProps) {
                         },
                         paddingY: '12px',
                         width: '48%'
-                    }} variant='contained'
+                    }} variant='contained' onClick={modal.type === 'DELETE' ? handleDelete : handleEdit}
                         loading={modal.isLoading}>{modal.type === 'DELETE' ? 'Sim' : 'Atualizar'}
                     </LoadingButton>
                 </Box>
