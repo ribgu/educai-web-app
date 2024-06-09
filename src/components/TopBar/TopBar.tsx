@@ -20,7 +20,7 @@ export default function TopBar() {
       padding: '20px 48px'
     }}>
       <img src='/logos/padraoWhite.svg' alt='Logo' style={{width: '140px'}}/>
-      <ProfileHeader name={username} imageUrl={profilePicture} />
+      <ProfileHeader name={username} imageUrl={profilePicture || '/iconsPages/iconUser.png'} />
     </Stack>
   )
 }
