@@ -43,7 +43,7 @@ export default function Post(post: PostProps) {
           theme: 'light',
           })
       }
-    
+
     const [modal, setModal] = useState<{ isLoading: boolean, isOpen: boolean, type: 'EDIT' | 'DELETE' | null }>({
         isLoading: false,
         isOpen: false,
@@ -145,14 +145,13 @@ export default function Post(post: PostProps) {
                     <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap', fontWeight: 'bold' }}>{title}</Typography>
                 </Box>
 
-                { role=='TEACHER' && 
+                { role=='TEACHER' &&
                 <IconButton size='small' onClick={handleClick}>
                     <MoreVertIcon />
                 </IconButton>
                 }
 
                   <Menu
-                    id="long-menu"
                     anchorEl={anchorEl}
                     keepMounted
                     open={open}
