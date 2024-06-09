@@ -132,3 +132,7 @@
   .swiper-pagination {
     bottom: 0px !important;
   }
+
+.Toastify__toast-body {
+  font-family: 'Montserrat', Helvetica Neue, Helvetica, Arial, sans-serif;
+}

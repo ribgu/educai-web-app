@@ -3,19 +3,17 @@ import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { useContext, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useAsyncCallback } from 'react-async-hook'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../components/Logo/Logo'
 import SlideLogin from '../components/SlidesLogin/SlidesLogin'
-import { AuthContext } from '../contexts/AuthContext'
 import useClient from '../lib/client/useClient'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Login() {
     const client = useClient()
-    const { updateAuthData } = useContext(AuthContext)
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -28,7 +26,7 @@ export default function Login() {
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            theme: 'light',
+            theme: 'light'
         })
     }
 
@@ -47,7 +45,7 @@ export default function Login() {
             return
         }
         await client.login({ email, password }).then((res) => {
-            updateAuthData(res.token)
+            sessionStorage.setItem('token', res.token)
             navigate('/home')
         }).catch((e) => {
             console.log(e)

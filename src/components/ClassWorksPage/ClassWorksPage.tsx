@@ -42,7 +42,7 @@ export default function ClassWorks(props: ClassWorsPageProps) {
             setClassWorks(res)
             console.log(res)
         })
-    }, [classRoomId, client])
+    }, [])
 
     return (
         <>

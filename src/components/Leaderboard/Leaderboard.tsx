@@ -15,7 +15,7 @@ export default function Leaderboard() {
     if (id) {
       client.getLeaderboard(id).then(setLeaderboard)
     }
-  }, [id, client])
+  }, [])
 
   return (
     <Box sx={{
