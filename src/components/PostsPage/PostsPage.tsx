@@ -167,7 +167,7 @@ export default function PostsPage(props: postsPageProps) {
                 ) : (
                     <Typography variant="h6" align="center" sx={{
                         fontSize: '16px',
-                    }}>Poxa! Você ainda não publicou nenhum post.. 😕</Typography>
+                    }}>Poxa! Nenhum post publicado ainda.. 😕</Typography>
                 )}
             </Box>
             <ToastContainer
