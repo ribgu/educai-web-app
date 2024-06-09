@@ -17,6 +17,7 @@ import AuthProvider from './providers/AuthProvider.tsx'
 import Material from './pages/Material.tsx'
 import AnswerQuestionPage from './components/AnswerQuestionPage/AnswerQuestionPage.tsx'
 import CriarAtividade from './pages/Atividades/CriarAtividade.tsx'
+import ClassworkList from './components/ClassworksList/ClassworksList.tsx'
 
 const router = createBrowserRouter([
   {
@@ -50,7 +51,11 @@ const router = createBrowserRouter([
   {
     path: '/material',
     element: <Material />
-  }
+  },
+  {
+    path: '/turma/visualizar-atividade',
+    element: <ClassworkList />
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -10,6 +10,7 @@ import { GenerateQuestionPayload } from '../types/GenerateQuestionPayload'
 import { DictonaryResponse } from '../types/DictonaryResponse'
 import { AnswerType } from '../types/Answer'
 import { SendAnswerData } from '../types/SendAnswerData'
+import { UsersType } from '../types/User'
 
 type ClientProps = {
   clientType: 'ia-api' | 'api',
@@ -218,6 +219,10 @@ export default class Client {
       classworkId: string
     }): Promise<void> {
     return await this.axios.post('/classwork/answer', answers, { headers })
+  }
+
+  async getAnswersStatus(classworkId: string): Promise<UsersType> {
+    return (await this.axios.get(`/classwork/${classworkId}/answers/status`)).data
   }
 
 }

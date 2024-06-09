@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box/Box'
 import Button from '@mui/material/Button/Button'
 import Atividade from '../ClassWork/ClassWork'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography/Typography'
 import Modal from '../Modal/Modal'
@@ -11,17 +11,19 @@ import { BsStars } from 'react-icons/bs'
 import { FaBook } from 'react-icons/fa'
 import useClient from '../../lib/client/useClient'
 import { Classwork } from '../../lib/types/ClassWork'
+import { AuthContext } from '../../contexts/AuthContext'
 
-type ClassWorsPageProps = {
+type ClassWorksPageProps = {
     classRoomId: string
 }
 
-export default function ClassWorks(props: ClassWorsPageProps) {
+export default function ClassWorksPage(props: ClassWorksPageProps) {
     const { classRoomId } = props
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const navigate = useNavigate()
     const client = useClient()
     const [classWorks, setClassWorks] = useState<Classwork[]>([])
+    const { role } = useContext(AuthContext);
 
     const handleManualCreate = () => {
         setModalIsOpen(false)
@@ -29,7 +31,11 @@ export default function ClassWorks(props: ClassWorsPageProps) {
     }
 
     const onSelectAtividade = (atividade: any) => {
-        navigate(`/turma/responder-atividade/?classRoomId=${classRoomId}&classWorkId=${atividade.id}`)
+        if(role === 'STUDENT') {
+            navigate(`/turma/responder-atividade/?classRoomId=${classRoomId}&classWorkId=${atividade.id}`)
+        } else{
+            navigate(`/turma/visualizar-atividade/?classRoomId=${classRoomId}&classWorkId=${atividade.id}`)
+        }
     }
 
     const handleIACreate = () => {
