@@ -13,13 +13,14 @@ import CriarAtividade from './Atividades/CriarAtividade'
 import CriarAtividadeIA from './Atividades/CriarAtividadeIA'
 import { Question } from '../lib/types/Question'
 import ParticipantsPage from '../components/ParticipantsPage/ParticipantsPage'
+import Revisao from './Revisao'
 
 export default function Turma() {
   const client = useClient()
   const { id } = useParams()
   const [turma, setTurma] = useState<TurmaType>()
 
-  const tab = new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas' | 'criar-atividade' | 'criar-atividade-ia'
+  const tab = new URLSearchParams(window.location.search).get('tab') as 'posts' | 'atividades' | 'pessoas' | 'criar-atividade' | 'criar-atividade-ia' | 'revisao'
   const location = useLocation()
   const questions = location.state?.questions as Question[]
 
@@ -48,7 +49,15 @@ export default function Turma() {
           </>
         )}
 
-        {tab !== 'criar-atividade' && tab !== 'criar-atividade-ia' &&
+        {
+          tab === 'revisao' && (
+            <>
+              <Revisao />
+            </>
+          )
+        }
+
+        {tab !== 'criar-atividade' && tab !== 'criar-atividade-ia' && tab !== 'revisao' &&
           <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px' }}>
             <Box sx={{
               width: '65%',
@@ -62,9 +71,9 @@ export default function Turma() {
                 <PostsPage classroomId={id} />
               )}
               {tab === 'atividades' && (
-                  <AtividadesPage
-                    classRoomId={id as string}
-                  />
+                <AtividadesPage
+                  classRoomId={id as string}
+                />
               )}
               {tab === 'pessoas' && (
                 <ParticipantsPage classroomId={id as string} />
