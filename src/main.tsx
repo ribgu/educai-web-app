@@ -17,8 +17,8 @@ import TalkWithEdu from './pages/TalkWithEdu.tsx'
 import AuthProvider from './providers/AuthProvider.tsx'
 import Material from './pages/Material.tsx'
 import AnswerQuestionPage from './components/AnswerQuestionPage/AnswerQuestionPage.tsx'
-import CriarAtividade from './pages/Atividades/CriarAtividade.tsx'
 import ClassworkList from './components/ClassworksList/ClassworksList.tsx'
+import CriarAtividade from './pages/Atividades/CriarAtividade.tsx'
 
 const router = createBrowserRouter([
   {
@@ -68,7 +68,7 @@ const router = createBrowserRouter([
   {
     path: '/turma/visualizar-atividade',
     element: <AuthProvider>
-      <ClassworkList />
+      <ClassworkList></ClassworkList>
     </AuthProvider>,
   },
 ])
