@@ -83,11 +83,11 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
                     Adicionar
                 </Button>
             </BasicModal>
-            <Box sx={{ width: '100%', flexDirection: 'collumn', alignItems: 'center', justifyContent: 'space-evenly', border: '2px solid #BEBEBE', borderRadius: '10px', padding: '8px', height: '90%' }}>
+            <Box sx={{ width: '100%', flexDirection: 'collumn', alignItems: 'center', justifyContent: 'space-evenly', border: '1px solid #BEBEBE', borderRadius: '10px', padding: '8px', height: '90%' }}>
                 <Box sx={{ width: '100%', padding: '10px' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <img src='/iconsPages/teacher.svg' style={{ width: '50px', marginBottom: '5px' }} />
-                        <Typography variant='h4' sx={{ fontWeight: '500' }} >Professores</Typography>
+                        <img src='/iconsPages/teacher.svg' style={{ width: '40px', marginBottom: '5px' }} />
+                        <Typography variant='h6' sx={{ fontWeight: 'bold' }} >Professores</Typography>
                     </Box>
                     <div className='content-none w-[100%] h-[1px] bg-gradient-to-r from-gradientPurple' />
                     <Box sx={{ marginTop: '10px' }}>
@@ -102,8 +102,8 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
                 </Box>
                 <Box sx={{ width: '100%', padding: '10px' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <img src='/iconsPages/student.svg' style={{ width: '50px', marginBottom: '5px' }} />
-                        <Typography variant='h4' sx={{ fontWeight: '500' }} >Alunos</Typography>
+                        <img src='/iconsPages/student.svg' style={{ width: '40px', marginBottom: '5px' }} />
+                        <Typography variant='h6' sx={{ fontWeight: 'bold' }} >Alunos</Typography>
                     </Box>
                     <div className='content-none w-[100%] h-[1px] bg-gradient-to-r from-gradientPurple' />
                     <Box sx={{ marginTop: '10px' }}>

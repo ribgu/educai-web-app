@@ -32,10 +32,10 @@ export default function ClassworkList() {
 
   return (
     <Layout>
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{ width: '100%', display:'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Box
           sx={{
-            width: '100%',
+            width: '95%',
             gap: '10px',
             display: 'flex',
             flexDirection: 'column',
@@ -58,7 +58,7 @@ export default function ClassworkList() {
               flexDirection: 'row',
               alignItems: 'end',
               paddingLeft: '10px',
-              paddingRight: '5px',
+              paddingRight: '5px'
             }}
           >
             <Box sx={{ width: '55%' }}>
@@ -74,13 +74,13 @@ export default function ClassworkList() {
         </Box>
         <Box
           sx={{
-            width: '100%',
-            height: '85%',
+            width: '95%',
+            height: '80%',
             border: '2px solid #BEBEBE',
             borderRadius: '10px',
             gap: '10px',
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: 'column'
           }}
         >
           {answered.map((answer, index) => (
