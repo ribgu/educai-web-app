@@ -12,8 +12,8 @@ export default function Participant(props: ParticipantProps) {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '95%' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', padding: '8px', gap: '5px' }}>
-                <img src={picture} style={{ width: '30px', height: '30px', borderRadius: '50%' }} />
-                <Typography sx={{ fontSize: '20px' }}>{name}</Typography>
+                <img src={picture} style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '8px' }} />
+                <Typography sx={{ fontSize: '18px', color: '#262626' }}>{name}</Typography>
             </Box>
         </Box>
     )
