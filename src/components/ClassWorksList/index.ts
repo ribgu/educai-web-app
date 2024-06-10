@@ -1,1 +1,1 @@
-export * from './ClassworksList'
+export * from './ClassWorksList'
