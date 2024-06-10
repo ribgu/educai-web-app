@@ -10,6 +10,7 @@ import { GenerateQuestionPayload } from '../types/GenerateQuestionPayload'
 import { DictonaryResponse } from '../types/DictonaryResponse'
 import { AnswerType } from '../types/Answer'
 import { SendAnswerData } from '../types/SendAnswerData'
+import { UsersType } from '../types/User'
 import { Participant } from '../types/Participant'
 
 type ClientProps = {
@@ -42,7 +43,6 @@ export default class Client {
       error => {
         const originalRequest = error.config
 
-        console.log(error)
         if (error.response.status === 500 && !originalRequest._retry && error.response.data.message.includes('Token has expired')) {
           originalRequest._retry = true
 
@@ -65,7 +65,7 @@ export default class Client {
   async login(
     body: UserLogin
   ): Promise<{ token: string }> {
-    return (await this.axios.post('user/auth', body)).data
+    return (await this.axios.post('user/auth', body, { withCredentials: true })).data
   }
 
   async getUserClassrooms() {
@@ -135,7 +135,7 @@ export default class Client {
   }
 
   async refreshToken() {
-    return (await this.axios.post('/user/refreshToken'))
+    return (await this.axios.post('/user/refreshToken', { withCredentials: true }))
   }
 
   async transcribe(
@@ -221,11 +221,19 @@ export default class Client {
     return await this.axios.post('/classwork/answer', answers, { headers })
   }
 
+  async logout() {
+    return (await this.axios.post('/user/logoff'))
+  }
+
   async getParticipantsById(
     classroomId: string
   ): Promise<Participant[]> {
     const classroom = (await this.axios.get(`/classroom/${classroomId}`)).data
     return classroom.participants
+  }
+
+  async getAnswersStatus(classworkId: string): Promise<UsersType> {
+    return (await this.axios.get(`/classwork/${classworkId}/answers/status`)).data
   }
 
 }

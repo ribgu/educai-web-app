@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import TextField from '@mui/material/TextField/TextField'
 import Modal from '../Modal/Modal'
 import Box from '@mui/material/Box/Box'
@@ -167,7 +168,7 @@ export default function PostsPage(props: postsPageProps) {
                 ) : (
                     <Typography variant="h6" align="center" sx={{
                         fontSize: '16px',
-                    }}>Poxa! Você ainda não publicou nenhum post.. 😕</Typography>
+                    }}>Poxa! Nenhum post publicado ainda.. 😕</Typography>
                 )}
             </Box>
             <ToastContainer

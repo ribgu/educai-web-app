@@ -3,6 +3,7 @@ import List from '@mui/material/List'
 import Stack from '@mui/material/Stack'
 import Box from '@mui/material/Box/Box'
 import { useNavigate } from 'react-router-dom'
+import useClient from '../../lib/client/useClient'
 
 export default function SideDrawer() {
   const home = '/IconSideBar/home_icon.svg'
@@ -11,10 +12,19 @@ export default function SideDrawer() {
   const chat = '/IconSideBar/chat.svg'
   const logout = '/IconSideBar/logout.svg'
   const navigate = useNavigate()
+  const client = useClient()
   const actualPath = window.location.pathname
 
   const handleClick = (path: string) => {
     navigate(path)
+  }
+
+  const logoutClick = async () => {
+    await client.logout()
+
+    sessionStorage.removeItem('token')
+    document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+    navigate('/login')
   }
 
   const variantHome = actualPath === '/home' ? 'selected' : 'unselected'
@@ -52,7 +62,7 @@ export default function SideDrawer() {
             marginTop: '80px'
           }}
         >
-          <DrawerItem name='Sair' icon={logout} path='/logout' variant='unselected' color='red' onClick={() => handleClick('/logout')} />
+          <DrawerItem name='Sair' icon={logout} path='/logout' variant='unselected' color='red' onClick={logoutClick} />
         </Box>
       </List>
     </Box>

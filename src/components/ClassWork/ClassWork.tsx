@@ -33,7 +33,7 @@ export default function ClassWork(props: ClassWorkProps) {
     }
 
     return (
-        <Box sx={{ width: '100%', height: '30vh', border: '2px solid #BEBEBE', borderRadius: '10px' }}>
+        <Box sx={{ width: '100%', height: '30vh', border: '1px solid #BEBEBE', borderRadius: '10px' }}>
             <Box sx={{
                 width: '100%',
                 height: '20%',
@@ -41,7 +41,7 @@ export default function ClassWork(props: ClassWorkProps) {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 padding: '8px',
-                borderBottom: '2px solid #BEBEBE',
+                borderBottom: '1px solid #BEBEBE',
                 borderColor: '#BEBEBE'
             }}>
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px' }}>
@@ -53,7 +53,7 @@ export default function ClassWork(props: ClassWorkProps) {
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px', justifyContent: 'flex-end' }}>
                     Prazo: <b>{ClassWork.endDate}</b>
                 </Box>
-                <IconButton size='small' onClick={handleClick}>
+                <IconButton size='small' onClick={handleClick} sx={{opacity: 0}}>
                     <MoreVertIcon />
                 </IconButton>
                 <Menu
