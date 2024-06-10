@@ -19,17 +19,30 @@ export default function Home() {
   const [search, setSearch] = useState('')
   const [turmaSearch, setTurmaSearch] = useState<TurmaType | null>(null)
   const regex = /[^a-zA-Z0-9\s]/g
-  const errorToast = (message : string) => {
-    toast.error(message, {
-      position: 'bottom-right',
-      autoClose: 2600,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
+  const throwToast = (message : string, isError : boolean = false) => {
+    if(isError){
+      return toast.error(message, {
+        position: 'bottom-right',
+        autoClose: 2600,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
       })
+    } else {
+      return toast.success(message, {
+        position: 'bottom-right',
+        autoClose: 2600,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        })
+    }
   }
 
   const handleClick = (classroomId: string) => {
@@ -48,7 +61,7 @@ export default function Home() {
 
   function binarySearch(turmas: TurmasType, title: string): TurmaType | null {
     if(regex.test(title)) {
-      errorToast('Caracteres especiais são invalidos.')
+      throwToast('Caracteres especiais são invalidos.', true)
     }
 
     let left = 0
@@ -102,11 +115,14 @@ export default function Home() {
 
   const createClassroom = async (title: string, course: string): Promise<void> => {
     if (regex.test(title) || regex.test(course)) {
-      errorToast('Não foi possivel criar a turma, atente-se aos caracteres especiais.')
+      throwToast('Não foi possivel criar a turma, atente-se aos caracteres especiais.', true)
       return
     }
 
-    return await client.createClassroom({ title, course }).then(() => updateClassrooms())
+    return await client.createClassroom({ title, course }).then(() => {
+      updateClassrooms()
+      throwToast('Turma criada com sucesso!')
+    })
   }
 
   const updateClassrooms = () => {

@@ -14,6 +14,8 @@ import useClient from '../../lib/client/useClient'
 import { AuthContext } from '../../contexts/AuthContext'
 import { TbEdit } from 'react-icons/tb'
 import { FiTrash2 } from 'react-icons/fi'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 interface TurmaProps extends TurmaType {
     isTeacher: boolean
@@ -35,6 +37,31 @@ export default function Turma(props: TurmaProps) {
     const [name, setName] = useState(title)
     const [subject, setSubject] = useState(course)
     const regex = /[^a-zA-Z0-9\s]/g
+    const throwToast = (message : string, isError : boolean = false) => {
+        if(isError){
+          return toast.error(message, {
+            position: 'bottom-right',
+            autoClose: 2600,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          })
+        } else {
+          return toast.success(message, {
+            position: 'bottom-right',
+            autoClose: 2600,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+            })
+        }
+      }
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation()
@@ -76,6 +103,7 @@ export default function Turma(props: TurmaProps) {
                 isOpen: false
             })
             updateClassrooms()
+            throwToast('Turma deletada com sucesso!')
         })
     }
 
@@ -97,6 +125,7 @@ export default function Turma(props: TurmaProps) {
                 isOpen: false
             })
             updateClassrooms()
+            throwToast('Turma atualizada com sucesso!')
         })
     }
 
