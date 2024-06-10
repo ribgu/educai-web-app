@@ -29,16 +29,16 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
         })
     }, [classroomId])
 
-    const handleCleanFields = () => {
-        setNewParticipantName('')
-        setNewParticipantEmail('')
-        setNewParticipantRole('STUDENT')
-    }
+    // const handleCleanFields = () => {
+    //     setNewParticipantName('')
+    //     setNewParticipantEmail('')
+    //     setNewParticipantRole('STUDENT')
+    // }
 
-    const handleAddParticipant = () => {
-        // client.addParticipant
-        handleCleanFields()
-    }
+    // const handleAddParticipant = () => {
+    //     // client.addParticipant
+    //     handleCleanFields()
+    // }
 
     return (
         <>

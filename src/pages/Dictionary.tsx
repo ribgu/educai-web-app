@@ -10,8 +10,9 @@ import { alpha } from '@mui/material/styles'
 import { Box, TextField, Tooltip, Typography } from '@mui/material'
 import useClient from '../lib/client/useClient'
 import { DictonaryResponse } from '../lib/types/DictonaryResponse'
-import VolumeUpIcon from '@mui/icons-material/VolumeUp'
+import VolumeUpIcon from '@mui/icons-material/VolumeUpRounded'
 import { Stack } from '../lib/stack'
+import Divider from '@mui/material/Divider'
 
 const stack = new Stack<string>()
 
@@ -36,10 +37,12 @@ export default function Dictionary() {
 
     const handleClose = () => {
         setOpen(false)
-        setSearch('')
-        setResultData(null)
-        stack.clear()
-        setHistory([])
+        setTimeout(() => {
+            setSearch('')
+            setResultData(null)
+            stack.clear()
+            setHistory([])
+        }, 180)
     }
 
     const handleSearch = async (word: string) => {
@@ -66,7 +69,7 @@ export default function Dictionary() {
                     position: 'absolute',
                     bottom: 0,
                     right: 0,
-                    margin: 1,
+                    margin: 3,
                     width: 50,
                     height: 50,
                     backgroundColor: '#A681FF',
@@ -81,24 +84,49 @@ export default function Dictionary() {
             <Dialog
                 open={open}
                 onClose={handleClose}
-                sx={{ padding: '32px' }}
+                PaperProps={{
+                    sx: {
+                        borderRadius: '20px'
+                    }
+                }}
             >
                 <DialogTitle
                     sx={{
                         display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
+                        flexDirection: 'column',
                         gap: 1
                     }}
                 >
-                    <BookIcon sx={{ color: 'black' }} />
-                    Dicionário
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}>                    
+                    <img src='/iconsPages/iconDictionary.svg' alt='Ícone de livro' 
+                    style={{
+                        marginRight: '14px',
+                    }} />
+                    <Typography sx={{
+                        fontWeight: 'bold',
+                        fontSize: '18px',
+                    }}>Dicionário</Typography>
+                    </Box>
+                    <Divider sx={{
+                        width: '100%',
+                        border: 0,
+                        height: '2px',
+                        background: 'linear-gradient(to right, #E0D5F4 0%, #A578F9 50%, #DBCFF2 100%)',
+                    }} />
                 </DialogTitle>
                 <DialogContent>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '8px' }}>
-                        <TextField label='Pesquisar' variant='outlined' fullWidth value={search} onChange={(e) => setSearch(e.target.value)} />
+                    <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '6px' }}>
+                        <TextField label='Pesquisar' variant='outlined' fullWidth value={search} onChange={(e) => setSearch(e.target.value)}
+                        InputProps={{
+                            sx: {
+                                borderRadius: '10px'
+                            }
+                        }} />
                         <Button
-                            sx={{ marginLeft: 1, height: '100%', padding: '16px', paddingX: '24px' }}
+                            sx={{ marginLeft: 1, height: '100%', padding: '16px', paddingX: '40px', borderRadius: '10px', fontWeight: 'bold'}}
                             variant='contained'
                             color='primary'
                             onClick={() => handleSearch(search)}
@@ -123,11 +151,11 @@ export default function Dictionary() {
                     {resultData && (
                         <Box sx={{ marginTop: '16px' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'center' }}>
-                                <Typography variant='h4' sx={{ fontWeight: 'bold' }}>Significados</Typography>
+                                <Typography variant='h5' sx={{ fontWeight: 'bold' }}>{resultData.word}</Typography>
                                 {resultData.audio && (
                                     <Tooltip title='Ouvir pronúncia' placement='right'>
                                         <IconButton size='small' sx={{ marginTop: '4px' }} onClick={() => listenAudio(resultData.audio)}>
-                                            <VolumeUpIcon sx={{ color: 'black' }} />
+                                            <VolumeUpIcon sx={{ color: '#4921a5' }} />
                                         </IconButton>
                                     </Tooltip>
                                 )}
