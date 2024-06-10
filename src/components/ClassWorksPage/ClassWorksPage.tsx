@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Box from '@mui/material/Box/Box'
 import Button from '@mui/material/Button/Button'
 import Atividade from '../ClassWork/ClassWork'
@@ -23,7 +24,7 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
     const navigate = useNavigate()
     const client = useClient()
     const [classWorks, setClassWorks] = useState<Classwork[]>([])
-    const { role } = useContext(AuthContext);
+    const { role } = useContext(AuthContext)
 
     const handleManualCreate = () => {
         setModalIsOpen(false)
@@ -123,18 +124,15 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
             </Modal>
 
             <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column', overflow: 'auto' }}>
-                {classWorks.length === 0 && (
-                    <Typography variant="h6" align="center" sx={{
-                        fontSize: '16px',
-                    }}>Poxa! Você ainda não tem nenhuma atividade.. 😕</Typography>
-                )}
-                {classWorks.map((classWork, index) => (
+                {classWorks ? classWorks.map((classWork, index) => (
                     <Box key={index} onClick={() => onSelectAtividade(classWork)}>
                         <Atividade
                             ClassWork={classWork}
                         />
                     </Box>
-                ))}
+                )) : <Typography variant="h6" align="center" sx={{
+                    fontSize: '16px',
+                }}>Poxa! Você ainda não tem nenhuma atividade.. 😕</Typography>}
             </Box>
         </>
     )

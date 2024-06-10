@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { jwtDecode } from 'jwt-decode'
 import { ReactNode, useEffect, useState } from 'react'
 import { AuthContext } from '../contexts/AuthContext'

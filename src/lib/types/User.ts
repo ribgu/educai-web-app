@@ -1,4 +1,4 @@
-import { Role } from "./Role"
+import { Role } from './Role'
 
 export type UserType = {
     user: User
@@ -12,6 +12,5 @@ export type User = {
     email: string
     role: Role
 }
-
 
 export interface UsersType extends Array<UserType>{}
