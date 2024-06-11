@@ -33,7 +33,11 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
 
     const onSelectAtividade = (atividade: any) => {
         if(role === 'STUDENT') {
-            navigate(`/turma/${classRoomId}?tab=responder-atividade&classRoomId=${classRoomId}&classWorkId=${atividade.id}`)
+            if(atividade.hasAnswered) {
+                navigate(`/turma/${classRoomId}?tab=revisao&classWorkId=${atividade.id}`)
+            } else {
+                navigate(`/turma/${classRoomId}?tab=responder-atividade&classRoomId=${classRoomId}&classWorkId=${atividade.id}`)
+            }
         } else{
             navigate(`/turma/visualizar-atividade/?classRoomId=${classRoomId}&classWorkId=${atividade.id}`)
         }

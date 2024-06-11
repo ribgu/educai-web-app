@@ -1,66 +1,51 @@
 import { Box, Radio, Typography } from '@mui/material'
-import { ReviewClasswork } from '../lib/types/ReviewClasswork'
+import { useContext, useEffect, useState } from 'react'
 import { IoIosCheckmarkCircleOutline, IoIosCloseCircleOutline } from 'react-icons/io'
+import { useLocation } from 'react-router-dom'
+import useClient from '../lib/client/useClient'
+import { AuthContext } from '../contexts/AuthContext'
+import { ReviewClasswork } from '../lib/types/ReviewClasswork'
+import { formatDate } from '../utils/formartDate'
 
 export default function Revisao() {
-	const classwork: ReviewClasswork = {
-		id: '1',
-		user: {
-			id: '1',
-			name: 'Gustavo Alcantara Ribeiro',
-			email: 'gustavo.gmail.com',
-		},
-		datePosting: '2024-05-08',
-		questionAnswers: [
-			{
-				optionKey: 'c',
-				question: {
-					id: '1',
-					description: 'Qual é a capital do Brasil?',
-					correctAnswerKey: 'c',
-					options: [
-						{ key: 'a', description: 'Rio de Janeiro' },
-						{ key: 'b', description: 'São Paulo' },
-						{ key: 'c', description: 'Brasília' },
-						{ key: 'd', description: 'Curitiba' }
-					]
-				},
-			},
-			{
-				optionKey: 'd',
-				question: {
-					id: '2',
-					description: 'Qual é a capital do Brasil?',
-					correctAnswerKey: 'c',
-					options: [
-						{ key: 'a', description: 'Rio de Janeiro' },
-						{ key: 'b', description: 'São Paulo' },
-						{ key: 'c', description: 'Brasília' },
-						{ key: 'd', description: 'Curitiba' }
-					]
-				},
-			}
-		],
-	}
+	const { id } = useContext(AuthContext)
+	const client = useClient()
+	const classworkId = new URLSearchParams(useLocation().search).get('classWorkId') ?? ''
 
-	const getQuestionColor = (correctAnswerKey: string, currentOptionKey: string, userQuestionKey: string): string => {
-		if(correctAnswerKey === currentOptionKey) {
+	const [classwork, setClasswork] = useState<ReviewClasswork>()
+
+	useEffect(() => {
+		client.getUserAnswers(classworkId, id).then((res) => setClasswork(res))
+	}, [])
+
+	const getQuestionColor = (questionId?: string, currentOptionKey?: string): string => {
+		const correctKey = classwork?.classwork.questions.find(question => question.id === questionId)?.correctAnswerKey
+		const userKey = classwork?.questionAnswers.find(answer => answer.questionId === questionId)?.optionKey
+
+		if(correctKey === currentOptionKey) {
 			return '#EAFFEA'
 		}
 
-		if(currentOptionKey === userQuestionKey && currentOptionKey !== correctAnswerKey) {
+		if(currentOptionKey === userKey && currentOptionKey !== correctKey) {
 			return '#FFEAEA'
 		}
 
 		return '#FFFFFF'
 	}
 
-	const getQuestionType = (correctAnswerKey: string, currentOptionKey: string, userQuestionKey: string): string => {
-		if(correctAnswerKey === currentOptionKey) {
+	const isUserAnswer = (questionId?: string, optionKey?: string) => {
+		return !!classwork?.questionAnswers.find(answer => answer.questionId === questionId && answer.optionKey === optionKey)
+	}
+
+	const getQuestionType = (questionId?: string, currentOptionKey?: string): string => {
+		const correctKey = classwork?.classwork.questions.find(question => question.id === questionId)?.correctAnswerKey
+		const userKey = classwork?.questionAnswers.find(answer => answer.questionId === questionId)?.optionKey
+
+		if(correctKey === currentOptionKey) {
 			return 'CORRECT'
 		}
 
-		if(currentOptionKey === userQuestionKey && currentOptionKey !== correctAnswerKey) {
+		if(currentOptionKey === userKey && currentOptionKey !== correctKey) {
 			return 'WRONG'
 		}
 
@@ -74,45 +59,45 @@ export default function Revisao() {
 			<Box sx={{ border: '1px solid #BEBEBE', borderRadius: '10px', padding: '16px' }}>
 				<Box sx={{ display: 'flex', gap: '4px' }}>
 					<Typography sx={{ fontSize: 14, fontWeight: 700 }}>Aluno:</Typography>
-					<Typography sx={{ fontSize: 14, fontWeight: 500, color: '#646363' }}>{classwork.user.name}</Typography>
+					<Typography sx={{ fontSize: 14, fontWeight: 500, color: '#646363' }}>{classwork?.user.name}</Typography>
 				</Box>
 
 				<Box sx={{ display: 'flex', gap: '4px' }}>
 					<Typography sx={{ fontSize: 14, fontWeight: 700 }}>Data de Entrega:</Typography>
-					<Typography sx={{ fontSize: 14, fontWeight: 500, color: '#646363' }}>20/02/2024</Typography>
+					<Typography sx={{ fontSize: 14, fontWeight: 500, color: '#646363' }}>{classwork && formatDate(classwork.datePosting)}</Typography>
 				</Box>
 			</Box>
 
-			{classwork.questionAnswers.map((question, index) => (
+			{classwork?.classwork.questions.map((question, index) => (
 				<Box sx={{ border: '1px solid #BEBEBE', borderRadius: '10px', paddingBlock: '16px' }}>
 					<Typography sx={{ fontSize: 16, fontWeight: 800, padding: '8px 26px' }}>Questão {index + 1}</Typography>
-					<Typography sx={{ fontSize: 18, fontWeight: 700, padding: '8px 26px' }}>{question.question.description}</Typography>
+					<Typography sx={{ fontSize: 18, fontWeight: 700, padding: '8px 26px' }}>{question.description}</Typography>
 
 					<Box sx={{ display: 'flex', flexDirection: 'column' }}>
-						{question.question.options.map(option => (
+						{question.options.map(option => (
 							<Box sx={{ 
 								display: 'flex', 
 								alignItems: 'center', 
 								justifyContent: 'space-between',
-								backgroundColor: getQuestionColor(question.question.correctAnswerKey, option.key, question.optionKey),
+								backgroundColor: getQuestionColor(question?.id, option.key),
 								padding: '4px 26px',
 								cursor: 'pointer',
 								userSelect: 'none'
 							}}>
 								<Box sx={{ display: 'flex', alignItems: 'center' }}>
 									<Typography sx={{ fontSize: 14, fontWeight: 500, width: 10 }}>{option.key}</Typography>
-									<Radio checked={question.optionKey === option.key} disabled />
+									<Radio checked={isUserAnswer(question.id, option.key)} disabled />
 									<Typography sx={{ fontSize: 14, fontWeight: 500 }}>{option.description}</Typography>
 								</Box>
 
-								{getQuestionType(question.question.correctAnswerKey, option.key, question.optionKey) && 
+								{getQuestionType(question?.id, option.key) && 
 									<Box sx={{ display: 'flex', alignItems: 'center', gap: '46px', marginRight: '24px' }}>
-										<Typography sx={{ fontSize: 16, fontWeight: 500, color: getQuestionType(question.question.correctAnswerKey, option.key, question.optionKey) === 'CORRECT' ? '#005600' : '#D30000' }}>
-											{getQuestionType(question.question.correctAnswerKey, option.key, question.optionKey) === 'CORRECT' ? 'Correta' : 'Errada'}
+										<Typography sx={{ fontSize: 16, fontWeight: 500, color: getQuestionType(question?.id, option.key) === 'CORRECT' ? '#005600' : '#D30000' }}>
+											{getQuestionType(question?.id, option.key) === 'CORRECT' ? 'Correta' : 'Errada'}
 										</Typography>
 
 										{
-											getQuestionType(question.question.correctAnswerKey, option.key, question.optionKey) === 'CORRECT' 
+											getQuestionType(question?.id, option.key) === 'CORRECT' 
 												? <IoIosCheckmarkCircleOutline size={22} color='#005600' /> 
 												: <IoIosCloseCircleOutline size={22} color='#D30000' />
 										}

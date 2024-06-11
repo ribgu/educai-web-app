@@ -9,6 +9,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment'
 import Divider from '@mui/material/Divider'
 import { Classwork } from '../../lib/types/ClassWork'
 import { AuthContext } from '../../contexts/AuthContext'
+import { formatDate } from '../../utils/formartDate'
 
 type ClassWorkProps = {
     ClassWork: Classwork
@@ -52,8 +53,8 @@ export default function ClassWork(props: ClassWorkProps) {
                     }}/>
                     <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap' }}>{ClassWork.title}</Typography>
                 </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px', justifyContent: 'flex-end' }}>
-                    Prazo: <b>{ClassWork.endDate}</b>
+                <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '4px', justifyContent: 'flex-end' }}>
+                    Prazo:<b>{formatDate(ClassWork.endDate)}</b>
                 </Box>
                 <IconButton size='small' onClick={handleClick} sx={{opacity: 0}}>
                     <MoreVertIcon />
@@ -75,7 +76,7 @@ export default function ClassWork(props: ClassWorkProps) {
             </Box>
             <Box sx={{ width: '100%', height: '80%', padding: '8px', display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '10px' }}>
                 <Box sx={{ width: '50%', height: '100%', padding: '8px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
-                    <Typography sx={{width: '100%', height: '20%', padding: '8px', justifySelf: 'flex-start'}}>Data de publicação: <b>{ClassWork.datePosting}</b>    </Typography>
+                    <Typography sx={{width: '100%', height: '20%', padding: '8px', justifySelf: 'flex-start'}}>Data de publicação: <b>{formatDate(ClassWork.datePosting)}</b></Typography>
                     {ClassWork.description && <Typography sx={{ width: '100%', fontSize: '14px', padding: '8px', justifySelf: 'center',textAlign: 'justify' }}>{ClassWork.description}</Typography>}
                 </Box>
                 <Box sx={{ width: '50%', height: '100%', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px' }}>

@@ -8,8 +8,15 @@ export type ReviewClasswork = {
 		email: string
 	}
 	datePosting: string
+	classwork: {
+		id: string
+		title: string
+		endDate: string
+		description: string
+		questions: Question[]
+	},
 	questionAnswers: {
 		optionKey: string
-		question: Question
+		questionId: string
 	}[]
 }
