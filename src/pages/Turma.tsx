@@ -8,7 +8,7 @@ import { TurmaType } from '../lib/types/Turma'
 import useClient from '../lib/client/useClient'
 import PostsPage from '../components/PostsPage/PostsPage'
 import Leaderboard from '../components/Leaderboard/Leaderboard'
-import AtividadesPage from '../components/ClassWorksPage/ClassWorksPage'
+import ClassWorksPage from '../components/ClassWorksPage/ClassWorksPage'
 import CriarAtividade from './Atividades/CriarAtividade'
 import CriarAtividadeIA from './Atividades/CriarAtividadeIA'
 import { Question } from '../lib/types/Question'
@@ -80,7 +80,7 @@ export default function Turma() {
                 <PostsPage classroomId={id} />
               )}
               {tab === 'atividades' && (
-                <AtividadesPage
+                <ClassWorksPage
                   classRoomId={id as string}
                 />
               )}

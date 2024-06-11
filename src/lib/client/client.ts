@@ -10,6 +10,7 @@ import { GenerateQuestionPayload } from '../types/GenerateQuestionPayload'
 import { DictonaryResponse } from '../types/DictonaryResponse'
 import { AnswerType } from '../types/Answer'
 import { SendAnswerData } from '../types/SendAnswerData'
+import { UsersType } from '../types/User'
 import { Participant } from '../types/Participant'
 
 type ClientProps = {
@@ -237,6 +238,10 @@ export default class Client {
 
   async getUserAnswers(classworkId: string, userId: string) {
     return (await this.axios.get(`/classwork/${classworkId}/answer/${userId}`)).data
+  }
+  
+  async getAnswersStatus(classworkId: string): Promise<UsersType> {
+    return (await this.axios.get(`/classwork/${classworkId}/answers/status`)).data
   }
 
 }
