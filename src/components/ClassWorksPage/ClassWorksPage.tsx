@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box/Box'
 import Button from '@mui/material/Button/Button'
 import Atividade from '../ClassWork/ClassWork'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography/Typography'
 import Modal from '../Modal/Modal'
@@ -11,12 +11,14 @@ import { BsStars } from 'react-icons/bs'
 import { FaBook } from 'react-icons/fa'
 import useClient from '../../lib/client/useClient'
 import { Classwork } from '../../lib/types/ClassWork'
+import { AuthContext } from '../../contexts/AuthContext'
 
 type ClassWorsPageProps = {
     classRoomId: string
 }
 
 export default function ClassWorks(props: ClassWorsPageProps) {
+    const { role, id } = useContext(AuthContext)
     const { classRoomId } = props
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const navigate = useNavigate()
@@ -29,7 +31,7 @@ export default function ClassWorks(props: ClassWorsPageProps) {
     }
 
     const onSelectAtividade = (atividade: any) => {
-        navigate(`/turma/responder-atividade/?classRoomId=${classRoomId}&classWorkId=${atividade.id}`)
+        navigate(`/turma/${classRoomId}?tab=responder-atividade&classRoomId=${classRoomId}&classWorkId=${atividade.id}`)
     }
 
     const handleIACreate = () => {
@@ -38,15 +40,24 @@ export default function ClassWorks(props: ClassWorsPageProps) {
     }
 
     useEffect(() => {
-        client.getClassWorksByClassroom(classRoomId).then((res) => {
-            setClassWorks(res)
-            console.log(res)
-        })
+        if(role ==='TEACHER') {
+            client.getClassWorksByClassroom(classRoomId).then((res) => {
+                if(res) {
+                    setClassWorks(res)
+                }
+            })
+        } else {
+            client.getClassWorksByClassroom(classRoomId, id).then((res) => {
+                if(res) {
+                    setClassWorks(res)
+                }
+            })
+        }
     }, [])
 
     return (
         <>
-            <Modal
+            {role === 'TEACHER' && <Modal
                 variantButton='lg'
                 titulo='Nova atividade'
                 iconeReact={
@@ -114,10 +125,10 @@ export default function ClassWorks(props: ClassWorsPageProps) {
                         startIcon={<BsStars color='#6730EC' size={22} />}
                         onClick={handleIACreate}>Gerar Questionário por IA</Button>
                 </Box>
-            </Modal>
+            </Modal>}
 
             <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column', overflow: 'auto' }}>
-                {classWorks.length === 0 && (
+                {!classWorks || classWorks.length === 0 && (
                     <Typography variant="h6" align="center" sx={{
                         fontSize: '16px',
                     }}>Poxa! Você ainda não tem nenhuma atividade.. 😕</Typography>

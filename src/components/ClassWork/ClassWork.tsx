@@ -2,18 +2,20 @@ import Box from '@mui/material/Box/Box'
 import IconButton from '@mui/material/IconButton/IconButton'
 import Typography from '@mui/material/Typography/Typography'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Menu from '@mui/material/Menu/Menu'
 import MenuItem from '@mui/material/MenuItem/MenuItem'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import Divider from '@mui/material/Divider'
 import { Classwork } from '../../lib/types/ClassWork'
+import { AuthContext } from '../../contexts/AuthContext'
 
 type ClassWorkProps = {
     ClassWork: Classwork
 }
 
 export default function ClassWork(props: ClassWorkProps) {
+    const { role } = useContext(AuthContext)
     const { ClassWork } = props
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
@@ -79,7 +81,8 @@ export default function ClassWork(props: ClassWorkProps) {
                 <Box sx={{ width: '50%', height: '100%', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px' }}>
                     <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem'}}>{ClassWork.totalQuestions}</b> EXERCICIOS</Typography>
                     <Divider sx={{ borderBottomWidth: 2, borderColor: '#5E5E5E', borderRadius: '1px'}}/>
-                    <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem', gap: '10px'}}>{ClassWork.totalAnswers}</b> ALUNOS ENTREGARAM</Typography>
+                    {role === 'TEACHER' && <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem', gap: '10px'}}>{ClassWork.totalAnswers}</b> ALUNOS ENTREGARAM</Typography>}
+                    {role === 'STUDENT' && <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem', gap: '10px'}}>{(ClassWork.correctPercentage/100) * ClassWork.totalQuestions}/{ClassWork.totalQuestions}</b> acertos</Typography>}
                 </Box>
             </Box>
         </Box>

@@ -244,7 +244,7 @@ export default function CriarAtividadeIA() {
 
 						<Box sx={{width: '100%'}}>
 							<Box sx={{display: 'flex'}}>
-								<Typography sx={{fontSize: '16px', fontWeight: 400, color: '#000'}}>Dificuldade:</Typography>
+								<Typography sx={{fontSize: '16px', fontWeight: 400, color: '#000'}}>Quantidade:</Typography>
 								<Typography sx={{fontSize: '16px', fontWeight: 400, color: 'red'}}>*</Typography>
 							</Box>
 							
