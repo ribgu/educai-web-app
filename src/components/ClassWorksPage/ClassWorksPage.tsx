@@ -11,7 +11,7 @@ import { TbSchool } from 'react-icons/tb'
 import { BsStars } from 'react-icons/bs'
 import { FaBook } from 'react-icons/fa'
 import useClient from '../../lib/client/useClient'
-import { Classwork } from '../../lib/types/ClassWork'
+import { Classwork, ClassworksAnswered } from '../../lib/types/ClassWork'
 import { AuthContext } from '../../contexts/AuthContext'
 
 type ClassWorksPageProps = {
@@ -23,8 +23,10 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const navigate = useNavigate()
     const client = useClient()
-    const [classWorks, setClassWorks] = useState<Classwork[]>([])
-    const { role, id } = useContext(AuthContext)
+    const [classworksAnswered, setClassworksAnswered] = useState<ClassworksAnswered[]>([])
+    const [classworks, setClassworks] = useState<Classwork[]>([])
+    const { role } = useContext(AuthContext)
+    const { id } = useContext(AuthContext)
 
     const handleManualCreate = () => {
         setModalIsOpen(false)
@@ -33,9 +35,9 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
 
     const onSelectAtividade = (atividade: any) => {
         if(role === 'STUDENT') {
-            if(atividade.hasAnswered) {
+            if(atividade.hasAnswered){
                 navigate(`/turma/${classRoomId}?tab=revisao&classWorkId=${atividade.id}`)
-            } else {
+            }else{
                 navigate(`/turma/${classRoomId}?tab=responder-atividade&classRoomId=${classRoomId}&classWorkId=${atividade.id}`)
             }
         } else{
@@ -49,20 +51,20 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
     }
 
     useEffect(() => {
-        if(role ==='TEACHER') {
+        if(role === 'STUDENT') {
+            client.getClasworksByUserId(classRoomId, id).then((res) => {
+                setClassworksAnswered(res)
+                console.log(res)
+            })
+            
+        } 
+        else {
             client.getClassWorksByClassroom(classRoomId).then((res) => {
-                if(res) {
-                    setClassWorks(res)
-                }
+                setClassworks(res)
+                console.log(res)
             })
-        } else {
-            client.getClassWorksByClassroom(classRoomId, id).then((res) => {
-                if(res) {
-                    setClassWorks(res)
-                }
-            })
-        }
-    }, [])
+        }    
+    }, [classRoomId, id, role])
 
     return (
         <>
@@ -135,18 +137,34 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
                         onClick={handleIACreate}>Gerar Questionário por IA</Button>
                 </Box>
             </Modal>}
-
-            <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column', overflow: 'auto' }}>
-                {classWorks ? classWorks.map((classWork, index) => (
-                    <Box key={index} onClick={() => onSelectAtividade(classWork)}>
+            
+            {role === 'TEACHER' ? 
+                <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column', overflow: 'auto' }}>
+                {classworks ? classworks.map((classwork, index) => (
+                    <Box key={index} onClick={() => onSelectAtividade(classwork)}>
                         <Atividade
-                            ClassWork={classWork}
+                            ClassWork={classwork}
+                            IsStudent = {false}
                         />
                     </Box>
                 )) : <Typography variant="h6" align="center" sx={{
                     fontSize: '16px',
                 }}>Poxa! Você ainda não tem nenhuma atividade.. 😕</Typography>}
-            </Box>
+                </Box>
+            :
+                <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column', overflow: 'auto' }}>
+                {classworksAnswered ? classworksAnswered.map((classworkAnswered, index) => (
+                    <Box key={index} onClick={() => onSelectAtividade(classworkAnswered)}>
+                        <Atividade
+                            ClassworkStudent={classworkAnswered}
+                            IsStudent = {true}
+                        />
+                    </Box>
+                )) : <Typography variant="h6" align="center" sx={{
+                    fontSize: '16px',
+                }}>Poxa! Você ainda não tem nenhuma atividade.. 😕</Typography>}
+                </Box>
+            }            
         </>
     )
 }

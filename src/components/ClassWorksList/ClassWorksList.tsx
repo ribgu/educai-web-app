@@ -78,7 +78,6 @@ export default function ClassworkList() {
             height: '80%',
             border: '2px solid #BEBEBE',
             borderRadius: '10px',
-            gap: '10px',
             display: 'flex',
             flexDirection: 'column'
           }}
