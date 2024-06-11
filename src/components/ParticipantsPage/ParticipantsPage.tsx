@@ -9,6 +9,9 @@ import Participant from '../Participant/Participant'
 import { Participant as ParticipantType } from '../../lib/types/Participant'
 import { Button, MenuItem, TextField } from '@mui/material'
 import { AuthContext } from '../../contexts/AuthContext'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { useNavigate } from 'react-router-dom'
 
 type ParticipantsPageProps = {
     classroomId: string
@@ -17,6 +20,7 @@ type ParticipantsPageProps = {
 export default function ParticipantsPage(props: ParticipantsPageProps) {
     const { role } = useContext(AuthContext)
     const { classroomId } = props
+    const navigate = useNavigate()
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [participants, setParticipants] = useState<ParticipantType[]>([])
     const [newParticipantName, setNewParticipantName] = useState('')
@@ -32,26 +36,47 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
         })
     }, [classroomId])
 
-    // const handleCleanFields = () => {
-    //     setNewParticipantName('')
-    //     setNewParticipantEmail('')
-    //     setNewParticipantRole('STUDENT')
-    // }
+    const sucessToast = (message : string) => {
+        toast.success(message, {
+          position: 'bottom-right',
+          autoClose: 2600,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          })
+      }
 
-    // const handleAddParticipant = () => {
-    //     // client.addParticipant
-    //     handleCleanFields()
-    // }
+    const handleCleanFields = () => {
+        setNewParticipantName('')
+        setNewParticipantEmail('')
+        setNewParticipantRole('STUDENT')
+    }
+
+    const handleAddParticipant = async () => {
+        const participant = {
+            name: newParticipantName,
+            email: newParticipantEmail,
+            role: newParticipantRole
+        }
+        await client.addParticipant(classroomId, participant)
+        handleCleanFields()
+        setModalIsOpen(false)
+        navigate(0)
+        sucessToast('Integrante conviado com sucesso!')
+    }
 
     return (
         <>
             {role === 'TEACHER' && <BasicModal
-                variantButton='lg' titulo='Novo Integrante'
+                variantButton='lg' titulo='Convidar Integrante'
                 iconeReact={
                     <AssignmentIcon />
                 }
                 altIcone='Caderno de atividade'
-                textoBotaoAbrirModal='Adicionar Integrante'
+                textoBotaoAbrirModal='Convidar Integrante'
                 showModal={modalIsOpen}
                 onClose={() => setModalIsOpen(false)}
                 onOpen={() => setModalIsOpen(true)}
@@ -81,8 +106,8 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
                     <MenuItem value='STUDENT'>Aluno</MenuItem>
                     <MenuItem value='TEACHER'>Professor</MenuItem>
                 </TextField>
-                <Button variant='contained' sx={{ width: '100%', marginTop: '10px' }}>
-                    Adicionar
+                <Button variant='contained' sx={{ width: '100%', marginTop: '10px' }} onClick={handleAddParticipant}>
+                    Convidar
                 </Button>
             </BasicModal>}
             <Box sx={{ width: '100%', flexDirection: 'collumn', alignItems: 'center', justifyContent: 'space-evenly', border: '1px solid #BEBEBE', borderRadius: '10px', padding: '8px', height: '90%' }}>
