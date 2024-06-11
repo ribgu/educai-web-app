@@ -12,6 +12,7 @@ import { AnswerType } from '../types/Answer'
 import { SendAnswerData } from '../types/SendAnswerData'
 import { UsersType } from '../types/User'
 import { Participant } from '../types/Participant'
+import { Messages } from '../../pages/TalkWithEdu'
 
 type ClientProps = {
   clientType: 'ia-api' | 'api',
@@ -249,6 +250,20 @@ export default class Client {
     body: { name: string, email: string, role: string }
   ): Promise<void> {
     return (await this.axios.post(`/classroom/${classroomId}/invite`, body))
+  }
+
+  async getFeedback(
+    messages: Messages[],
+    studentName: string
+  ): Promise<AxiosResponse<ArrayBuffer>> {
+
+    const body = {
+      messages: messages,
+      studentName: studentName
+    }
+
+    const response = await this.axios.post('/feedback', body, { responseType: 'arraybuffer' })
+    return response
   }
 
 }

@@ -129,7 +129,7 @@ export default function Post(post: PostProps) {
     }
 
     return (
-        <Box sx={{ width: '100%', height: '18vh', border: '1px solid #BEBEBE', borderRadius: '10px' }}>
+        <Box sx={{ width: '100%', height: '24vh', border: '1px solid #BEBEBE', borderRadius: '10px' }}>
             <Box sx={{
                 width: '100%',
                 height: '35%',
