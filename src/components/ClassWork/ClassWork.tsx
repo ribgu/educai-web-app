@@ -5,7 +5,6 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { useContext, useState } from 'react'
 import Menu from '@mui/material/Menu/Menu'
 import MenuItem from '@mui/material/MenuItem/MenuItem'
-import AssignmentIcon from '@mui/icons-material/Assignment'
 import Divider from '@mui/material/Divider'
 import { Classwork } from '../../lib/types/ClassWork'
 import { AuthContext } from '../../contexts/AuthContext'
@@ -48,13 +47,11 @@ export default function ClassWork(props: ClassWorkProps) {
                 borderColor: '#BEBEBE'
             }}>
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px' }}>
-                    <AssignmentIcon sx={{
-                        width: '26px', marginBottom: '5px'
-                    }}/>
-                    <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap' }}>{ClassWork.title}</Typography>
+                    <img src="/iconsPages/bookIcon.svg" alt="Livro" />
+                    <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap', fontWeight: 'bold' }}>{ClassWork.title}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '4px', justifyContent: 'flex-end' }}>
-                    Prazo:<b>{formatDate(ClassWork.endDate)}</b>
+                    Prazo:<b style={{fontSize: '16px', color: '#5E5E5E'}}>{formatDate(ClassWork.endDate)}</b>
                 </Box>
                 <IconButton size='small' onClick={handleClick} sx={{opacity: 0}}>
                     <MoreVertIcon />
@@ -76,8 +73,8 @@ export default function ClassWork(props: ClassWorkProps) {
             </Box>
             <Box sx={{ width: '100%', height: '80%', padding: '8px', display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '10px' }}>
                 <Box sx={{ width: '50%', height: '100%', padding: '8px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
-                    <Typography sx={{width: '100%', height: '20%', padding: '8px', justifySelf: 'flex-start'}}>Data de publicação: <b>{formatDate(ClassWork.datePosting)}</b></Typography>
-                    {ClassWork.description && <Typography sx={{ width: '100%', fontSize: '14px', padding: '8px', justifySelf: 'center',textAlign: 'justify' }}>{ClassWork.description}</Typography>}
+                    <Typography sx={{width: '100%', height: '20%', padding: '8px', justifySelf: 'flex-start', color: '#5E5E5E'}}>Data de publicação: <b style={{fontSize: '16px', color: '#5E5E5E'}}>{formatDate(ClassWork.datePosting)}</b></Typography>
+                    {ClassWork.description && <Typography sx={{ width: '100%', fontSize: '14px', padding: '8px', justifySelf: 'center',textAlign: 'justify', color: '#5E5E5E' }}>{ClassWork.description}</Typography>}
                 </Box>
                 <Box sx={{ width: '50%', height: '100%', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px' }}>
                     <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem'}}>{ClassWork.totalQuestions}</b> EXERCICIOS</Typography>
