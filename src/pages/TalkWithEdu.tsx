@@ -5,23 +5,27 @@ import PageHeader from '../components/PageHeader/PageHeader'
 import TalkButton from '../components/TalkButton/TalkButton'
 import { useAudioRecorder } from '../lib/useAudioRecorder'
 import useAiClient from '../lib/client/useAIClient'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import Typography from '@mui/material/Typography'
+import { AuthContext } from '../contexts/AuthContext'
+import { LoadingButton } from '@mui/lab'
 
-type Messages = {
+export type Messages = {
   message: string
   isUser: boolean
 }
 
 export default function TalkWithEdu() {
   const { recording, audioBlobUrl, startRecording, stopRecording } = useAudioRecorder()
+  const { username } = useContext(AuthContext)
   const [transcription, setTranscription] = useState<string>('')
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [response, setResponse] = useState<string>()
   const client = useAiClient()
   const [messages, setMessages] = useState<Messages[]>([])
+  const [pdfLink, setPdfLink] = useState<string>('')
+  const [isFeedbackLoading, setFeedbackLoading] = useState<boolean>(false)
 
   const handleSendAudioToEdu = async () => {
     setResponse('')
@@ -53,14 +57,23 @@ export default function TalkWithEdu() {
     }
   }, [transcription, response])
 
+  const handleGetFeedback = async () => {
+    setFeedbackLoading(true)
+    const response = await client.getFeedback(messages, username)
+    const pdfBlob = new Blob([response.data], { type: 'application/pdf' })
+    const pdfUrl = URL.createObjectURL(pdfBlob)
+    setPdfLink(pdfUrl)
+    setFeedbackLoading(false)
+  }
+
   return (
     <Layout>
       <Box sx={{ width: '100%' }} >
         <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
           <PageHeader title='Falando com o Edu' />
         </Box>
-        <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px', flexDirection: 'column'}}>
-          <Box sx={{ width: '100%', height: '80%', overflowY: 'scroll'}}>
+        <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px', flexDirection: 'column' }}>
+          <Box sx={{ width: '100%', height: '80%', overflowY: 'scroll' }}>
             {messages.map((message, index) => (
               <Box key={index}
                 sx={{
@@ -68,7 +81,7 @@ export default function TalkWithEdu() {
                   display: 'flex',
                   justifyContent: message.isUser ? 'flex-end' : 'flex-start',
                   marginBottom: '8px'
-                  }}>
+                }}>
                 <Box
                   sx={{
                     width: '50%',
@@ -76,7 +89,7 @@ export default function TalkWithEdu() {
                     borderRadius: '8px',
                     backgroundColor: message.isUser ? '#DED1FF' : '#6730EC',
                     color: message.isUser ? 'black' : 'white'
-                    }}>
+                  }}>
                   <Typography variant='body1'>
                     {message.message}
                   </Typography>
@@ -84,13 +97,29 @@ export default function TalkWithEdu() {
               </Box>
             ))}
           </Box>
-          <Box sx={{ width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <Box sx={{ width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', marginTop: '24px' }}>
             <TalkButton
+              loading={isLoading}
               recording={recording || false}
               audioBlobUrl={audioBlobUrl}
               startRecording={startRecording}
               stopRecording={stopRecording}
             />
+            <LoadingButton
+              sx={{ width: '24vw', padding: '8px', borderRadius: '10px' }}
+              color='primary'
+              variant='text'
+              loading={isFeedbackLoading}
+              onClick={handleGetFeedback}
+            >Terminar conversa</LoadingButton>
+            {pdfLink && (
+              <a
+                style={{ color: '#7750DE', fontWeight: 400, fontSize: 14, textDecoration: 'underline' }}
+                href={pdfLink}
+                download={`feedback-${username}-${new Date().toLocaleDateString('pt-BR').split('/').reverse().join('-')}.pdf`}>
+                Clique aqui para ver o seu feedback
+              </a>
+            )}
           </Box>
         </Box>
       </Box>
