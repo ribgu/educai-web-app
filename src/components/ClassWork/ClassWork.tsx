@@ -80,7 +80,7 @@ export default function ClassWork(props: ClassWorkProps) {
                     <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem'}}>{ClassWork.totalQuestions}</b> EXERCICIOS</Typography>
                     <Divider sx={{ borderBottomWidth: 2, borderColor: '#5E5E5E', borderRadius: '1px'}}/>
                     {role === 'TEACHER' && <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem', gap: '10px'}}>{ClassWork.totalAnswers}</b> ALUNOS ENTREGARAM</Typography>}
-                    {role === 'STUDENT' && ClassWork.hasAnswered && <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem', gap: '10px'}}>{ClassWork.correctPercentage && ClassWork.totalQuestions && (ClassWork.correctPercentage/100) * ClassWork.totalQuestions}/{ClassWork.totalQuestions}</b> acertos</Typography>}
+                    {role === 'STUDENT' && ClassWork.hasAnswered && <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem', gap: '10px'}}>{ClassWork.correctPercentage && ClassWork.totalQuestions && ((ClassWork.correctPercentage/100) * ClassWork.totalQuestions).toFixed(0)}/{ClassWork.totalQuestions}</b> acertos</Typography>}
                 </Box>
             </Box>
         </Box>
