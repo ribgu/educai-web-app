@@ -27,9 +27,9 @@ export default function Option(props: OptionProps) {
 
     return (
         <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center', width: '100%' }} >
-            <Typography variant='body1' width={10}>{optionKey}</Typography>
-            <Radio checked={selected} onClick={handleSelectAlternative} />
-            <TextField size='small' value={description} onChange={(e) => handleChangeName?.(e.target.value)} />
+            <Typography variant='body1' sx={{minWidth: '10px'}}>{optionKey}</Typography>
+            <Radio checked={selected} sx={{width: '40px'}}  onClick={handleSelectAlternative} />
+            <TextField sx={{width: '100%'}} size='small' value={description} onChange={(e) => handleChangeName?.(e.target.value)} multiline/>
             <IconButton onClick={handleDeleteAlternative}>
                 <CloseIcon />
             </IconButton>

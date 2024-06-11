@@ -3,17 +3,19 @@ import Box from '@mui/material/Box/Box'
 import Typography from '@mui/material/Typography'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import BasicModal from '../Modal/Modal'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import useClient from '../../lib/client/useClient'
 import Participant from '../Participant/Participant'
 import { Participant as ParticipantType } from '../../lib/types/Participant'
 import { Button, MenuItem, TextField } from '@mui/material'
+import { AuthContext } from '../../contexts/AuthContext'
 
 type ParticipantsPageProps = {
     classroomId: string
 }
 
 export default function ParticipantsPage(props: ParticipantsPageProps) {
+    const { role } = useContext(AuthContext)
     const { classroomId } = props
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [participants, setParticipants] = useState<ParticipantType[]>([])
@@ -43,7 +45,7 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
 
     return (
         <>
-            <BasicModal
+            {role === 'TEACHER' && <BasicModal
                 variantButton='lg' titulo='Novo Integrante'
                 iconeReact={
                     <AssignmentIcon />
@@ -82,7 +84,7 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
                 <Button variant='contained' sx={{ width: '100%', marginTop: '10px' }}>
                     Adicionar
                 </Button>
-            </BasicModal>
+            </BasicModal>}
             <Box sx={{ width: '100%', flexDirection: 'collumn', alignItems: 'center', justifyContent: 'space-evenly', border: '1px solid #BEBEBE', borderRadius: '10px', padding: '8px', height: '90%' }}>
                 <Box sx={{ width: '100%', padding: '10px' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

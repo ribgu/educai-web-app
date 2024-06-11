@@ -9,4 +9,5 @@ export type Classwork = {
   totalAnswers?: number
   totalQuestions?: number
   questions: Question[]
+  correctPercentage?: number
 }

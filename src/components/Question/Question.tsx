@@ -19,7 +19,7 @@ interface QuestionProps {
 
 export default function Question(props: QuestionProps) {
     const { question, index, handleChangeQuestionDescription, handleChangeAlternativeDescription, deleteQuestion, handleAddAlternative, handleDeleteAlternative } = props
-    
+
     const [questionIsComplete, setQuestionIsComplete] = useState<boolean>(false)
     const [correctAnswerKey, setCorrectAnswerKey] = useState(question.correctAnswerKey)
 
@@ -38,6 +38,7 @@ export default function Question(props: QuestionProps) {
                 <Typography variant='h6'>
                     Questão {index + 1}
                 </Typography>
+
                 <Typography variant='body2' color={questionIsComplete ? 'green' : 'red'}>
                     {questionIsComplete ? 'Completa' : 'Incompleta'}
                 </Typography>
@@ -45,7 +46,7 @@ export default function Question(props: QuestionProps) {
                 {questionIsComplete ? <IoCheckmarkSharp color='green'/> : <IoMdClose color='red'/>}
             </Box>
             <TextField size='small' spellCheck={false} multiline value={question.description} onChange={(e) => handleChangeQuestionDescription?.(e.target.value)} />
-            <Box sx={{ borderBottom: '1px solid #BEBEBE', marginTop: '12px' }}>
+            <Box sx={{ borderBottom: '1px solid #BEBEBE', marginTop: '12px', gap: '16px', display: 'flex', flexDirection: 'column' }}>
                 {question.options.map((option, index) => (
                     <Option
                         optionKey={option.key}
