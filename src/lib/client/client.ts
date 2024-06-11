@@ -4,7 +4,7 @@ import { EduResponse } from '../types/EduResponse'
 import { TurmaType } from '../types/Turma'
 import { LeaderboardType } from '../types/Leaderboard'
 import { PostType } from '../types/Post'
-import { Classwork } from '../types/ClassWork'
+import { Classwork, ClassworksAnswered } from '../types/ClassWork'
 import { Question } from '../types/Question'
 import { GenerateQuestionPayload } from '../types/GenerateQuestionPayload'
 import { DictonaryResponse } from '../types/DictonaryResponse'
@@ -234,6 +234,10 @@ export default class Client {
 
   async getAnswersStatus(classworkId: string): Promise<UsersType> {
     return (await this.axios.get(`/classwork/${classworkId}/answers/status`)).data
+  }
+
+  async getClasworksByUserId(classworkId: string, userId: string): Promise<ClassworksAnswered[]> {
+    return (await this.axios.get(`/classroom/${classworkId}/classworks/${userId}`)).data
   }
 
 }

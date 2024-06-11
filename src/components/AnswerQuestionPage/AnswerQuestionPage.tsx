@@ -2,7 +2,7 @@
   import Box from '@mui/material/Box'
   import AnswerQuestion from '../AnswerQuestion/AnswerQuestion'
   import Button from '@mui/material/Button'
-  import { Classwork } from '../../lib/types/ClassWork'
+  import { Classwork, ClassworksAnswered } from '../../lib/types/ClassWork'
   import { useState, useEffect, useContext } from 'react'
   import useClient from '../../lib/client/useClient'
   import { QuestionAnswers } from '../../lib/types/SendAnswerData'
@@ -15,11 +15,14 @@
   export default function AnswerQuestionPage() {
     const [classwork, setClasswork] = useState<Classwork>()
     const [answers, setAnswers] = useState<QuestionAnswers[]>([])
+    const [classworksAnswered, setClassworksAnswered] = useState<ClassworksAnswered[]>([])
     const [completedQuestion, setCompletedQuestion] = useState<SendAnswerData>()
     const client = useClient()
     const { id } = useContext(AuthContext)
+    const [answered, setAnswered] = useState<boolean | undefined>(undefined)
 
     const classworkId = new URLSearchParams(useLocation().search).get('classWorkId') ?? ''
+    const classroomId = new URLSearchParams(useLocation().search).get('classRoomId') ?? ''
     console.log('classworkId:', classworkId)
 
     const handleSelectAlternative = (questionId: string, answerKey: string) => {
@@ -34,6 +37,11 @@
         }
       })
     }
+
+    useEffect(() => {
+      client.getClasworksByUserId(classroomId, id).then((res) => setClassworksAnswered(res))
+      setAnswered(classworksAnswered.find(classworkAnswered => classworkAnswered.id === classworkId)?.hasAnswered)
+    }, [classworkId, id])
 
     useEffect(() => {
       console.log('answers updated:', answers)
@@ -59,28 +67,30 @@
     return (
       <Layout>
         <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
-          <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
-            <PageHeader title={classwork?.title} tab='atividades'/>
-          </Box>
-          <Box sx={{ width: '100%', height: '80%', display: 'flex', padding: '24px', overflowY: 'auto' }}>
-            <Box sx={{
-              width: '100%',
-              height: '80vh',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '16px'
-            }}>
-              {classwork?.questions.map((question, index) => (
-                <AnswerQuestion key={index}
-                  description={question.description}
-                  options={question.options}
-                  id={question.id as string}
-                  handleSelectAlternative={handleSelectAlternative}
-                />
-              ))}
-            </Box>
-          </Box>
-          <Button
+          {answered ? 
+            <Box>
+              <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
+                <PageHeader title={classwork?.title} tab='atividades'/>
+              </Box>
+              <Box sx={{ width: '100%', height: '80%', display: 'flex', padding: '24px', overflowY: 'auto' }}>
+                <Box sx={{
+                  width: '100%',
+                  height: '80vh',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '16px'
+                }}>
+                  {classwork?.questions.map((question, index) => (
+                    <AnswerQuestion key={index}
+                      description={question.description}
+                      options={question.options}
+                      id={question.id as string}
+                      handleSelectAlternative={handleSelectAlternative}
+                    />
+                  ))}
+                </Box>
+              </Box>
+              <Button
                 variant='contained'
                 onClick={handleSendAnswers}
                 sx={{
@@ -88,6 +98,9 @@
                   width: '96%',
                 }}
               >Finalizar</Button>
+            </Box>
+            : <Box>Você já respondeu essa atividade!</Box>
+          }
         </Box>
       </Layout>
     )

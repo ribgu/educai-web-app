@@ -7,14 +7,16 @@ import Menu from '@mui/material/Menu/Menu'
 import MenuItem from '@mui/material/MenuItem/MenuItem'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import Divider from '@mui/material/Divider'
-import { Classwork } from '../../lib/types/ClassWork'
+import { Classwork, ClassworksAnswered } from '../../lib/types/ClassWork'
 
 type ClassWorkProps = {
-    ClassWork: Classwork
+    ClassWork?: Classwork
+    ClassworkStudent?: ClassworksAnswered
+    IsStudent: boolean
 }
 
 export default function ClassWork(props: ClassWorkProps) {
-    const { ClassWork } = props
+    const { ClassWork, ClassworkStudent, IsStudent } = props
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
 
@@ -48,10 +50,10 @@ export default function ClassWork(props: ClassWorkProps) {
                     <AssignmentIcon sx={{
                         width: '26px', marginBottom: '5px'
                     }}/>
-                    <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap' }}>{ClassWork.title}</Typography>
+                    <Typography sx={{ fontSize: '16px', whiteSpace: 'nowrap' }}>{ClassWork?.title || ClassworkStudent?.title || '-'}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '60%', alignItems: 'center', gap: '10px', justifyContent: 'flex-end' }}>
-                    Prazo: <b>{ClassWork.endDate}</b>
+                    Prazo: <b>{ClassWork?.endDate || ClassworkStudent?.endDate || '-'}</b>
                 </Box>
                 <IconButton size='small' onClick={handleClick} sx={{opacity: 0}}>
                     <MoreVertIcon />
@@ -73,13 +75,17 @@ export default function ClassWork(props: ClassWorkProps) {
             </Box>
             <Box sx={{ width: '100%', height: '80%', padding: '8px', display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '10px' }}>
                 <Box sx={{ width: '50%', height: '100%', padding: '8px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
-                    <Typography sx={{width: '100%', height: '20%', padding: '8px', justifySelf: 'flex-start'}}>Data de publicação: <b>{ClassWork.datePosting}</b>    </Typography>
-                    {ClassWork.description && <Typography sx={{ width: '100%', fontSize: '14px', padding: '8px', justifySelf: 'center',textAlign: 'justify' }}>{ClassWork.description}</Typography>}
+                    <Typography sx={{width: '100%', height: '20%', padding: '8px', justifySelf: 'flex-start'}}>Data de publicação: <b>{ClassWork?.datePosting || ClassworkStudent?.datePosting || '-'}</b>    </Typography>
+                    {ClassWork?.description || ClassworkStudent?.description && <Typography sx={{ width: '100%', fontSize: '14px', padding: '8px', justifySelf: 'center',textAlign: 'justify' }}>{ClassWork?.description || ClassworkStudent?.description}</Typography>}
                 </Box>
                 <Box sx={{ width: '50%', height: '100%', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px' }}>
-                    <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem'}}>{ClassWork.totalQuestions}</b> EXERCICIOS</Typography>
+                    <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem'}}>{ClassWork?.totalQuestions || ClassworkStudent?.totalQuestions || '-'}</b> EXERCICIOS</Typography>
                     <Divider sx={{ borderBottomWidth: 2, borderColor: '#5E5E5E', borderRadius: '1px'}}/>
-                    <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem', gap: '10px'}}>{ClassWork.totalAnswers}</b> ALUNOS ENTREGARAM</Typography>
+                    {!IsStudent ? 
+                        <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem', gap: '10px'}}>{ClassWork?.totalAnswers}</b> ALUNOS ENTREGARAM</Typography>
+                    :
+                        <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px', fontSize:'1.4rem' }} ><b style={{ gap: '10px'}}>Nota: {ClassworkStudent?.correctPercentage ? ClassworkStudent?.correctPercentage / 10 : 'PENDENTE'}</b></Typography>
+                    }
                 </Box>
             </Box>
         </Box>

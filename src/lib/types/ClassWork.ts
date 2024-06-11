@@ -10,3 +10,14 @@ export type Classwork = {
   totalQuestions?: number
   questions: Question[]
 }
+
+export type ClassworksAnswered = {
+  id?: string
+  title: string
+  datePosting: string
+  endDate: string
+  description: string
+  totalQuestions?: number
+  hasAnswered: boolean,
+  correctPercentage: number
+}
