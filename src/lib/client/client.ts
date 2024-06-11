@@ -239,13 +239,20 @@ export default class Client {
   async getUserAnswers(classworkId: string, userId: string) {
     return (await this.axios.get(`/classwork/${classworkId}/answer/${userId}`)).data
   }
-  
+
   async getAnswersStatus(classworkId: string): Promise<UsersType> {
     return (await this.axios.get(`/classwork/${classworkId}/answers/status`)).data
   }
 
   async getClasworksByUserId(classworkId: string, userId: string): Promise<ClassworksAnswered[]> {
     return (await this.axios.get(`/classroom/${classworkId}/classworks/${userId}`)).data
+  }
+
+  async addParticipant(
+    classroomId: string,
+    body: { name: string, email: string, role: string }
+  ): Promise<void> {
+    return (await this.axios.post(`/classroom/${classroomId}/invite`, body))
   }
 
 }
