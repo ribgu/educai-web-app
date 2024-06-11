@@ -38,6 +38,7 @@ export default function Question(props: QuestionProps) {
                 <Typography variant='h6'>
                     Questão {index + 1}
                 </Typography>
+                
                 <Typography variant='body2' color={questionIsComplete ? 'green' : 'red'}>
                     {questionIsComplete ? 'Completa' : 'Incompleta'}
                 </Typography>

@@ -155,7 +155,7 @@ export default function Turma(props: TurmaProps) {
                     </Box>
 
                     <Box sx={{ display: 'flex', gap: '4px' }}>
-                        <Typography sx={{ display: 'flex', fontSize: 14, color: '#5E5E5E', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        <Typography sx={{ display: 'flex', fontSize: 14, color: '#5E5E5E', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                             {isTeacher ? 'Quantidade de alunos:' : 'Próxima entrega: ' }
                         </Typography>
 

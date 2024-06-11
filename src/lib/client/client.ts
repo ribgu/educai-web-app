@@ -176,7 +176,11 @@ export default class Client {
     return (await this.axios.post('/classwork', classWork, { headers }))
   }
 
-  async getClassWorksByClassroom(classroomId: string): Promise<Classwork[]> {
+  async getClassWorksByClassroom(classroomId: string, userId?: string): Promise<Classwork[]> {
+    if (userId) {
+      return (await this.axios.get(`/classroom/${classroomId}/classworks/${userId}`)).data
+    }
+
     return (await this.axios.get(`/classroom/${classroomId}/classworks`)).data
   }
 
@@ -232,6 +236,10 @@ export default class Client {
     return classroom.participants
   }
 
+  async getUserAnswers(classworkId: string, userId: string) {
+    return (await this.axios.get(`/classwork/${classworkId}/answer/${userId}`)).data
+  }
+  
   async getAnswersStatus(classworkId: string): Promise<UsersType> {
     return (await this.axios.get(`/classwork/${classworkId}/answers/status`)).data
   }

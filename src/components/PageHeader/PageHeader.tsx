@@ -36,6 +36,8 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
     pessoas: 'pessoas',
     'criar-atividade': 'atividades',
     'criar-atividade-ia': 'atividades',
+    'revisao': 'atividades',
+    'responder-atividade': 'atividades'
   }
 
   const actualTab = PageHeaderProps.tab ? PageHeaderProps.tab : new URLSearchParams(window.location.search).get('tab')

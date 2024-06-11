@@ -12,6 +12,7 @@ import GerarQuestaoModal from '../../components/GerarQuestaoModal/GerarQuestaoMo
 import { LuPlusCircle } from 'react-icons/lu'
 import { BsStars } from 'react-icons/bs'
 import Modal from '../../components/Modal/Modal'
+import { useNavigate } from 'react-router-dom'
 
 type QuestionProps = {
   questions?: QuestionType[]
@@ -21,6 +22,7 @@ export default function CriarAtividade(props: QuestionProps) {
   const { questions: q } = props
 
   const client = useClient()
+  const navigate = useNavigate()
   const [title, setTitle] = useState('')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_turma, setTurma] = useState<TurmaType>()
@@ -61,7 +63,7 @@ export default function CriarAtividade(props: QuestionProps) {
 
   const handleCreateClassWork = async () => {
     setCreateInProgress(true)
-    console.log(endDate)
+
     if(endDate) {
       const classWork: Classwork = {
         title,
@@ -72,7 +74,9 @@ export default function CriarAtividade(props: QuestionProps) {
       }
 
       if (classroomId)
-        await client.createClassWork(classWork, classroomId)
+        await client.createClassWork(classWork, classroomId).then(() => {
+          navigate('/turma/' + classroomId + '?tab=atividades')
+        })
     }
 
     setCreateInProgress(false)
@@ -146,7 +150,7 @@ export default function CriarAtividade(props: QuestionProps) {
     if (classroomId) {
       client.getClassroomById(classroomId).then((res) => setTurma(res))
     }
-  }, [classroomId, client])
+  }, [classroomId])
 
   const handleAddQuestion = (question?: QuestionType) => {
     if(question) {

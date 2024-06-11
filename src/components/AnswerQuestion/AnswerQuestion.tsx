@@ -32,11 +32,15 @@ export default function AnswerQuestion(
       height: 'auto',
       display: 'flex',
       flexDirection: 'column',
-      border: '2px solid #BEBEBE',
+      border: '1px solid #BEBEBE',
       borderRadius: '10px',
       padding: '15px',
       marginBottom: '16px'
     }}>
+      <Typography variant='h6'>
+        Questão 1
+      </Typography>
+      
       <Typography variant='h6' sx={{ marginBottom: '10px' }}>
         {description}
       </Typography>
