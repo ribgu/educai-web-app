@@ -13,6 +13,7 @@ import { FaBook } from 'react-icons/fa'
 import useClient from '../../lib/client/useClient'
 import { Classwork, ClassworksAnswered } from '../../lib/types/ClassWork'
 import { AuthContext } from '../../contexts/AuthContext'
+import { ToastContainer, toast } from 'react-toastify'
 
 type ClassWorksPageProps = {
     classRoomId: string
@@ -150,7 +151,7 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
             :
                 <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column', overflow: 'auto' }}>
                 {classworksAnswered ? classworksAnswered.map((classworkAnswered, index) => (
-                    <Box key={index} onClick={() => onSelectAtividade(classworkAnswered)}>
+                    <Box key={index} onClick={() => classworkAnswered.hasAnswered ? toast.warning('Você já respondeu essa atividade!') : onSelectAtividade(classworkAnswered)}>
                         <Atividade
                             ClassworkStudent={classworkAnswered}
                             IsStudent = {true}
@@ -161,6 +162,18 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
                 }}>Poxa! Você ainda não tem nenhuma atividade.. 😕</Typography>}
                 </Box>
             }
+            <ToastContainer
+                position='bottom-right'
+                autoClose={2600}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme='light'
+            />
             
         </>
     )

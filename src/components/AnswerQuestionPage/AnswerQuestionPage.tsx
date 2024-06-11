@@ -19,7 +19,6 @@
     const [completedQuestion, setCompletedQuestion] = useState<SendAnswerData>()
     const client = useClient()
     const { id } = useContext(AuthContext)
-    const [answered, setAnswered] = useState<boolean | undefined>(undefined)
 
     const classworkId = new URLSearchParams(useLocation().search).get('classWorkId') ?? ''
     const classroomId = new URLSearchParams(useLocation().search).get('classRoomId') ?? ''
@@ -40,7 +39,6 @@
 
     useEffect(() => {
       client.getClasworksByUserId(classroomId, id).then((res) => setClassworksAnswered(res))
-      setAnswered(classworksAnswered.find(classworkAnswered => classworkAnswered.id === classworkId)?.hasAnswered)
     }, [classworkId, id])
 
     useEffect(() => {
@@ -67,8 +65,6 @@
     return (
       <Layout>
         <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
-          {answered ? 
-            <Box>
               <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
                 <PageHeader title={classwork?.title} tab='atividades'/>
               </Box>
@@ -98,9 +94,6 @@
                   width: '96%',
                 }}
               >Finalizar</Button>
-            </Box>
-            : <Box>Você já respondeu essa atividade!</Box>
-          }
         </Box>
       </Layout>
     )
