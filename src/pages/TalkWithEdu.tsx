@@ -8,6 +8,7 @@ import useAiClient from '../lib/client/useAIClient'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 
 type Messages = {
   message: string
@@ -59,8 +60,8 @@ export default function TalkWithEdu() {
         <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
           <PageHeader title='Falando com o Edu' />
         </Box>
-        <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px', flexDirection: 'column'}}>
-          <Box sx={{ width: '100%', height: '80%', overflowY: 'scroll'}}>
+        <Box sx={{ width: '100%', height: '89%', display: 'flex', padding: '24px', flexDirection: 'column' }}>
+          <Box sx={{ width: '100%', height: '80%', overflowY: 'scroll' }}>
             {messages.map((message, index) => (
               <Box key={index}
                 sx={{
@@ -68,7 +69,7 @@ export default function TalkWithEdu() {
                   display: 'flex',
                   justifyContent: message.isUser ? 'flex-end' : 'flex-start',
                   marginBottom: '8px'
-                  }}>
+                }}>
                 <Box
                   sx={{
                     width: '50%',
@@ -76,7 +77,7 @@ export default function TalkWithEdu() {
                     borderRadius: '8px',
                     backgroundColor: message.isUser ? '#DED1FF' : '#6730EC',
                     color: message.isUser ? 'black' : 'white'
-                    }}>
+                  }}>
                   <Typography variant='body1'>
                     {message.message}
                   </Typography>
@@ -84,13 +85,18 @@ export default function TalkWithEdu() {
               </Box>
             ))}
           </Box>
-          <Box sx={{ width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <Box sx={{ width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', marginTop: '24px' }}>
             <TalkButton
               recording={recording || false}
               audioBlobUrl={audioBlobUrl}
               startRecording={startRecording}
               stopRecording={stopRecording}
             />
+            <Button
+              sx={{ width: '24vw', padding: '8px', borderRadius: '10px' }}
+              color='primary'
+              variant='text'
+            >Terminar conversa</Button>
           </Box>
         </Box>
       </Box>
