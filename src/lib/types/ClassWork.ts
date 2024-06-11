@@ -10,4 +10,5 @@ export type Classwork = {
   totalQuestions?: number
   questions: Question[]
   correctPercentage?: number
+  hasAnswered?: boolean
 }
