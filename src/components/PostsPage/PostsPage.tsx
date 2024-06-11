@@ -4,7 +4,7 @@ import Modal from '../Modal/Modal'
 import Box from '@mui/material/Box/Box'
 import Button from '@mui/material/Button/Button'
 import Post from '../Post/Post'
-import { LoadingButton } from '@mui/lab'
+import { LoadingButton, Skeleton } from '@mui/lab'
 import { useState, useEffect, useContext } from 'react'
 import { PostType } from '../../lib/types/Post'
 import useClient from '../../lib/client/useClient'
@@ -17,7 +17,7 @@ import { AuthContext } from '../../contexts/AuthContext'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-type  postsPageProps  = {
+type postsPageProps = {
     classroomId: string
 }
 
@@ -32,22 +32,23 @@ export default function PostsPage(props: postsPageProps) {
     const [description, setDescription] = useState('')
     const [file, setFile] = useState<File | null>(null)
     const [datePosting, setDatePosting] = useState('')
-    
+
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [modalIsLoading, setModalIsLoading] = useState(false)
+    const [postsLoading, setPostsLoading] = useState(true)
 
-    const sucessToast = (message : string) => {
+    const sucessToast = (message: string) => {
         toast.success(message, {
-          position: 'bottom-right',
-          autoClose: 2600,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-          })
-      }
+            position: 'bottom-right',
+            autoClose: 2600,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+        })
+    }
 
     useEffect(() => {
         setDatePosting(new Date().toISOString())
@@ -61,14 +62,17 @@ export default function PostsPage(props: postsPageProps) {
 
     const updatePosts = () => {
         if (classroomId) {
-            client.getPostsByClassroom(classroomId).then((data) => setPosts(data || []))
+            client.getPostsByClassroom(classroomId).then((data) => {
+                setPosts(data)
+                setPostsLoading(false)
+            })
         }
     }
 
     const createPost = async (title: string, description: string, datePosting: string, file: File): Promise<void> => {
         const formattedDatePosting = datePosting.split('T')[0]
         const post = await client.createPost({ title, description, datePosting: formattedDatePosting, classroomId }, file)
-        setPosts((prevPosts) => [{ ...post}, ...prevPosts])
+        setPosts((prevPosts) => [{ ...post }, ...prevPosts])
     }
 
     const createAPost = () => {
@@ -92,7 +96,7 @@ export default function PostsPage(props: postsPageProps) {
 
     return (
         <>
-            { role=='TEACHER' && <Modal
+            {role == 'TEACHER' && <Modal
                 variantButton='lg' titulo='Novo Post'
                 iconeReact={
                     <Box sx={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '8px' }}>
@@ -144,7 +148,7 @@ export default function PostsPage(props: postsPageProps) {
                     }
                     }>Cancelar</Button>
 
-                     <LoadingButton sx={{
+                    <LoadingButton sx={{
                         backgroundColor: '#6730EC',
                         color: 'white',
                         '&:hover': {
@@ -156,19 +160,25 @@ export default function PostsPage(props: postsPageProps) {
                         borderRadius: '10px',
                         fontWeight: 700
                     }} variant='contained' onClick={createAPost} loading={modalIsLoading}>Criar Post</LoadingButton>
-                    
+
                 </Box>
             </Modal>}
 
             <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column', overflow: 'auto' }}>
-                {Array.isArray(posts) && posts.length > 0 ? (
+                {Array.isArray(posts) && (
                     posts.map((post, index) => (
                         <Post key={index} id={post.id} datePosting={post.datePosting} title={post.title} description={post.description} file={post.file} updatePost={updatePosts} originalFileName={post.originalFileName} />
                     ))
-                ) : (
-                    <Typography variant="h6" align="center" sx={{
-                        fontSize: '16px',
-                    }}>Poxa! Nenhum post publicado ainda.. 😕</Typography>
+                )}
+                {posts.length === 0 && !postsLoading && (
+                    <Typography variant='h6' align='center' sx={{ fontSize: '16px' }}>
+                        Poxa! Nenhum post publicado ainda.. 😕
+                    </Typography>
+                )}
+                {postsLoading && (
+                    Array.from({ length: 3 }).map((_, index) => (
+                        <Skeleton variant='rounded' width={770} height={180} key={index} />
+                    ))
                 )}
             </Box>
             <ToastContainer
