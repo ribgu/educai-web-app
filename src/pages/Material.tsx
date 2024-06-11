@@ -1,9 +1,9 @@
-import { Box, Button, FormGroup, InputAdornment, Modal, TextField, Typography } from '@mui/material'
+import { Alert, Box, Button, FormGroup, InputAdornment, Modal, TextField, Typography } from '@mui/material'
 import Layout from './Layout'
 import CheckBox from '../components/CheckBox/CheckBox'
 import { IoChatbubblesOutline } from 'react-icons/io5'
 import { RiCloseFill, RiLink } from 'react-icons/ri'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FileInput from '../components/FileInput/FileInput'
 import { CiMusicNote1 } from 'react-icons/ci'
 import { LuFile } from 'react-icons/lu'
@@ -25,6 +25,7 @@ export default function Material() {
     const [documentoIsChecked, setDocumentoIsChecked] = useState<boolean>(false)
     const [linkYoutubeIsChecked, setLinkYoutubeIsChecked] = useState<boolean>(false)
     const [mp3IsChecked, setMp3IsChecked] = useState<boolean>(false)
+    const [error, setError] = useState<boolean>(false)
 
     const [openModal, setOpenModal] = useState<boolean>(false)
 
@@ -39,6 +40,7 @@ export default function Material() {
     }
 
     const handleClick = async () => {
+        setError(false)
         if (!instrucoes && !linkYoutube && !audio && !document) {
             setErrorMessage('Pelo menos uma entrada deve ser preenchida!')
             return
@@ -54,12 +56,16 @@ export default function Material() {
         instrucoesIsChecked && (payload = { ...payload, instructions: instrucoes })
 
         setOpenModal(true)
+        try {
 
-        const response = await client.generateEducationalMaterial(payload)
-        const pdfBlob = new Blob([response.data], { type: 'application/pdf' })
-        const pdfUrl = URL.createObjectURL(pdfBlob)
+            const response = await client.generateEducationalMaterial(payload)
+            const pdfBlob = new Blob([response.data], { type: 'application/pdf' })
+            const pdfUrl = URL.createObjectURL(pdfBlob)
+            setPdfLink(pdfUrl)
+        } catch (error) {
+            setError(true)
+        }
 
-        setPdfLink(pdfUrl)
     }
 
     const handleOnCloseModal = () => {
@@ -67,11 +73,17 @@ export default function Material() {
         setPdfLink('')
     }
 
+    useEffect(() => {
+        if (error) {
+            setOpenModal(false)
+        }
+    }, [error])
+
     return (
         <Layout>
             <Box sx={{ width: '100%', padding: '25px 100px', display: 'flex', flexDirection: 'column', alignItems: 'center', overflowY: 'auto' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-                    <img src="./Illustration/Edu-Robot.svg" alt="Robo do Educ.AI" />
+                    <img src='./Illustration/Edu-Robot.svg' alt='Robo do Educ.AI' />
                     <Box sx={{
                         width: '80%', display: 'flex', justifyItems: 'center', alignItems: 'center',
                         backgroundColor: '#F5F5F5', border: '1px solid #E2E2E2', borderRadius: '10px', padding: '15px'
@@ -89,10 +101,10 @@ export default function Material() {
 
                     <FormGroup>
                         <Box sx={{ display: 'flex', gap: '10px' }}>
-                            <CheckBox checked={instrucoesIsChecked} setChecked={setInstrucoesIsChecked} label="Instruções" />
-                            <CheckBox checked={linkYoutubeIsChecked} setChecked={setLinkYoutubeIsChecked} label="Link Youtube" />
-                            <CheckBox checked={mp3IsChecked} setChecked={setMp3IsChecked} label="MP3" />
-                            <CheckBox checked={documentoIsChecked} setChecked={setDocumentoIsChecked} label="Documento" />
+                            <CheckBox checked={instrucoesIsChecked} setChecked={setInstrucoesIsChecked} label='Instruções' />
+                            <CheckBox checked={linkYoutubeIsChecked} setChecked={setLinkYoutubeIsChecked} label='Link Youtube' />
+                            <CheckBox checked={mp3IsChecked} setChecked={setMp3IsChecked} label='MP3' />
+                            <CheckBox checked={documentoIsChecked} setChecked={setDocumentoIsChecked} label='Documento' />
                         </Box>
                     </FormGroup>
                 </Box>
@@ -116,7 +128,7 @@ export default function Material() {
                         rows={3}
                         InputProps={{
                             startAdornment:
-                                <InputAdornment position="start" sx={{ marginBottom: 'auto', marginTop: '10px' }}>
+                                <InputAdornment position='start' sx={{ marginBottom: 'auto', marginTop: '10px' }}>
                                     <IoChatbubblesOutline size={22} color='#7750DE' />
                                 </InputAdornment>,
                             sx: { borderRadius: 2 }
@@ -129,7 +141,7 @@ export default function Material() {
                         onChange={(event) => handleValueChange(event.target.value, setLinkYoutube)}
                         InputProps={{
                             startAdornment:
-                                <InputAdornment position="start">
+                                <InputAdornment position='start'>
                                     <RiLink size={22} color='#7750DE' />
                                 </InputAdornment>,
                             sx: { borderRadius: 2 }
@@ -169,7 +181,7 @@ export default function Material() {
 
                 <Button
                     onClick={handleClick}
-                    variant="contained"
+                    variant='contained'
                     sx={{
                         width: '70%',
                         marginTop: '26px',
@@ -179,16 +191,16 @@ export default function Material() {
 
             <Modal open={openModal} onClose={handleOnCloseModal}>
                 <Box
-                sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
+                    sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
                     {!pdfLink && <Box sx={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -201,7 +213,7 @@ export default function Material() {
                         height: '200px',
                         borderRadius: '10px',
                     }}>
-                        <img src="./Illustration/Edu-Robot.svg" alt="Robo do Educ.AI" />
+                        <img src='./Illustration/Edu-Robot.svg' alt='Edu' />
                         <Box>
                             <Typography sx={{ color: '#7750DE', fontWeight: 600, fontSize: 18, marginLeft: '12px', textAlign: 'center' }}>
                                 Gerando
@@ -231,12 +243,13 @@ export default function Material() {
                             height: '200px',
                             borderRadius: '10px',
                         }}>
-                            <RiCloseFill size={25} style={{ 
-                                position: 'absolute', 
-                                marginTop: '-145px', 
-                                marginRight: '-340px', 
+                            <RiCloseFill size={25} style={{
+                                position: 'absolute',
+                                marginTop: '-145px',
+                                marginRight: '-340px',
                                 cursor: 'pointer',
-                                color: '#545454' }}
+                                color: '#545454'
+                            }}
                                 onClick={handleOnCloseModal}
                             />
                             <Typography sx={{
@@ -276,6 +289,11 @@ export default function Material() {
                     }
                 </Box>
             </Modal>
+            {error && (
+                <Alert variant='outlined' severity='error' sx={{ position: 'absolute', bottom: 0, marginLeft: '20px', marginBottom: '20px' }}>
+                    Ocorreu um erro ao gerar o material didático. Tente novamente.
+                </Alert>
+            )}
         </Layout>
     )
 }
