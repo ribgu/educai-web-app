@@ -7,7 +7,7 @@ export type Classwork = {
   endDate: string
   description: string
   totalAnswers?: number
-  totalQuestions: number
+  totalQuestions?: number
   questions: Question[]
-  correctPercentage: number
+  correctPercentage?: number
 }
