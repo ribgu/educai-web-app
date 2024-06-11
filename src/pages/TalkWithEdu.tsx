@@ -20,8 +20,7 @@ export default function TalkWithEdu() {
   const { recording, audioBlobUrl, startRecording, stopRecording } = useAudioRecorder()
   const { username } = useContext(AuthContext)
   const [transcription, setTranscription] = useState<string>('')
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [response, setResponse] = useState<string>()
   const client = useAiClient()
   const [messages, setMessages] = useState<Messages[]>([])
@@ -100,6 +99,7 @@ export default function TalkWithEdu() {
           </Box>
           <Box sx={{ width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', marginTop: '24px' }}>
             <TalkButton
+              loading={isLoading}
               recording={recording || false}
               audioBlobUrl={audioBlobUrl}
               startRecording={startRecording}
@@ -117,7 +117,7 @@ export default function TalkWithEdu() {
                 style={{ color: '#7750DE', fontWeight: 400, fontSize: 14, textDecoration: 'underline' }}
                 href={pdfLink}
                 download={`feedback-${username}-${new Date().toLocaleDateString('pt-BR').split('/').reverse().join('-')}.pdf`}>
-                Clique aqui para fazer o download
+                Clique aqui para ver o seu feedback
               </a>
             )}
           </Box>
