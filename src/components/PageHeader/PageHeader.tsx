@@ -26,10 +26,11 @@ type PageHeaderProps = {
   }
   tab?: Tab
   classroomId?: string
+  iconPath?: string
 }
 
 export default function PageHeader(PageHeaderProps: PageHeaderProps) {
-  const { title, showButton, search, createClassroom } = PageHeaderProps
+  const { title, showButton, search, createClassroom, iconPath } = PageHeaderProps
 
   const tabName: { [key: string]: Tab } = {
     posts: 'posts',
@@ -80,7 +81,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
         justifyContent: 'space-between'
       }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <img src='/iconsPages/turma.svg' alt='Pessoas agrupadas' />
+          <img src={iconPath ? iconPath :'/iconsPages/turma.svg'} alt='Pessoas agrupadas' />
           <Typography variant='h5' sx={{
             fontWeight: '700'
           }}>
