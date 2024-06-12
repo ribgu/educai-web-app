@@ -189,7 +189,7 @@ export default function Material() {
                     }}>Gerar Material Didático</Button>
             </Box>
 
-            <Modal open={openModal} onClose={handleOnCloseModal}>
+            <Modal open={openModal} onClose={handleOnCloseModal} sx={{ zIndex: 100000 }}>
                 <Box
                     sx={{
                         position: 'absolute',

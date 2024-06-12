@@ -82,7 +82,7 @@ export default function BasicModal(props: ModalProps) {
           </Typography>
         </Button>
       )}
-      <Modal open={showModal} onClose={onClose}>
+      <Modal open={showModal} onClose={onClose} sx={{ zIndex: '100000' }}>
         <Box
           sx={{
             position: 'absolute',
@@ -102,7 +102,7 @@ export default function BasicModal(props: ModalProps) {
             overflowY: 'auto',
             zIndex: 10001,
             '&::-webkit-scrollbar-track': {
-              border: 0 
+              border: 0
             }
           }}
         >

@@ -150,7 +150,7 @@ export default function CriarAtividade(props: QuestionProps) {
     if (classroomId) {
       client.getClassroomById(classroomId).then((res) => setTurma(res))
     }
-  }, [classroomId])
+  }, [classroomId, client])
 
   const handleAddQuestion = (question?: QuestionType) => {
     if(question) {

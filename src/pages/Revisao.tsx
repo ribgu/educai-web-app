@@ -19,7 +19,7 @@ export default function Revisao() {
 		}else{
 			client.getUserAnswers(classworkId, auth.id).then((res) => setClasswork(res))
 		}
-	}, [])
+	}, [classworkId, client, auth])
 
 	const getQuestionColor = (questionId?: string, currentOptionKey?: string): string => {
 		const correctKey = classwork?.classwork.questions.find(question => question.id === questionId)?.correctAnswerKey
