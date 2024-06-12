@@ -55,15 +55,15 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
             client.getClassWorksByClassroom(classRoomId).then((res) => {
                 if (res) {
                     setClassWorks(res)
-                    setLoading(false)
-                }
+                    }
+                setLoading(false)
             })
         } else {
             client.getClassWorksByClassroom(classRoomId, id).then((res) => {
                 if (res) {
                     setClassWorks(res)
-                    setLoading(false)
-                }
+                    }
+                setLoading(false)
             })
         }
     }, [])

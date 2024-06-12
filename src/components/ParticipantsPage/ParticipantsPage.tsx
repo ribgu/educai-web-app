@@ -7,11 +7,12 @@ import { useContext, useEffect, useState } from 'react'
 import useClient from '../../lib/client/useClient'
 import Participant from '../Participant/Participant'
 import { Participant as ParticipantType } from '../../lib/types/Participant'
-import { Button, MenuItem, Skeleton, TextField } from '@mui/material'
+import { MenuItem, Skeleton, TextField } from '@mui/material'
 import { AuthContext } from '../../contexts/AuthContext'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
+import { LoadingButton } from '@mui/lab'
 
 type ParticipantsPageProps = {
     classroomId: string
@@ -26,6 +27,7 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
     const [newParticipantName, setNewParticipantName] = useState('')
     const [newParticipantEmail, setNewParticipantEmail] = useState('')
     const [newParticipantRole, setNewParticipantRole] = useState('STUDENT')
+    const [inviteLoading, setInviteLoading] = useState(false)
     const [loading, setLoading] = useState(true)
 
     const client = useClient()
@@ -57,6 +59,7 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
     }
 
     const handleAddParticipant = async () => {
+        setInviteLoading(true)
         const participant = {
             name: newParticipantName,
             email: newParticipantEmail,
@@ -66,6 +69,7 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
         handleCleanFields()
         setModalIsOpen(false)
         navigate(0)
+        setInviteLoading(false)
         sucessToast('Integrante conviado com sucesso!')
     }
 
@@ -107,9 +111,14 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
                     <MenuItem value='STUDENT'>Aluno</MenuItem>
                     <MenuItem value='TEACHER'>Professor</MenuItem>
                 </TextField>
-                <Button variant='contained' sx={{ width: '100%', marginTop: '10px' }} onClick={handleAddParticipant}>
+                <LoadingButton
+                    variant='contained'
+                    sx={{ width: '100%', marginTop: '10px' }}
+                    onClick={handleAddParticipant}
+                    loading={inviteLoading}
+                    >
                     Convidar
-                </Button>
+                </LoadingButton>
             </BasicModal>}
             <Box sx={{ width: '100%', flexDirection: 'collumn', alignItems: 'center', justifyContent: 'space-evenly', border: '1px solid #BEBEBE', borderRadius: '10px', padding: '8px', height: '90%' }}>
                 <Box sx={{ width: '100%', padding: '10px' }}>

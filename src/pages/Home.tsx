@@ -10,7 +10,7 @@ import { AuthContext } from '../contexts/AuthContext'
 import { TurmaType, TurmasType } from '../lib/types/Turma'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { Skeleton } from '@mui/material'
+import { Skeleton, Typography } from '@mui/material'
 
 export default function Home() {
   const { role } = useContext(AuthContext)
@@ -152,6 +152,11 @@ export default function Home() {
               <Skeleton variant='rounded' width='95%' height={120} key={index} />
             )
           ))}
+          {turmas.length === 0 && !loading && (
+            <Typography variant='h6' align='center' sx={{ fontSize: '16px' }}>
+              Poxa! Nenhuma turma encontrada.. 😕
+            </Typography>
+          )}
           {
             turmaSearch &&
             <Turma
