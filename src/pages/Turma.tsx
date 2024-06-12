@@ -35,7 +35,7 @@ export default function Turma() {
     <Layout>
       <Box sx={{ width: '100%', overflowY: 'auto' }} >
         <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
-          <PageHeader title={turma?.title} />
+          <PageHeader title={tab == 'revisao' ? 'Revisão questionário' : turma?.title} iconPath={tab == 'revisao' ? '/iconsPages/bookIcon.svg' : undefined}/>
         </Box>
 
         {tab === 'criar-atividade' && (

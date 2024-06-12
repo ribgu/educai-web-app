@@ -10,4 +10,8 @@ export const AuthContext = createContext<Auth>({
 	updateAuthData: function (): void {
 		throw new Error('Function not implemented.')
 	},
+	setStudentTeacher: function (id: string): void {
+		this.student = id
+	},
+	student: undefined
 })

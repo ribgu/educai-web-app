@@ -25,10 +25,12 @@ type PageHeaderProps = {
     onSearch: () => void
   }
   tab?: Tab
+  classroomId?: string
+  iconPath?: string
 }
 
 export default function PageHeader(PageHeaderProps: PageHeaderProps) {
-  const { title, showButton, search, createClassroom } = PageHeaderProps
+  const { title, showButton, search, createClassroom, iconPath } = PageHeaderProps
 
   const tabName: { [key: string]: Tab } = {
     posts: 'posts',
@@ -37,7 +39,8 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
     'criar-atividade': 'atividades',
     'criar-atividade-ia': 'atividades',
     'revisao': 'atividades',
-    'responder-atividade': 'atividades'
+    'responder-atividade': 'atividades',
+    'listagem-atividade': 'atividades'
   }
 
   const actualTab = PageHeaderProps.tab ? PageHeaderProps.tab : new URLSearchParams(window.location.search).get('tab')
@@ -47,6 +50,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
   const [subject, setSubject] = useState('')
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [modalIsLoading, setModalIsLoading] = useState(false)
+  const classroomId = PageHeaderProps.classroomId
 
   const createClass = () => {
     if(name && subject && createClassroom) {
@@ -62,7 +66,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
 
   const handleChange = (_e: React.SyntheticEvent, newTab: Tab) => {
     const url = new URL(window.location.href)
-    navigate(`${url.pathname}?tab=${newTab}`)
+    classroomId ? navigate(`/turma/${classroomId}?tab=${newTab}`) : navigate(`${url.pathname}?tab=${newTab}`)
     setTab(newTab)
   }
 
@@ -77,7 +81,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
         justifyContent: 'space-between'
       }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <img src='/iconsPages/turma.svg' alt='Pessoas agrupadas' />
+          <img src={iconPath ? iconPath :'/iconsPages/turma.svg'} alt='Pessoas agrupadas' />
           <Typography variant='h5' sx={{
             fontWeight: '700'
           }}>
