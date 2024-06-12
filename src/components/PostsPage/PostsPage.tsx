@@ -177,7 +177,7 @@ export default function PostsPage(props: postsPageProps) {
                 )}
                 {postsLoading && (
                     Array.from({ length: 3 }).map((_, index) => (
-                        <Skeleton variant='rounded' width={770} height={180} key={index} />
+                        <Skeleton variant='rounded' width='100%' height={180} key={index} />
                     ))
                 )}
             </Box>

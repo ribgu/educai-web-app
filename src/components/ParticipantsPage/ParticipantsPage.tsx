@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from 'react'
 import useClient from '../../lib/client/useClient'
 import Participant from '../Participant/Participant'
 import { Participant as ParticipantType } from '../../lib/types/Participant'
-import { Button, MenuItem, TextField } from '@mui/material'
+import { Button, MenuItem, Skeleton, TextField } from '@mui/material'
 import { AuthContext } from '../../contexts/AuthContext'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -26,28 +26,29 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
     const [newParticipantName, setNewParticipantName] = useState('')
     const [newParticipantEmail, setNewParticipantEmail] = useState('')
     const [newParticipantRole, setNewParticipantRole] = useState('STUDENT')
+    const [loading, setLoading] = useState(true)
 
     const client = useClient()
 
     useEffect(() => {
         client.getParticipantsById(classroomId).then((res: any) => {
             setParticipants(res)
-            console.log(res)
+            setLoading(false)
         })
     }, [classroomId])
 
-    const sucessToast = (message : string) => {
+    const sucessToast = (message: string) => {
         toast.success(message, {
-          position: 'bottom-right',
-          autoClose: 2600,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-          })
-      }
+            position: 'bottom-right',
+            autoClose: 2600,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+        })
+    }
 
     const handleCleanFields = () => {
         setNewParticipantName('')
@@ -94,7 +95,7 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
                     fullWidth
                     value={newParticipantEmail}
                     onChange={(e) => setNewParticipantEmail(e.target.value)}
-                    />
+                />
                 <TextField
                     select
                     label='Tipo'
@@ -125,6 +126,12 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
                                 )
                             }
                         })}
+                        {loading && (
+                            <Box sx={{ display: 'flex', gap: '10px' }}>
+                                <Skeleton variant='circular' width={40} height={40} />
+                                <Skeleton variant='text' sx={{ fontSize: '1rem' }} width='20%' />
+                            </Box>
+                        )}
                     </Box>
                 </Box>
                 <Box sx={{ width: '100%', padding: '10px' }}>
@@ -141,6 +148,12 @@ export default function ParticipantsPage(props: ParticipantsPageProps) {
                                 )
                             }
                         })}
+                        {loading && Array.from({ length: 5 }).map((_, index) => (
+                            <Box sx={{ display: 'flex', gap: '10px', marginTop: '8px' }} key={index}>
+                                <Skeleton variant='circular' width={40} height={40} />
+                                <Skeleton variant='text' sx={{ fontSize: '1rem' }} width='20%' />
+                            </Box>
+                        ))}
                     </Box>
                 </Box>
             </Box>
