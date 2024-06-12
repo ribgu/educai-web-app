@@ -25,6 +25,7 @@ type PageHeaderProps = {
     onSearch: () => void
   }
   tab?: Tab
+  classroomId?: string
 }
 
 export default function PageHeader(PageHeaderProps: PageHeaderProps) {
@@ -37,7 +38,8 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
     'criar-atividade': 'atividades',
     'criar-atividade-ia': 'atividades',
     'revisao': 'atividades',
-    'responder-atividade': 'atividades'
+    'responder-atividade': 'atividades',
+    'listagem-atividade': 'atividades'
   }
 
   const actualTab = PageHeaderProps.tab ? PageHeaderProps.tab : new URLSearchParams(window.location.search).get('tab')
@@ -47,6 +49,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
   const [subject, setSubject] = useState('')
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [modalIsLoading, setModalIsLoading] = useState(false)
+  const classroomId = PageHeaderProps.classroomId
 
   const createClass = () => {
     if(name && subject && createClassroom) {
@@ -62,7 +65,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
 
   const handleChange = (_e: React.SyntheticEvent, newTab: Tab) => {
     const url = new URL(window.location.href)
-    navigate(`${url.pathname}?tab=${newTab}`)
+    classroomId ? navigate(`/turma/${classroomId}?tab=${newTab}`) : navigate(`${url.pathname}?tab=${newTab}`)
     setTab(newTab)
   }
 
