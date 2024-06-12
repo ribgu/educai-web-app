@@ -97,7 +97,13 @@ export default function BasicModal(props: ModalProps) {
             borderRadius: 8,
             boxShadow: 24,
             p: 5,
-            gap: '10px'
+            gap: '10px',
+            maxHeight: '95vh',
+            overflowY: 'auto',
+            zIndex: 10001,
+            '&::-webkit-scrollbar-track': {
+              border: 0 
+            }
           }}
         >
           <Box

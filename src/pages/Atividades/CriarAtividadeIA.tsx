@@ -156,7 +156,7 @@ export default function CriarAtividadeIA() {
 					textoBotaoAbrirModal='Nova Atividade'
 					altIcone='Nova Atividade'
 					variantButton='none'
-					width='40%'
+					width='50%'
 					iconeReact={
 						<Box sx={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '8px' }}>
 							<TbSchool color='#341069' size={30} />
