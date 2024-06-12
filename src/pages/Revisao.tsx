@@ -8,14 +8,17 @@ import { ReviewClasswork } from '../lib/types/ReviewClasswork'
 import { formatDate } from '../utils/formartDate'
 
 export default function Revisao() {
-	const { id } = useContext(AuthContext)
+	const auth= useContext(AuthContext)
 	const client = useClient()
 	const classworkId = new URLSearchParams(useLocation().search).get('classWorkId') ?? ''
-
 	const [classwork, setClasswork] = useState<ReviewClasswork>()
 
 	useEffect(() => {
-		client.getUserAnswers(classworkId, id).then((res) => setClasswork(res))
+		if(auth.role == 'TEACHER' && auth.student) {
+			client.getUserAnswers(classworkId, auth.student).then((res) => setClasswork(res))
+		}else{
+			client.getUserAnswers(classworkId, auth.id).then((res) => setClasswork(res))
+		}
 	}, [])
 
 	const getQuestionColor = (questionId?: string, currentOptionKey?: string): string => {
@@ -54,7 +57,7 @@ export default function Revisao() {
 	
 	return (
 		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '16px 42px' }}>
-			<Typography sx={{ fontSize: 18, fontWeight: 800 }}>Revisão Questionário</Typography>
+			<Typography sx={{ fontSize: 18, fontWeight: 800 }}>{classwork?.classwork.title}</Typography>
 
 			<Box sx={{ border: '1px solid #BEBEBE', borderRadius: '10px', padding: '16px' }}>
 				<Box sx={{ display: 'flex', gap: '4px' }}>

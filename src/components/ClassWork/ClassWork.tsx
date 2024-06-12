@@ -35,7 +35,7 @@ export default function ClassWork(props: ClassWorkProps) {
     }
 
     return (
-        <Box sx={{ width: '100%', height: '30vh', border: '1px solid #BEBEBE', borderRadius: '10px' }}>
+        <Box sx={{ width: '100%', height: '30vh', border: '1px solid #BEBEBE', borderRadius: '10px', cursor:'pointer' }}>
             <Box sx={{
                 width: '100%',
                 height: '20%',

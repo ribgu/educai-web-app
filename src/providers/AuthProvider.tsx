@@ -22,6 +22,7 @@ const AuthProvider = ({ children }: Props) => {
 	const [id, setId] = useState(tokenDecoded?.id ?? '')
 	const [username, setUsername] = useState(tokenDecoded?.username ?? '')
 	const [role, setRole] = useState<Role>(tokenDecoded?.role ?? '')
+	const [student, setStudent] = useState<string | undefined>(undefined)
 	const navigate = useNavigate()
 	const client = useClient()
 
@@ -33,6 +34,10 @@ const AuthProvider = ({ children }: Props) => {
 		setToken(newToken)
 		setUsername(tokenDecoded.username)
 		sessionStorage.setItem('token', newToken)
+	}
+
+	const setStudentTeacher = (studentId: string) => {
+		setStudent(studentId)
 	}
 
 	useEffect(() => {
@@ -48,7 +53,7 @@ const AuthProvider = ({ children }: Props) => {
 	}, [token])
 
 	return (
-		<AuthContext.Provider value={{ id, role, username, token, updateAuthData }}>
+		<AuthContext.Provider value={{ id, role, username, token, updateAuthData, student, setStudentTeacher}}>
 			{token !== '' ? 
 				children 
 				: 
