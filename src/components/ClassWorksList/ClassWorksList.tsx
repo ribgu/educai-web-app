@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import useClient from '../../lib/client/useClient'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { UsersType } from '../../lib/types/User'
 import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
@@ -9,6 +9,8 @@ import { Classwork } from '../../lib/types/ClassWork'
 import Layout from '../../pages/Layout'
 import PageHeader from '../PageHeader/PageHeader'
 import { Skeleton } from '@mui/material'
+import { AuthContext } from '../../contexts/AuthContext'
+import { ToastContainer, toast } from 'react-toastify'
 
 export default function ClassworkList() {
   const client = useClient()
@@ -20,6 +22,8 @@ export default function ClassworkList() {
   const [answered, setAnswered] = useState<UsersType>([])
   const [classwork, setClasswork] = useState<Classwork>()
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
+  const auth = useContext(AuthContext)
 
   useEffect(() => {
     const answers = client.getAnswersStatus(classworkId)
@@ -34,7 +38,7 @@ export default function ClassworkList() {
     <Layout>
       <Box sx={{ width: '100%', display:'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
-            <PageHeader title={classwork?.title} tab='atividades' classroomId={classroomId} />
+            <PageHeader title={classwork?.title} tab='atividades' classroomId={classroomId} iconPath='/iconsPages/bookIcon.svg' />
         </Box>
         <Box
           sx={{
@@ -70,7 +74,7 @@ export default function ClassworkList() {
         <Box
           sx={{
             width: '95%',
-            height: '80%',
+            height: '75%',
             border: '2px solid #BEBEBE',
             borderRadius: '10px',
             display: 'flex',
@@ -86,7 +90,18 @@ export default function ClassworkList() {
                 display: 'flex',
                 alignItems: 'center',
                 backgroundColor: index % 2 === 0 ? '#FBF9F9' : 'white',
+                cursor:'pointer'
               }}
+              onClick={() => {
+                if(answer.hasAnswered){
+                  if(auth.role === 'TEACHER' && auth.setStudentTeacher){
+                    auth.setStudentTeacher(answer.user.id)
+                  }
+                  navigate(`/turma/${classroomId}?tab=revisao&classWorkId=${classworkId}`)
+                } else {
+                  toast.warn('O aluno ainda não enviou a atividade')
+                }
+              }} 
             >
               <Box
                 sx={{
@@ -138,6 +153,18 @@ export default function ClassworkList() {
         }
         </Box>
       </Box>
+      <ToastContainer
+                position='bottom-right'
+                autoClose={2600}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme='light'
+      />
     </Layout>
   )
 }

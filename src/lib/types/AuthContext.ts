@@ -7,4 +7,6 @@ export type Auth = {
     username: string
     token: string
     updateAuthData: (newToken: string) => void
+    setStudentTeacher?: (student: string) => void;
+    student: string | undefined
 }
