@@ -74,7 +74,7 @@ export default function ClassworkList() {
         <Box
           sx={{
             width: '95%',
-            height: '80%',
+            height: '75%',
             border: '2px solid #BEBEBE',
             borderRadius: '10px',
             display: 'flex',
