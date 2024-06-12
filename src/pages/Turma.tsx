@@ -80,9 +80,7 @@ export default function Turma() {
                 <PostsPage classroomId={id} />
               )}
               {tab === 'atividades' && (
-                <ClassWorksPage
-                  classRoomId={id as string}
-                />
+                <ClassWorksPage classRoomId={id as string} />
               )}
               {tab === 'pessoas' && (
                 <ParticipantsPage classroomId={id as string} />
