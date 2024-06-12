@@ -74,6 +74,28 @@ export default function ClassWork(props: ClassWorkProps) {
             <Box sx={{ width: '100%', height: '80%', padding: '8px', display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '10px' }}>
                 <Box sx={{ width: '50%', height: '100%', padding: '8px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
                     <Typography sx={{width: '100%', height: '20%', padding: '8px', justifySelf: 'flex-start', color: '#5E5E5E'}}>Data de publicação: <b style={{fontSize: '16px', color: '#5E5E5E'}}>{formatDate(ClassWork.datePosting)}</b></Typography>
+                    <Box sx={{
+                        display: 'flex',
+                        padding: '8px',
+                        gap: '8px',
+                        alignItems: 'center'
+                    }}>
+                    <Typography sx={{color: '#5E5E5E'}}>Status:</Typography>
+                    {role === 'STUDENT' && ClassWork.hasAnswered ? (
+                    <img 
+                        style={{width: '16px', height: '16px'}}
+                        src='/iconsPages/sent.svg'
+                        alt='Ícone que indica que atividade foi enviada'
+                    />
+                    ) : (
+                    <img 
+                        style={{width: '16px', height: '16px'}}
+                        src='/iconsPages/waiting.svg'
+                        alt='Ícone que indica que atividade não foi enviada'
+                    />
+                    )}
+                    <Typography sx={{color: '#5e5e5e', fontWeight: 'bold'}}>{ClassWork.hasAnswered ? 'Enviado' : 'Pendente'}</Typography>
+                    </Box>
                     {ClassWork.description && <Typography sx={{ width: '100%', fontSize: '14px', padding: '8px', justifySelf: 'center',textAlign: 'justify', color: '#5E5E5E' }}>{ClassWork.description}</Typography>}
                 </Box>
                 <Box sx={{ width: '50%', height: '100%', padding: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px' }}>
@@ -81,6 +103,11 @@ export default function ClassWork(props: ClassWorkProps) {
                     <Divider sx={{ borderBottomWidth: 2, borderColor: '#5E5E5E', borderRadius: '1px'}}/>
                     {role === 'TEACHER' && <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem', gap: '10px'}}>{ClassWork.totalAnswers}</b> ALUNOS ENTREGARAM</Typography>}
                     {role === 'STUDENT' && ClassWork.hasAnswered && <Typography sx={{ display: 'flex', alignItems: 'center',  gap: '10px' }} ><b style={{fontSize:'2rem', gap: '10px'}}>{ClassWork.correctPercentage && ClassWork.totalQuestions && ((ClassWork.correctPercentage/100) * ClassWork.totalQuestions).toFixed(0)}/{ClassWork.totalQuestions}</b> acertos</Typography>}
+                    {role === 'STUDENT' && !ClassWork.hasAnswered && (
+                        <Typography sx={{ fontWeight: 'bold', fontSize: '24px' }}>
+                            N/A
+                        </Typography>
+                        )}
                 </Box>
             </Box>
         </Box>
