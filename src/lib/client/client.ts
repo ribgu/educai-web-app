@@ -17,6 +17,7 @@ import { Messages } from '../../pages/TalkWithEdu'
 type ClientProps = {
   clientType: 'ia-api' | 'api',
   clientToken: string
+  updateAuthData: (newToken: string) => void
 }
 
 export default class Client {
@@ -49,7 +50,7 @@ export default class Client {
 
           return this.refreshToken().then(response => {
             this.clientProps.clientToken = response.data.token
-            sessionStorage.setItem('token', response.data.token)
+            this.clientProps.updateAuthData(response.data.token)
 
             return this.axios(originalRequest)
           }).catch(errorToken => {
