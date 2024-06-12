@@ -55,7 +55,7 @@ export default function Leaderboard() {
       }}>
         <Typography variant='subtitle2'>#</Typography>
         <Typography variant='subtitle2'>Nome</Typography>
-        <Typography variant='subtitle2'>Questões</Typography>
+        <Typography variant='subtitle2'>Pontuação</Typography>
       </Box>
       <Box sx={{
         width: '100%',
