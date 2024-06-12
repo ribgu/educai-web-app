@@ -18,15 +18,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Bump version and push tag
-      id: tag_version
-      uses: mathieudutour/github-tag-action@v5.6
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        default_bump: patch
-        initial_version: '1.0.0' # Sets the initial version if no tags exist
-        release_branches: main  # Ensures tags are only pushed on the main branch
-
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
@@ -48,6 +39,15 @@ jobs:
         path: |
           dist/
           nginx.conf
+
+    - name: Bump version and push tag
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v5.6
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        default_bump: patch
+        initial_version: '1.0.0' # Sets the initial version if no tags exist
+        release_branches: main  # Ensures tags are only pushed on the main branch
 
   CD:
     needs: [CI]
