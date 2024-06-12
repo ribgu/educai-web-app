@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Typography from '@mui/material/Typography'
 import { AuthContext } from '../contexts/AuthContext'
 import { LoadingButton } from '@mui/lab'
+import axios from 'axios'
 
 export type Messages = {
   message: string
@@ -26,6 +27,36 @@ export default function TalkWithEdu() {
   const [messages, setMessages] = useState<Messages[]>([])
   const [pdfLink, setPdfLink] = useState<string>('')
   const [isFeedbackLoading, setFeedbackLoading] = useState<boolean>(false)
+
+  const fetchTTS = async (text: string) => {
+    const response = await axios.post(
+      'https://api.openai.com/v1/audio/speech',
+      {
+        model: 'tts-1',
+        input: text,
+        voice: 'onyx'
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        responseType: 'blob'
+      }
+    )
+
+    if (response.status !== 200) {
+      throw new Error('Erro ao obter áudio da API')
+    }
+
+    const url = URL.createObjectURL(response.data)
+    return url
+  }
+
+  const playAudio = (audioUrl: string) => {
+    const audio = new Audio(audioUrl)
+    audio.play()
+  }
 
   const handleSendAudioToEdu = async () => {
     setResponse('')
@@ -54,6 +85,7 @@ export default function TalkWithEdu() {
     }
     if (response) {
       setMessages([...messages, { message: response, isUser: false }])
+      fetchTTS(response).then(playAudio).catch(console.error)
     }
   }, [transcription, response])
 
