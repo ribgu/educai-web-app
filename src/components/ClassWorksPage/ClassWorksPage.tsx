@@ -13,6 +13,7 @@ import { FaBook } from 'react-icons/fa'
 import useClient from '../../lib/client/useClient'
 import { Classwork } from '../../lib/types/ClassWork'
 import { AuthContext } from '../../contexts/AuthContext'
+import { Skeleton } from '@mui/material'
 
 type ClassWorksPageProps = {
     classRoomId: string
@@ -24,6 +25,7 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
     const navigate = useNavigate()
     const client = useClient()
     const [classWorks, setClassWorks] = useState<Classwork[]>([])
+    const [loading, setLoading] = useState(true)
     const { role, id } = useContext(AuthContext)
 
     const handleManualCreate = () => {
@@ -32,13 +34,13 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
     }
 
     const onSelectAtividade = (atividade: any) => {
-        if(role === 'STUDENT') {
-            if(atividade.hasAnswered) {
+        if (role === 'STUDENT') {
+            if (atividade.hasAnswered) {
                 navigate(`/turma/${classRoomId}?tab=revisao&classWorkId=${atividade.id}`)
             } else {
                 navigate(`/turma/${classRoomId}?tab=responder-atividade&classRoomId=${classRoomId}&classWorkId=${atividade.id}`)
             }
-        } else{
+        } else {
             navigate(`/turma/visualizar-atividade/?classRoomId=${classRoomId}&classWorkId=${atividade.id}`)
         }
     }
@@ -49,16 +51,18 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
     }
 
     useEffect(() => {
-        if(role ==='TEACHER') {
+        if (role === 'TEACHER') {
             client.getClassWorksByClassroom(classRoomId).then((res) => {
-                if(res) {
+                if (res) {
                     setClassWorks(res)
+                    setLoading(false)
                 }
             })
         } else {
             client.getClassWorksByClassroom(classRoomId, id).then((res) => {
-                if(res) {
+                if (res) {
                     setClassWorks(res)
+                    setLoading(false)
                 }
             })
         }
@@ -137,15 +141,25 @@ export default function ClassWorksPage(props: ClassWorksPageProps) {
             </Modal>}
 
             <Box sx={{ display: 'flex', gap: '16px', flexDirection: 'column', overflow: 'auto' }}>
-                {classWorks ? classWorks.map((classWork, index) => (
+                {classWorks && classWorks.map((classWork, index) => (
                     <Box key={index} onClick={() => onSelectAtividade(classWork)}>
                         <Atividade
                             ClassWork={classWork}
                         />
                     </Box>
-                )) : <Typography variant="h6" align="center" sx={{
-                    fontSize: '16px',
-                }}>Poxa! Você ainda não tem nenhuma atividade.. 😕</Typography>}
+                ))}
+                {classWorks.length === 0 && !loading && (
+                    <Typography variant='h6' align='center' sx={{ fontSize: '16px' }}>
+                        Poxa! Nenhum post publicado ainda.. 😕
+                    </Typography>
+                )}
+                {loading && (
+                    Array.from({ length: 3 }).map((_, index) => (
+                        <Box key={index}>
+                            <Skeleton variant='rounded' width='100%' height={180} key={index} />
+                        </Box>
+                    ))
+                )}
             </Box>
         </>
     )

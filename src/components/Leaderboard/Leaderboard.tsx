@@ -6,15 +6,22 @@ import { useEffect, useState } from 'react'
 import { LeaderboardType } from '../../lib/types/Leaderboard'
 import useClient from '../../lib/client/useClient'
 import { useParams } from 'react-router-dom'
+import { Skeleton } from '@mui/material'
 
 export default function Leaderboard() {
   const client = useClient()
   const { id } = useParams()
   const [leaderboard, setLeaderboard] = useState<LeaderboardType>()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (id) {
-      client.getLeaderboard(id).then(setLeaderboard)
+      client.getLeaderboard(id).then((res) => {
+        if (res) {
+          setLeaderboard(res)
+          setLoading(false)
+        }
+      })
     }
   }, [id])
 
@@ -60,20 +67,18 @@ export default function Leaderboard() {
         gap: '10px',
       }}>
 
-        {leaderboard && leaderboard.length > 0 ? (
-          leaderboard.map((leaderboard, index) => (
-            <CardLeaderboard
-              key={leaderboard.id}
-              nome={leaderboard.name}
-              foto={leaderboard.profilePicture || '/iconsPages/iconUser.png'}
-              posicao={index + 1}
-              acertos={leaderboard.score}
-            />
-          ))
-        ) : (
-          <Typography variant='body2'>Nenhum aluno respondeu ainda...</Typography>
-        )}
-
+        {leaderboard && leaderboard.map((student, index) => (
+          <CardLeaderboard
+            key={student.id}
+            nome={student.name}
+            foto={student.profilePicture || '/iconsPages/iconUser.png'}
+            posicao={index + 1}
+            acertos={student.score}
+          />
+        ))}
+        {loading && Array.from({ length: 5 }).map((_, index) => (
+          <Skeleton variant='rounded' width='95%' height={60} key={index} />
+        ))}
       </Box>
     </Box>
   )

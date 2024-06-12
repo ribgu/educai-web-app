@@ -9,7 +9,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Modal from '../Modal/Modal'
 import Button from '@mui/material/Button'
-import { LoadingButton } from '@mui/lab'
+import { LoadingButton, Skeleton } from '@mui/lab'
 import SearchBar from '../SearchBar/SearchBar'
 import { TbSchool } from 'react-icons/tb'
 
@@ -81,7 +81,9 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
           <Typography variant='h5' sx={{
             fontWeight: '700'
           }}>
-            {title}
+            {title ?? (
+              <Skeleton variant='text' width='200px' height='40px' animation='wave' sx={{ borderRadius: '10px' }} />
+            )}
           </Typography>
         </Box>
         {!isTabsNecessary && (
@@ -132,7 +134,7 @@ export default function PageHeader(PageHeaderProps: PageHeaderProps) {
             iconeReact={
               <Box sx={{ backgroundColor: '#F1EBFF', borderRadius: '4px', padding: '8px' }}>
                 <TbSchool color='#341069' size={30} />
-              </Box>      
+              </Box>
             }
             showModal={modalIsOpen}
             onClose={() => setModalIsOpen(false)}

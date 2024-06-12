@@ -10,6 +10,7 @@ import { AuthContext } from '../contexts/AuthContext'
 import { TurmaType, TurmasType } from '../lib/types/Turma'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Skeleton } from '@mui/material'
 
 export default function Home() {
   const { role } = useContext(AuthContext)
@@ -17,6 +18,7 @@ export default function Home() {
   const [turmas, setTurmas] = useState<TurmasType>([])
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(true)
   const [turmaSearch, setTurmaSearch] = useState<TurmaType | null>(null)
   const regex = /[^a-zA-Z0-9\s]/g
   const errorToast = (message : string) => {
@@ -110,7 +112,10 @@ export default function Home() {
   }
 
   const updateClassrooms = () => {
-    client.getUserClassrooms().then((data) => setTurmas(data))
+    client.getUserClassrooms().then((data) => {
+      setTurmas(data)
+      setLoading(false)
+    })
   }
 
   return (
@@ -142,7 +147,11 @@ export default function Home() {
               updateClassrooms={updateClassrooms}
             />
           ))}
-
+          {loading && (
+            Array.from({ length: 8 }).map((_, index) => (
+              <Skeleton variant='rounded' width='95%' height={120} key={index} />
+            )
+          ))}
           {
             turmaSearch &&
             <Turma
