@@ -45,7 +45,9 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: web-app
-        path: dist/
+        path: |
+          dist/
+          nginx.conf
 
   CD:
     needs: [CI]
