@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react'
 import useClient from '../../lib/client/useClient'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { UsersType } from '../../lib/types/User'
 import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { Classwork } from '../../lib/types/ClassWork'
 import Layout from '../../pages/Layout'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import PageHeader from '../PageHeader/PageHeader'
+import { Skeleton } from '@mui/material'
 
 export default function ClassworkList() {
   const client = useClient()
-  const navigate = useNavigate()
 
   const classworkId =
     new URLSearchParams(useLocation().search).get('classWorkId') ?? ''
@@ -19,37 +19,32 @@ export default function ClassworkList() {
     new URLSearchParams(useLocation().search).get('classRoomId') ?? ''
   const [answered, setAnswered] = useState<UsersType>([])
   const [classwork, setClasswork] = useState<Classwork>()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const answers = client.getAnswersStatus(classworkId)
     client.getClassworkById(classworkId).then((res) => setClasswork(res))
-    answers.then((result) => setAnswered(result))
+    answers.then((result) => {
+      setAnswered(result)
+      setLoading(false)
+    })
   }, [classworkId])
-
-  const handleVoltar = () => {
-    navigate(`/turma/${classroomId}/?tab=atividades`)
-  }
 
   return (
     <Layout>
       <Box sx={{ width: '100%', display:'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
+            <PageHeader title={classwork?.title} tab='atividades' classroomId={classroomId} />
+        </Box>
         <Box
           sx={{
             width: '95%',
             gap: '10px',
             display: 'flex',
             flexDirection: 'column',
-            paddingTop: '10px',
+            paddingTop: '30px',
           }}
         >
-          <ArrowBackIcon
-            onClick={() => handleVoltar()}
-            sx={{ paddingLeft: '10px', fontSize: '2rem' }}
-          />
-          <Typography sx={{ paddingLeft: '10px' }}>
-            <b>{classwork?.title}</b>
-          </Typography>
-
           <Box
             sx={{
               width: '100%',
@@ -78,12 +73,11 @@ export default function ClassworkList() {
             height: '80%',
             border: '2px solid #BEBEBE',
             borderRadius: '10px',
-            gap: '10px',
             display: 'flex',
             flexDirection: 'column'
           }}
         >
-          {answered.map((answer, index) => (
+          {answered && answered.map((answer, index) => (
             <Box
               key={index}
               sx={{
@@ -135,7 +129,13 @@ export default function ClassworkList() {
                 </Typography>
               </Box>
             </Box>
-          ))}
+          )) 
+        }
+        {
+          loading && Array.from({ length: 10}).map((_, index) => (
+            <Skeleton variant='rounded' width='100%' height={60} key={index} style={{ marginTop: '10px' }} />
+          ))
+        }
         </Box>
       </Box>
     </Layout>
