@@ -11,7 +11,7 @@ import { Skeleton } from '@mui/material'
 export default function Leaderboard() {
   const client = useClient()
   const { id } = useParams()
-  const [leaderboard, setLeaderboard] = useState<LeaderboardType>()
+  const [leaderboard, setLeaderboard] = useState<LeaderboardType>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -19,8 +19,8 @@ export default function Leaderboard() {
       client.getLeaderboard(id).then((res) => {
         if (res) {
           setLeaderboard(res)
-          setLoading(false)
-        }
+          }
+        setLoading(false)
       })
     }
   }, [id])
@@ -79,6 +79,9 @@ export default function Leaderboard() {
         {loading && Array.from({ length: 5 }).map((_, index) => (
           <Skeleton variant='rounded' width='95%' height={60} key={index} />
         ))}
+        {!loading && leaderboard.length === 0 && (
+          <Typography variant='body1'>Nenhum aluno respondeu questões ainda</Typography>
+        )}
       </Box>
     </Box>
   )
